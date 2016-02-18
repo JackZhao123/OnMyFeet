@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DB1C72960300957BEF /* AppDelegate.swift */; };
 		2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DD1C72960300957BEF /* ViewController.swift */; };
 		2AAA60E11C72960300957BEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60DF1C72960300957BEF /* Main.storyboard */; };
@@ -14,6 +15,7 @@
 		2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E51C72960300957BEF /* Assets.xcassets */; };
 		2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */; };
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
+		2ABD7CB21C7527E000C1F7CA /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABD7CB11C7527E000C1F7CA /* DataViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		2AAA60D81C72960300957BEF /* onMyFeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = onMyFeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60DB1C72960300957BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AAA60DD1C72960300957BEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		2AAA60EF1C72960300957BEF /* onMyFeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = onMyFeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60F31C72960300957BEF /* onMyFeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMyFeetTests.swift; sourceTree = "<group>"; };
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ABD7CB11C7527E000C1F7CA /* DataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 			children = (
 				2AAA60DB1C72960300957BEF /* AppDelegate.swift */,
 				2AAA60DD1C72960300957BEF /* ViewController.swift */,
+				2ABD7CB11C7527E000C1F7CA /* DataViewController.swift */,
+				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
 				2AAA60E51C72960300957BEF /* Assets.xcassets */,
 				2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */,
@@ -202,6 +208,8 @@
 			files = (
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
+				2ABD7CB21C7527E000C1F7CA /* DataViewController.swift in Sources */,
+				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				2AAA60E41C72960300957BEF /* onMyFeet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,6 +398,7 @@
 				2AAA60FA1C72960300957BEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2AAA60FB1C72960300957BEF /* Build configuration list for PBXNativeTarget "onMyFeetTests" */ = {
 			isa = XCConfigurationList;
@@ -398,6 +407,7 @@
 				2AAA60FD1C72960300957BEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -10,10 +10,13 @@ import UIKit
 import SafariServices
 
 var access_token:String?
+var user_id :String?
+var token_type:String?
 
 class ViewController: UIViewController {
 //    MARK: Outlet
     @IBOutlet weak var logInBtn: UIButton!
+    @IBOutlet weak var syncBtn: UIButton!
     @IBOutlet weak var tokenTextView: UITextView!
     
 //    MARK: Properties
@@ -38,13 +41,20 @@ class ViewController: UIViewController {
     }
     
     func didBecomeActive() {
-        self.tokenTextView.text = access_token
+        self.tokenTextView.text = "access_token is \(access_token) " + "user_id is \(user_id) " + "token_type is \(token_type)"
     }
 
     func initSubView() {
         self.logInBtn.layer.cornerRadius = 5.0
         self.logInBtn.clipsToBounds = true
+        self.syncBtn.layer.cornerRadius = 5.0
+        self.syncBtn.clipsToBounds = true
     }
+    
+    @IBAction func syncViaFitbit(sender: AnyObject) {
+        UIApplication.sharedApplication().openURL(NSURL(string: "fitbit://")!)
+    }
+    
 
     @IBAction func logIn(sender: AnyObject) {
         //print("Logging in");

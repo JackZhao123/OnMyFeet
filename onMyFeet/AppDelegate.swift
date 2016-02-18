@@ -28,9 +28,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        access_token = String(url)
+        
+        let userInfo = getInfoFromURL(url)
+        
+        access_token = userInfo["access_token"]
+        user_id = userInfo["user_id"]
+        token_type = userInfo["token_type"]
+        
         return true
     }
+    
+    func getInfoFromURL(url:NSURL) -> [String:String]{
+        var userInfo = [String:String]()
+        var accessArray: [NSString]!
+        
+        accessArray = String(url).componentsSeparatedByString("&")
+        
+        for index in 1...accessArray.count-1 {
+            let infoArray = String(accessArray[index]).componentsSeparatedByString("=")
+            let key = infoArray[0]
+            let value = infoArray[1]
+            userInfo[key] = value
+        }
+        
+        return userInfo
+    }
+    
+    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
