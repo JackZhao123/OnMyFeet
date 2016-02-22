@@ -13,17 +13,17 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     func requestToFitbit(requestType:String, url:NSURL) {
         // create the request
         
-        if let access_token = access_token {
-            
-            let request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = requestType
-            request.setValue("Bearer \(access_token)", forHTTPHeaderField: "Authorization")
-            
-            let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
-            let dataTask = urlSession.dataTaskWithRequest(request)
-            
-            dataTask.resume()
-        }
+//        if let access_token = access_token {
+//            
+//            let request = NSMutableURLRequest(URL: url)
+//            request.HTTPMethod = requestType
+//            request.setValue("Bearer \(access_token)", forHTTPHeaderField: "Authorization")
+//            
+//            let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
+//            let dataTask = urlSession.dataTaskWithRequest(request)
+//            
+//            dataTask.resume()
+//        }
         
     }
     

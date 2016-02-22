@@ -17,28 +17,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        if let launchOptions = launchOptions {
-            let s = launchOptions["UIApplicationLaunchOptionsURLKey"] as! NSURL
-            access_token = String(s)
-        } else {
-            access_token = "No Access_token available"
+        if NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") == nil {
+            if let url = launchOptions![UIApplicationLaunchOptionsURLKey] {
+                getInfoFromURL(url as! NSURL)
+            }
         }
-        
+
         return true
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         
-        let userInfo = getInfoFromURL(url)
-        
-        access_token = userInfo["access_token"]
-        user_id = userInfo["user_id"]
-        token_type = userInfo["token_type"]
+        if NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") == nil {
+            getInfoFromURL(url)
+        }
         
         return true
     }
     
-    func getInfoFromURL(url:NSURL) -> [String:String]{
+    func getInfoFromURL(url:NSURL) {
         var userInfo = [String:String]()
         var accessArray: [NSString]!
         
@@ -51,8 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userInfo[key] = value
         }
         
-        return userInfo
-    }
+        NSUserDefaults.standardUserDefaults().setObject(userInfo, forKey: "userInfoDict")
+}
     
     
     

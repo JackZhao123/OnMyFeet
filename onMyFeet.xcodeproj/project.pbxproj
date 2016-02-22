@@ -15,7 +15,10 @@
 		2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E51C72960300957BEF /* Assets.xcassets */; };
 		2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */; };
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
-		2ABD7CB21C7527E000C1F7CA /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABD7CB11C7527E000C1F7CA /* DataViewController.swift */; };
+		2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF8357E1C7B560000287892 /* LogInViewController.swift */; };
+		2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835801C7B7E9F00287892 /* MenuCell.swift */; };
+		2AF835831C7B84BC00287892 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835821C7B84BC00287892 /* ProgressViewController.swift */; };
+		2AF835851C7B84F300287892 /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835841C7B84F300287892 /* GoalsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +44,10 @@
 		2AAA60EF1C72960300957BEF /* onMyFeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = onMyFeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60F31C72960300957BEF /* onMyFeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMyFeetTests.swift; sourceTree = "<group>"; };
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2ABD7CB11C7527E000C1F7CA /* DataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
+		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		2AF835801C7B7E9F00287892 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		2AF835821C7B84BC00287892 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		2AF835841C7B84F300287892 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,13 +89,14 @@
 		2AAA60DA1C72960300957BEF /* onMyFeet */ = {
 			isa = PBXGroup;
 			children = (
+				2AF835891C7B8C6500287892 /* LogInMenu */,
+				2AF835881C7B8C4C00287892 /* FitbitAPI */,
+				2AF835871C7B8C3D00287892 /* GoalsTracking */,
+				2AF835861C7B8C2A00287892 /* ProgressTracking */,
 				2AAA60DB1C72960300957BEF /* AppDelegate.swift */,
-				2AAA60DD1C72960300957BEF /* ViewController.swift */,
-				2ABD7CB11C7527E000C1F7CA /* DataViewController.swift */,
-				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
-				2AAA60E51C72960300957BEF /* Assets.xcassets */,
 				2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */,
+				2AAA60E51C72960300957BEF /* Assets.xcassets */,
 				2AAA60EA1C72960300957BEF /* Info.plist */,
 				2AAA60E21C72960300957BEF /* onMyFeet.xcdatamodeld */,
 			);
@@ -103,6 +110,40 @@
 				2AAA60F51C72960300957BEF /* Info.plist */,
 			);
 			path = onMyFeetTests;
+			sourceTree = "<group>";
+		};
+		2AF835861C7B8C2A00287892 /* ProgressTracking */ = {
+			isa = PBXGroup;
+			children = (
+				2AF835821C7B84BC00287892 /* ProgressViewController.swift */,
+			);
+			name = ProgressTracking;
+			sourceTree = "<group>";
+		};
+		2AF835871C7B8C3D00287892 /* GoalsTracking */ = {
+			isa = PBXGroup;
+			children = (
+				2AF835841C7B84F300287892 /* GoalsViewController.swift */,
+			);
+			name = GoalsTracking;
+			sourceTree = "<group>";
+		};
+		2AF835881C7B8C4C00287892 /* FitbitAPI */ = {
+			isa = PBXGroup;
+			children = (
+				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
+			);
+			name = FitbitAPI;
+			sourceTree = "<group>";
+		};
+		2AF835891C7B8C6500287892 /* LogInMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2AAA60DD1C72960300957BEF /* ViewController.swift */,
+				2AF835801C7B7E9F00287892 /* MenuCell.swift */,
+				2AF8357E1C7B560000287892 /* LogInViewController.swift */,
+			);
+			name = LogInMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,11 +247,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
-				2ABD7CB21C7527E000C1F7CA /* DataViewController.swift in Sources */,
+				2AF835831C7B84BC00287892 /* ProgressViewController.swift in Sources */,
+				2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				2AAA60E41C72960300957BEF /* onMyFeet.xcdatamodeld in Sources */,
+				2AF835851C7B84F300287892 /* GoalsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

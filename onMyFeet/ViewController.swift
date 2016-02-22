@@ -7,32 +7,32 @@
 //
 
 import UIKit
-import SafariServices
 
-var access_token:String?
-var user_id :String?
-var token_type:String?
-
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //    MARK: Outlet
-    @IBOutlet weak var logInBtn: UIButton!
-    @IBOutlet weak var syncBtn: UIButton!
-    @IBOutlet weak var tokenTextView: UITextView!
+    @IBOutlet weak var menuTableView: UITableView!
     
 //    MARK: Properties
+    var userInfo: NSDictionary!
+    var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
     
+//    MARK: view initialize
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        if let access_token = access_token {
-            self.tokenTextView.text = access_token
+        self.menuTableView.delegate = self
+        self.menuTableView.dataSource = self
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        if let info = NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") as? NSDictionary {
+            self.userInfo = info
         } else {
-            self.tokenTextView.text = "No Token Aviable"
+            let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
+            self.presentViewController(logInController, animated: false, completion: nil)
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
-        
-        initSubView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,25 +40,56 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func didBecomeActive() {
-        self.tokenTextView.text = "access_token is \(access_token) " + "user_id is \(user_id) " + "token_type is \(token_type)"
-    }
-
-    func initSubView() {
-        self.logInBtn.layer.cornerRadius = 5.0
-        self.logInBtn.clipsToBounds = true
-        self.syncBtn.layer.cornerRadius = 5.0
-        self.syncBtn.clipsToBounds = true
+    //MARK: tableView
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories.count
     }
     
-    @IBAction func syncViaFitbit(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "fitbit://")!)
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("menuCell", forIndexPath: indexPath) as! MenuCell
+        cell.categoryName.text = categories[indexPath.row]
+        
+        return cell
     }
     
-
-    @IBAction func logIn(sender: AnyObject) {
-        //print("Logging in");
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=604800")!)
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let tableViewHeight = self.menuTableView.frame.height - 64;
+        return (tableViewHeight / (CGFloat)(categories.count));
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var storyboardIdentifier: String?
+        switch indexPath.row {
+        case 0:
+            storyboardIdentifier = "GoalsController"
+        case 1:
+            storyboardIdentifier = "ProgressController"
+        default:
+            storyboardIdentifier = nil
+        }
+        
+        if let storyboardIdentifier = storyboardIdentifier {
+            let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
+            self.navigationController!.pushViewController(desController, animated: true)
+        }
+    }
+
+    //MARK: Actions
+    @IBAction func logOut(sender: AnyObject) {
+        let alertView = UIAlertController(title: "Logging Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
+        alertView.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {(action) in
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("userInfoDict")
+            let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
+            self.presentViewController(logInController, animated: true, completion: nil)
+        }))
+        
+        alertView.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {(action) in
+            alertView.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(alertView, animated: true, completion: nil)
+        
+    }
+    
 }
 
