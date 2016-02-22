@@ -140,8 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				2AAA60DD1C72960300957BEF /* ViewController.swift */,
-				2AF835801C7B7E9F00287892 /* MenuCell.swift */,
 				2AF8357E1C7B560000287892 /* LogInViewController.swift */,
+				2AF835801C7B7E9F00287892 /* MenuCell.swift */,
 			);
 			name = LogInMenu;
 			sourceTree = "<group>";

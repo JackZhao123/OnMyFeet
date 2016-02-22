@@ -17,7 +17,6 @@ class GoalsViewController: UIViewController {
         let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
         navigationItem.leftBarButtonItem = backBtn
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

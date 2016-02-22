@@ -13,7 +13,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var menuTableView: UITableView!
     
 //    MARK: Properties
-    var userInfo: NSDictionary!
+    var userInfo: String!
     var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
     
 //    MARK: view initialize
@@ -26,7 +26,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidAppear(animated: Bool) {
         
-        if let info = NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") as? NSDictionary {
+        if let info = NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") as? String {
             self.userInfo = info
         } else {
             let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
@@ -78,9 +78,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func logOut(sender: AnyObject) {
         let alertView = UIAlertController(title: "Logging Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
         alertView.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {(action) in
-            NSUserDefaults.standardUserDefaults().removeObjectForKey("userInfoDict")
+            
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("RefreshCode")
             let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
             self.presentViewController(logInController, animated: true, completion: nil)
+            
         }))
         
         alertView.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {(action) in
@@ -89,6 +91,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         self.presentViewController(alertView, animated: true, completion: nil)
         
+    }
+    
+    @IBAction func syncData(sender: AnyObject) {
+                let fitbit = FitbitAPI()
+                fitbit.refreshAccessToken()
     }
     
 }

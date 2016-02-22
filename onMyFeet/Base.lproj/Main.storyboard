@@ -116,6 +116,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="On My Feet" id="kj3-tc-J8l">
+                        <barButtonItem key="leftBarButtonItem" title="Sync" id="gN8-Tv-nVa">
+                            <connections>
+                                <action selector="syncData:" destination="BYZ-38-t0r" id="A3F-OW-hEL"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Log Out" id="Yj9-Kd-mMc">
                             <color key="tintColor" red="0.1333333333" green="0.64705882349999999" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>

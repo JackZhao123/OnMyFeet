@@ -14,13 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    //MARK: Init Fitbit API
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        if NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") == nil {
-            if let url = launchOptions![UIApplicationLaunchOptionsURLKey] {
-                getInfoFromURL(url as! NSURL)
-            }
+        
+        if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] {
+            initFitbitAPI(url as! NSURL)
         }
 
         return true
@@ -28,30 +27,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         
-        if NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") == nil {
-            getInfoFromURL(url)
-        }
-        
+        initFitbitAPI(url)
         return true
     }
     
-    func getInfoFromURL(url:NSURL) {
-        var userInfo = [String:String]()
-        var accessArray: [NSString]!
-        
-        accessArray = String(url).componentsSeparatedByString("&")
-        
-        for index in 1...accessArray.count-1 {
-            let infoArray = String(accessArray[index]).componentsSeparatedByString("=")
-            let key = infoArray[0]
-            let value = infoArray[1]
-            userInfo[key] = value
-        }
-        
-        NSUserDefaults.standardUserDefaults().setObject(userInfo, forKey: "userInfoDict")
-}
+    func initFitbitAPI(url:NSURL) {
+        let fitbit = FitbitAPI()
+        fitbit.getAuthorizationCodeFromURL(url)
+        fitbit.requestAccessToken()
+    }
     
-    
+    // MARK: Hanlde status changed
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

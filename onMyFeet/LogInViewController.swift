@@ -28,23 +28,21 @@ class LogInViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        if NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") != nil {
+        if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     func didBecomeActive() {
-        if NSUserDefaults.standardUserDefaults().objectForKey("userInfoDict") != nil {
+        if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     @IBAction func logIn(sender: AnyObject) {
         //print("Logging in");
-        let loginView = SFSafariViewController(URL: NSURL(string: "https://www.fitbit.com/oauth2/authorize?response_type=token&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=2592000")!)
-        self.presentViewController(loginView, animated: true, completion: nil)
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&prompt=login")!)
     }
-
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
