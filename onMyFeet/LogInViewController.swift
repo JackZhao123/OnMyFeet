@@ -11,6 +11,8 @@ import SafariServices
 
 class LogInViewController: UIViewController {
     
+    let authenticationURL = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight"
+    
     //MARK: Outlets
     @IBOutlet weak var logInBtn: UIButton!
     
@@ -40,8 +42,17 @@ class LogInViewController: UIViewController {
     }
     
     @IBAction func logIn(sender: AnyObject) {
-        //print("Logging in");
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&prompt=login")!)
+        let url: NSURL?
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("LogOutManually") == true {
+            url = NSURL(string: authenticationURL+"&prompt=login")
+        } else {
+            url = NSURL(string: authenticationURL)
+        }
+        
+        if let url = url {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

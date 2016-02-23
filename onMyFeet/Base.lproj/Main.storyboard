@@ -122,7 +122,6 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Log Out" id="Yj9-Kd-mMc">
-                            <color key="tintColor" red="0.1333333333" green="0.64705882349999999" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="logOut:" destination="BYZ-38-t0r" id="oly-bt-7Sd"/>
                             </connections>

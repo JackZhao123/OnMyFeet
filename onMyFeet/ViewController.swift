@@ -80,6 +80,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         alertView.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {(action) in
             
             NSUserDefaults.standardUserDefaults().removeObjectForKey("RefreshCode")
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "LogOutManually")
+            
             let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
             self.presentViewController(logInController, animated: true, completion: nil)
             

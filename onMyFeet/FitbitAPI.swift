@@ -38,6 +38,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                 
                 request.setValue("Basic \(encodedString)", forHTTPHeaderField: "Authorization")
                 request.setValue( contentType , forHTTPHeaderField: "Content-Type")
+                request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
                 request.HTTPBody = NSString(string: requestTokenBody + authorizationCode).dataUsingEncoding(NSUTF8StringEncoding)
                 
                 let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
