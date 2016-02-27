@@ -34,7 +34,7 @@ class ProgressViewController: UIViewController {
     }
 
     @IBAction func getSteps(sender: AnyObject) {
-        fitbitAPI.getStepsFrom("2016-02-25", toEndDate: "2016-02-26")
+
     }
     
     @IBAction func getDistances(sender: AnyObject) {

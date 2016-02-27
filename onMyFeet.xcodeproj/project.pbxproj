@@ -14,6 +14,10 @@
 		2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */; };
 		2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
+		2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */; };
+		2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */; };
+		2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8891C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift */; };
+		2AA5B88E1C826A6400186BDD /* IntradaySleepTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B88A1C826A6400186BDD /* IntradaySleepTime.swift */; };
 		2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DB1C72960300957BEF /* AppDelegate.swift */; };
 		2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DD1C72960300957BEF /* ViewController.swift */; };
 		2AAA60E11C72960300957BEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60DF1C72960300957BEF /* Main.storyboard */; };
@@ -46,6 +50,10 @@
 		2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataManager.swift; sourceTree = "<group>"; };
 		2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
+		2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "IntradaySedentary+CoreDataProperties.swift"; path = "../IntradaySedentary+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntradaySedentary.swift; path = ../IntradaySedentary.swift; sourceTree = "<group>"; };
+		2AA5B8891C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "IntradaySleepTime+CoreDataProperties.swift"; path = "../IntradaySleepTime+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2AA5B88A1C826A6400186BDD /* IntradaySleepTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntradaySleepTime.swift; path = ../IntradaySleepTime.swift; sourceTree = "<group>"; };
 		2AAA60D81C72960300957BEF /* OnMyFeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnMyFeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60DB1C72960300957BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AAA60DD1C72960300957BEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +98,10 @@
 				2A2E41DD1C80AE8700E78A37 /* Person.swift */,
 				2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */,
 				2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */,
+				2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */,
+				2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */,
+				2AA5B8891C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift */,
+				2AA5B88A1C826A6400186BDD /* IntradaySleepTime.swift */,
 			);
 			name = DataBase;
 			sourceTree = "<group>";
@@ -278,6 +290,8 @@
 			files = (
 				2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */,
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
+				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
+				2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
 				2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */,
 				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
@@ -286,7 +300,9 @@
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2AF835831C7B84BC00287892 /* ProgressViewController.swift in Sources */,
+				2AA5B88E1C826A6400186BDD /* IntradaySleepTime.swift in Sources */,
 				2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */,
+				2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
 				2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */,

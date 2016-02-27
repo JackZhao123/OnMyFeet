@@ -126,8 +126,11 @@ class ClientDataManager {
             print(error)
         }
         
-        if let result = result {
-            print(result.first?.summary?.firstObject)
+        if let p = result?.first {
+            let summaries = p.mutableOrderedSetValueForKey("summary")
+            for s in summaries {
+                print(s)
+            }
         }
         
         return result?.first

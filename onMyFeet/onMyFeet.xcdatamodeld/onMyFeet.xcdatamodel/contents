@@ -2,17 +2,34 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
     <entity name="DailySummary" representedClassName=".DailySummary" syncable="YES">
         <attribute name="dateTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="distances" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="distances" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="minutesActive" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="minutesLightlyActive" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="minutesSedentary" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sleepTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="steps" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="summary" inverseEntity="Person" syncable="YES"/>
+        <relationship name="intradaySedentary" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="IntradaySedentary" inverseName="day" inverseEntity="IntradaySedentary" syncable="YES"/>
+        <relationship name="intradaySleep" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="IntradaySleepTime" inverseName="day" inverseEntity="IntradaySleepTime" syncable="YES"/>
+    </entity>
+    <entity name="IntradaySedentary" representedClassName=".IntradaySedentary" syncable="YES">
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailySummary" inverseName="intradaySedentary" inverseEntity="DailySummary" syncable="YES"/>
+    </entity>
+    <entity name="IntradaySleepTime" representedClassName=".IntradaySleepTime" syncable="YES">
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailySummary" inverseName="intradaySleep" inverseEntity="DailySummary" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName=".Person" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="summary" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DailySummary" inverseName="client" inverseEntity="DailySummary" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DailySummary" positionX="0" positionY="45" width="128" height="120"/>
+        <element name="DailySummary" positionX="0" positionY="45" width="128" height="195"/>
         <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="IntradaySedentary" positionX="-18" positionY="90" width="128" height="90"/>
+        <element name="IntradaySleepTime" positionX="-9" positionY="99" width="128" height="90"/>
     </elements>
 </model>
