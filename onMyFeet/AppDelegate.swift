@@ -32,9 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initFitbitAPI(url:NSURL) {
-        let fitbit = FitbitAPI()
-        fitbit.getAuthorizationCodeFromURL(url)
-        fitbit.requestAccessToken()
+        FitbitAPI.sharedAPI().getAuthorizationCodeFromURL(url)
+        FitbitAPI.sharedAPI().requestAccessToken()
     }
     
     // MARK: Hanlde status changed

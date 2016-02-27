@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */; };
+		2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DD1C80AE8700E78A37 /* Person.swift */; };
+		2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */; };
+		2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */; };
+		2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DB1C72960300957BEF /* AppDelegate.swift */; };
 		2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DD1C72960300957BEF /* ViewController.swift */; };
 		2AAA60E11C72960300957BEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60DF1C72960300957BEF /* Main.storyboard */; };
-		2AAA60E41C72960300957BEF /* onMyFeet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60E21C72960300957BEF /* onMyFeet.xcdatamodeld */; };
+		2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60E21C72960300957BEF /* OnMyFeet.xcdatamodeld */; };
 		2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E51C72960300957BEF /* Assets.xcassets */; };
 		2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */; };
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
@@ -32,16 +37,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2A2E41DD1C80AE8700E78A37 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DailySummary+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
+		2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataManager.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
-		2AAA60D81C72960300957BEF /* onMyFeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = onMyFeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2AAA60D81C72960300957BEF /* OnMyFeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnMyFeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60DB1C72960300957BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AAA60DD1C72960300957BEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2AAA60E01C72960300957BEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2AAA60E31C72960300957BEF /* onMyFeet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = onMyFeet.xcdatamodel; sourceTree = "<group>"; };
+		2AAA60E31C72960300957BEF /* OnMyFeet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OnMyFeet.xcdatamodel; sourceTree = "<group>"; };
 		2AAA60E51C72960300957BEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2AAA60E81C72960300957BEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2AAA60EA1C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AAA60EF1C72960300957BEF /* onMyFeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = onMyFeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2AAA60EF1C72960300957BEF /* OnMyFeet.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnMyFeet.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60F31C72960300957BEF /* onMyFeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMyFeetTests.swift; sourceTree = "<group>"; };
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +78,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A2E41E51C80AEA600E78A37 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */,
+				2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */,
+				2A2E41DD1C80AE8700E78A37 /* Person.swift */,
+				2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */,
+				2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */,
+			);
+			name = DataBase;
+			sourceTree = "<group>";
+		};
 		2AAA60CF1C72960300957BEF = {
 			isa = PBXGroup;
 			children = (
@@ -80,8 +102,8 @@
 		2AAA60D91C72960300957BEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2AAA60D81C72960300957BEF /* onMyFeet.app */,
-				2AAA60EF1C72960300957BEF /* onMyFeetTests.xctest */,
+				2AAA60D81C72960300957BEF /* OnMyFeet.app */,
+				2AAA60EF1C72960300957BEF /* OnMyFeet.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,16 +111,17 @@
 		2AAA60DA1C72960300957BEF /* onMyFeet */ = {
 			isa = PBXGroup;
 			children = (
+				2AAA60DB1C72960300957BEF /* AppDelegate.swift */,
 				2AF835891C7B8C6500287892 /* LogInMenu */,
 				2AF835881C7B8C4C00287892 /* FitbitAPI */,
 				2AF835871C7B8C3D00287892 /* GoalsTracking */,
 				2AF835861C7B8C2A00287892 /* ProgressTracking */,
-				2AAA60DB1C72960300957BEF /* AppDelegate.swift */,
+				2A2E41E51C80AEA600E78A37 /* DataBase */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
 				2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */,
 				2AAA60E51C72960300957BEF /* Assets.xcassets */,
 				2AAA60EA1C72960300957BEF /* Info.plist */,
-				2AAA60E21C72960300957BEF /* onMyFeet.xcdatamodeld */,
+				2AAA60E21C72960300957BEF /* OnMyFeet.xcdatamodeld */,
 			);
 			path = onMyFeet;
 			sourceTree = "<group>";
@@ -149,9 +172,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2AAA60D71C72960300957BEF /* onMyFeet */ = {
+		2AAA60D71C72960300957BEF /* OnMyFeet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2AAA60F81C72960300957BEF /* Build configuration list for PBXNativeTarget "onMyFeet" */;
+			buildConfigurationList = 2AAA60F81C72960300957BEF /* Build configuration list for PBXNativeTarget "OnMyFeet" */;
 			buildPhases = (
 				2AAA60D41C72960300957BEF /* Sources */,
 				2AAA60D51C72960300957BEF /* Frameworks */,
@@ -161,14 +184,14 @@
 			);
 			dependencies = (
 			);
-			name = onMyFeet;
+			name = OnMyFeet;
 			productName = onMyFeet;
-			productReference = 2AAA60D81C72960300957BEF /* onMyFeet.app */;
+			productReference = 2AAA60D81C72960300957BEF /* OnMyFeet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2AAA60EE1C72960300957BEF /* onMyFeetTests */ = {
+		2AAA60EE1C72960300957BEF /* OnMyFeetTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2AAA60FB1C72960300957BEF /* Build configuration list for PBXNativeTarget "onMyFeetTests" */;
+			buildConfigurationList = 2AAA60FB1C72960300957BEF /* Build configuration list for PBXNativeTarget "OnMyFeetTests" */;
 			buildPhases = (
 				2AAA60EB1C72960300957BEF /* Sources */,
 				2AAA60EC1C72960300957BEF /* Frameworks */,
@@ -179,9 +202,9 @@
 			dependencies = (
 				2AAA60F11C72960300957BEF /* PBXTargetDependency */,
 			);
-			name = onMyFeetTests;
+			name = OnMyFeetTests;
 			productName = onMyFeetTests;
-			productReference = 2AAA60EF1C72960300957BEF /* onMyFeetTests.xctest */;
+			productReference = 2AAA60EF1C72960300957BEF /* OnMyFeet.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -203,7 +226,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */;
+			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -216,8 +239,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2AAA60D71C72960300957BEF /* onMyFeet */,
-				2AAA60EE1C72960300957BEF /* onMyFeetTests */,
+				2AAA60D71C72960300957BEF /* OnMyFeet */,
+				2AAA60EE1C72960300957BEF /* OnMyFeetTests */,
 			);
 		};
 /* End PBXProject section */
@@ -247,13 +270,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */,
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
+				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
+				2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
+				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2AF835831C7B84BC00287892 /* ProgressViewController.swift in Sources */,
 				2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
-				2AAA60E41C72960300957BEF /* onMyFeet.xcdatamodeld in Sources */,
+				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
+				2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */,
 				2AF835851C7B84F300287892 /* GoalsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,7 +299,7 @@
 /* Begin PBXTargetDependency section */
 		2AAA60F11C72960300957BEF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2AAA60D71C72960300957BEF /* onMyFeet */;
+			target = 2AAA60D71C72960300957BEF /* OnMyFeet */;
 			targetProxy = 2AAA60F01C72960300957BEF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -384,7 +412,7 @@
 				INFOPLIST_FILE = onMyFeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OnMyFeet;
 			};
 			name = Debug;
 		};
@@ -395,7 +423,7 @@
 				INFOPLIST_FILE = onMyFeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OnMyFeet;
 			};
 			name = Release;
 		};
@@ -406,8 +434,8 @@
 				INFOPLIST_FILE = onMyFeetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeetTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/onMyFeet.app/onMyFeet";
+				PRODUCT_NAME = OnMyFeet;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnMyFeet.app/OnMyFeet";
 			};
 			name = Debug;
 		};
@@ -418,15 +446,15 @@
 				INFOPLIST_FILE = onMyFeetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeetTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/onMyFeet.app/onMyFeet";
+				PRODUCT_NAME = OnMyFeet;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnMyFeet.app/OnMyFeet";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */ = {
+		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F61C72960300957BEF /* Debug */,
@@ -435,7 +463,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2AAA60F81C72960300957BEF /* Build configuration list for PBXNativeTarget "onMyFeet" */ = {
+		2AAA60F81C72960300957BEF /* Build configuration list for PBXNativeTarget "OnMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F91C72960300957BEF /* Debug */,
@@ -444,7 +472,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2AAA60FB1C72960300957BEF /* Build configuration list for PBXNativeTarget "onMyFeetTests" */ = {
+		2AAA60FB1C72960300957BEF /* Build configuration list for PBXNativeTarget "OnMyFeetTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60FC1C72960300957BEF /* Debug */,
@@ -456,13 +484,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		2AAA60E21C72960300957BEF /* onMyFeet.xcdatamodeld */ = {
+		2AAA60E21C72960300957BEF /* OnMyFeet.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				2AAA60E31C72960300957BEF /* onMyFeet.xcdatamodel */,
+				2AAA60E31C72960300957BEF /* OnMyFeet.xcdatamodel */,
 			);
-			currentVersion = 2AAA60E31C72960300957BEF /* onMyFeet.xcdatamodel */;
-			path = onMyFeet.xcdatamodeld;
+			currentVersion = 2AAA60E31C72960300957BEF /* OnMyFeet.xcdatamodel */;
+			path = OnMyFeet.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

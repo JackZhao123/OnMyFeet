@@ -21,7 +21,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -92,7 +91,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }))
         
         self.presentViewController(alertView, animated: true, completion: nil)
-        
     }
     
     @IBAction func syncData(sender: AnyObject) {

@@ -9,7 +9,7 @@
         <!--Log In View Controller-->
         <scene sceneID="L9L-Qe-U2y">
             <objects>
-                <viewController storyboardIdentifier="LogIn" id="jTg-a9-Sfb" customClass="LogInViewController" customModule="onMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogIn" id="jTg-a9-Sfb" customClass="LogInViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nQT-hM-o6z"/>
                         <viewControllerLayoutGuide type="bottom" id="dgS-Gc-2QP"/>
@@ -63,7 +63,7 @@
         <!--On My Feet-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="onMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -76,7 +76,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" rowHeight="100" id="aUu-SR-6et" customClass="MenuCell" customModule="onMyFeet" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" rowHeight="100" id="aUu-SR-6et" customClass="MenuCell" customModule="OnMyFeet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUu-SR-6et" id="Bk5-5Z-ogw">
@@ -123,7 +123,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Log Out" id="Yj9-Kd-mMc">
                             <connections>
-                                <action selector="logOut:" destination="BYZ-38-t0r" id="oly-bt-7Sd"/>
+                                <action selector="logOut:" destination="BYZ-38-t0r" id="o30-7u-naV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -138,7 +138,7 @@
         <!--Goals View Controller-->
         <scene sceneID="ogz-K9-Dff">
             <objects>
-                <viewController storyboardIdentifier="GoalsController" id="vy6-u8-GoF" customClass="GoalsViewController" customModule="onMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GoalsController" id="vy6-u8-GoF" customClass="GoalsViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Vo-RL-0xj"/>
                         <viewControllerLayoutGuide type="bottom" id="Hh0-4O-Qfm"/>
@@ -156,7 +156,7 @@
         <!--Progress View Controller-->
         <scene sceneID="cfN-qM-nR3">
             <objects>
-                <viewController storyboardIdentifier="ProgressController" id="uRk-LZ-uvB" customClass="ProgressViewController" customModule="onMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProgressController" id="uRk-LZ-uvB" customClass="ProgressViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s1k-w3-hCk"/>
                         <viewControllerLayoutGuide type="bottom" id="5Fh-cs-uo9"/>
@@ -164,7 +164,65 @@
                     <view key="view" contentMode="scaleToFill" id="Bt0-Dt-YxB">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAl-EP-zE2">
+                                <rect key="frame" x="280" y="94" width="40" height="30"/>
+                                <state key="normal" title="Steps"/>
+                                <connections>
+                                    <action selector="getSteps:" destination="uRk-LZ-uvB" eventType="touchUpInside" id="bIQ-ux-NUf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PU3-MS-h9q">
+                                <rect key="frame" x="266" y="139" width="68" height="30"/>
+                                <state key="normal" title="Distances"/>
+                                <connections>
+                                    <action selector="getDistances:" destination="uRk-LZ-uvB" eventType="touchUpInside" id="83H-w1-kOJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XOo-S2-ddk">
+                                <rect key="frame" x="243" y="177" width="114" height="30"/>
+                                <state key="normal" title="Activity Intensity"/>
+                                <connections>
+                                    <action selector="getIntensity:" destination="uRk-LZ-uvB" eventType="touchUpInside" id="ry4-HF-DaM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jXr-UE-CA4">
+                                <rect key="frame" x="281" y="215" width="39" height="30"/>
+                                <state key="normal" title="Sleep"/>
+                                <connections>
+                                    <action selector="getSleep:" destination="uRk-LZ-uvB" eventType="touchUpInside" id="2xc-5s-2Ka"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19K-DJ-31a">
+                                <rect key="frame" x="280" y="260" width="40" height="30"/>
+                                <state key="normal" title="Alarm"/>
+                                <connections>
+                                    <action selector="setAlarm:" destination="uRk-LZ-uvB" eventType="touchUpInside" id="Zqh-F8-KMb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2D-cM-AfJ">
+                                <rect key="frame" x="236" y="298" width="129" height="30"/>
+                                <state key="normal" title="Sedentary Minutes"/>
+                                <connections>
+                                    <action selector="getSedentaryMinutes:" destination="uRk-LZ-uvB" eventType="touchUpInside" id="JE4-tP-uMp"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="19K-DJ-31a" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="66v-Ie-gZY"/>
+                            <constraint firstItem="IAl-EP-zE2" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="9Hc-Of-fa5"/>
+                            <constraint firstItem="XOo-S2-ddk" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="BEk-7R-Ovb"/>
+                            <constraint firstItem="PU3-MS-h9q" firstAttribute="top" secondItem="IAl-EP-zE2" secondAttribute="bottom" constant="15" id="Ewy-mV-ByR"/>
+                            <constraint firstItem="jXr-UE-CA4" firstAttribute="top" secondItem="XOo-S2-ddk" secondAttribute="bottom" constant="8" id="FVN-mn-LbB"/>
+                            <constraint firstItem="a2D-cM-AfJ" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="Kjs-hw-l7t"/>
+                            <constraint firstItem="jXr-UE-CA4" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="LkK-2W-Lmo"/>
+                            <constraint firstItem="IAl-EP-zE2" firstAttribute="top" secondItem="s1k-w3-hCk" secondAttribute="bottom" constant="74" id="NAa-ia-VWN"/>
+                            <constraint firstItem="19K-DJ-31a" firstAttribute="top" secondItem="jXr-UE-CA4" secondAttribute="bottom" constant="15" id="XDq-af-MNf"/>
+                            <constraint firstItem="PU3-MS-h9q" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="cFL-Vo-3a5"/>
+                            <constraint firstItem="a2D-cM-AfJ" firstAttribute="top" secondItem="19K-DJ-31a" secondAttribute="bottom" constant="8" id="mNa-pz-9Ux"/>
+                            <constraint firstItem="XOo-S2-ddk" firstAttribute="top" secondItem="PU3-MS-h9q" secondAttribute="bottom" constant="8" id="z1i-Zg-3DM"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXX-mq-GzN" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2AAA60D71C72960300957BEF"
-               BuildableName = "onMyFeet.app"
-               BlueprintName = "onMyFeet"
+               BuildableName = "OnMyFeet.app"
+               BlueprintName = "OnMyFeet"
                ReferencedContainer = "container:onMyFeet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2AAA60EE1C72960300957BEF"
-               BuildableName = "onMyFeetTests.xctest"
-               BlueprintName = "onMyFeetTests"
+               BuildableName = "OnMyFeet.xctest"
+               BlueprintName = "OnMyFeetTests"
                ReferencedContainer = "container:onMyFeet.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2AAA60D71C72960300957BEF"
-            BuildableName = "onMyFeet.app"
-            BlueprintName = "onMyFeet"
+            BuildableName = "OnMyFeet.app"
+            BlueprintName = "OnMyFeet"
             ReferencedContainer = "container:onMyFeet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,8 +66,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2AAA60D71C72960300957BEF"
-            BuildableName = "onMyFeet.app"
-            BlueprintName = "onMyFeet"
+            BuildableName = "OnMyFeet.app"
+            BlueprintName = "OnMyFeet"
             ReferencedContainer = "container:onMyFeet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -85,8 +85,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2AAA60D71C72960300957BEF"
-            BuildableName = "onMyFeet.app"
-            BlueprintName = "onMyFeet"
+            BuildableName = "OnMyFeet.app"
+            BlueprintName = "OnMyFeet"
             ReferencedContainer = "container:onMyFeet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

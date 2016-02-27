@@ -9,6 +9,7 @@
 import UIKit
 
 class ProgressViewController: UIViewController {
+    let fitbitAPI = FitbitAPI()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,4 +33,27 @@ class ProgressViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    @IBAction func getSteps(sender: AnyObject) {
+        fitbitAPI.getStepsFrom("2016-02-25", toEndDate: "2016-02-26")
+    }
+    
+    @IBAction func getDistances(sender: AnyObject) {
+        FitbitAPI.sharedAPI().getUserName()
+    }
+    
+    @IBAction func getIntensity(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func getSleep(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func setAlarm(sender: AnyObject) {
+
+    }
+    
+    @IBAction func getSedentaryMinutes(sender: AnyObject) {
+    }
+    
 }
