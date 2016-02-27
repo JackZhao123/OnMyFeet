@@ -78,7 +78,11 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                 if error == nil {
                     let json = JSON(data: data!)
                     let refreshCode = json["refresh_token"].stringValue
+                    print(refreshCode)
+                    let accessToken = json["access_token"].stringValue
                     NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
+                    NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
+
                 }
             }
             
@@ -86,6 +90,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                 let url = NSURL(string: authorizationHost)
                 let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
                 let body = requestTokenBody + authorizationCode
+                
                 runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: completionHandler)
             }
         }
@@ -99,6 +104,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                 if error == nil {
                     let json = JSON(data: data!)
+                    print(json)
                     let accessToken = json["access_token"].stringValue
                     NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
                 }

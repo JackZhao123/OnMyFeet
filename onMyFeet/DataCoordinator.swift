@@ -35,7 +35,6 @@ class DataCoordinator: FitbitAPIDelegate {
     //MARK: Method
     func syncData() {
         let userName = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as? String
-        fitbitAPI.requestAccessToken()
         fitbitAPI.refreshAccessToken()
         fitbitAPI.delegate = self
         
@@ -51,17 +50,37 @@ class DataCoordinator: FitbitAPIDelegate {
     }
     
     func updateData(userData: Person) {
-        dispatch_barrier_sync(queue){
-            if (userData.summary?.count == 0) {
-                print("Load All Data")
-                self.fitbitAPI.getStepsFrom("2016-01-01", toEndDate: "today")
-            } else {
-                print("Update Needed Data")
+        
+        if (userData.summary?.count == 0) {
+            print("Load All Data")
+            self.fitbitAPI.getStepsFrom("2016-01-01", toEndDate: "today")
+        } else {
+            print("Update Needed Data")
+        }
+        
+        while(finish){
+            
+        }
+        if let stepsJson = stepsJson {
+
+            for index in 0...stepsJson["activities-steps"].count - 1 {
+                
+                let dateTime = stepsJson["activities-steps"][index]["dateTime"].stringValue
+                let stepsValue = stepsJson["activities-steps"][index]["value"].numberValue
+                
+                if dataManager.fetchSummaryWith(dateTime) == nil {
+                    let summary = DailySummary()
+                    summary.dateTime = dateTime
+                    summary.steps = stepsValue
+                    dataManager.saveContext()
+                }
             }
         }
     }
     
     func handleDailyStepsData(data: NSData) {
         stepsJson = JSON(data: data)
+        print(stepsJson)
+        finish = false
     }
 }

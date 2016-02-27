@@ -89,7 +89,7 @@ class ClientDataManager {
         
         if let result = result {
             for p in result {
-                print(p.name!)
+                p.summary?.count
             }
         }
         
@@ -105,6 +105,13 @@ class ClientDataManager {
             print(error)
         }
         
+        if let result = result {
+            for d in result {
+                print(d.dateTime)
+                print(d.steps)
+            }
+        }
+        
         return result
     }
     
@@ -115,6 +122,24 @@ class ClientDataManager {
         
         do {
             try result = self.managedObjectContext.executeFetchRequest(fetchRequest) as? [Person]
+        } catch {
+            print(error)
+        }
+        
+        if let result = result {
+            print(result.first?.summary?.firstObject)
+        }
+        
+        return result?.first
+    }
+    
+    func fetchSummaryWith(dateTime:String) -> DailySummary? {
+        let fetchRequest = NSFetchRequest(entityName: "DailySummary")
+        fetchRequest.predicate = NSPredicate(format: "dateTime = %@", argumentArray: [dateTime])
+        var result: [DailySummary]?
+        
+        do {
+            try result = self.managedObjectContext.executeFetchRequest(fetchRequest) as? [DailySummary]
         } catch {
             print(error)
         }
