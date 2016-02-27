@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FitbitAPIDelegate {
+    func handleDailyStepsData(data:NSData)
+}
+
 class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     //MARK: Properties
@@ -22,6 +26,8 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     let refreshTokenBody = "grant_type=refresh_token&refresh_token="
     
     let apiRequest = NSMutableURLRequest()
+    
+    var delegate:FitbitAPIDelegate?
     
     //MARK: Token & Code
     var encodedSecret: String? {
@@ -68,12 +74,19 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     func requestAccessToken() {
         
         if let authorizationCode = authorizationCode {
+            let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                if error == nil {
+                    let json = JSON(data: data!)
+                    let refreshCode = json["refresh_token"].stringValue
+                    NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
+                }
+            }
             
             if let encodedSecret = encodedSecret {
                 let url = NSURL(string: authorizationHost)
                 let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
                 let body = requestTokenBody + authorizationCode
-                runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
+                runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: completionHandler)
             }
         }
     }
@@ -83,19 +96,26 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
 
         if let refreshCode = refreshCode {
             let url = NSURL(string: authorizationHost)
+            let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                if error == nil {
+                    let json = JSON(data: data!)
+                    let accessToken = json["access_token"].stringValue
+                    NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
+                }
+            }
             
             if let encodedSecret = encodedSecret {
                 let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
                 let body = refreshTokenBody + refreshCode
                 
-                runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
+                runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: completionHandler)
             }
         }
     }
     
     func getUserName() {
         let url = NSURL(string: "https://api.fitbit.com/1/user/-/profile.json")!
-        let completionHanlder = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error == nil) {
                 do{
                     let jsonData: AnyObject?
@@ -116,13 +136,22 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         }
         
         if let accessToken = accessToken {
-            runURLSessionWithURL(url, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHanlder)
+            runURLSessionWithURL(url, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
         }
     }
     
     func getStepsFrom(startDate:String, toEndDate endDate:String) {
         var dateComponent = endDate
         let url: NSURL!
+        let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if (error == nil) {
+                if let delegate = self.delegate {
+                    delegate.handleDailyStepsData(data!)
+                }
+            } else {
+                print(error)
+            }
+        }
         
         if startDate == endDate {
             //Get one day data
@@ -135,7 +164,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         
         if let accessToken = accessToken {
-            runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: nil)
+            runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
         }
         
     }
@@ -181,25 +210,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
 
     
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-        let jsonData: AnyObject?
-        
-        do{
-            jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-            if let jsonData = jsonData {
-                print(jsonData)
-                let refreshCode = jsonData.objectForKey("refresh_token") as? String
-                if let refreshCode = refreshCode {
-                    NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
-                }
-                
-                let accessToken = jsonData.objectForKey("access_token") as? String
-                if let accessToken = accessToken {
-                    NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
-                }
-            }
-        } catch {
-            print(error)
-        }
+
     }
     
 }

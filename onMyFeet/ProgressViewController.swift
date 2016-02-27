@@ -38,7 +38,6 @@ class ProgressViewController: UIViewController {
     }
     
     @IBAction func getDistances(sender: AnyObject) {
-        FitbitAPI.sharedAPI().getUserName()
     }
     
     @IBAction func getIntensity(sender: AnyObject) {

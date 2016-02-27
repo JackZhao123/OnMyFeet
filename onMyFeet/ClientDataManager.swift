@@ -87,6 +87,12 @@ class ClientDataManager {
             print(error)
         }
         
+        if let result = result {
+            for p in result {
+                print(p.name!)
+            }
+        }
+        
         return result
     }
     
@@ -123,6 +129,13 @@ class ClientDataManager {
                 saveContext()
             }
         }
+    }
+    
+    func createPersonData(name: String) {
+        let person = Person()
+        person.setValue(name, forKey: "name")
+        person.setValue(NSOrderedSet(), forKey: "summary")
+        saveContext()
     }
     
     //MARK: Testing Method

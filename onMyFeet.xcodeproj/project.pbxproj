@@ -12,6 +12,7 @@
 		2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */; };
 		2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */; };
 		2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */; };
+		2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DB1C72960300957BEF /* AppDelegate.swift */; };
 		2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DD1C72960300957BEF /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 		2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E51C72960300957BEF /* Assets.xcassets */; };
 		2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */; };
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
+		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
 		2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF8357E1C7B560000287892 /* LogInViewController.swift */; };
 		2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835801C7B7E9F00287892 /* MenuCell.swift */; };
 		2AF835831C7B84BC00287892 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835821C7B84BC00287892 /* ProgressViewController.swift */; };
@@ -42,6 +44,7 @@
 		2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DailySummary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataManager.swift; sourceTree = "<group>"; };
+		2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		2AAA60D81C72960300957BEF /* OnMyFeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnMyFeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60DB1C72960300957BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +57,7 @@
 		2AAA60EF1C72960300957BEF /* OnMyFeet.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnMyFeet.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60F31C72960300957BEF /* onMyFeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMyFeetTests.swift; sourceTree = "<group>"; };
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		2AF835801C7B7E9F00287892 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		2AF835821C7B84BC00287892 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
+				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
+				2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */,
 			);
 			name = FitbitAPI;
 			sourceTree = "<group>";
@@ -273,7 +279,9 @@
 				2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */,
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
+				2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */,
 				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
+				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,

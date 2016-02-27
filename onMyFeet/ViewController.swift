@@ -94,8 +94,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func syncData(sender: AnyObject) {
-                let fitbit = FitbitAPI()
-                fitbit.refreshAccessToken()
+        DataCoordinator.sharedInstance.syncData()
     }
     
 }
