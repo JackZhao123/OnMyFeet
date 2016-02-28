@@ -21,6 +21,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
+        
+        navigationController?.navigationBar.barTintColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
     }
     
     override func viewDidAppear(animated: Bool) {

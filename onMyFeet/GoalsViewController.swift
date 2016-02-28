@@ -15,6 +15,7 @@ class GoalsViewController: UIViewController {
         self.title = "My Goals"
         
         let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
 
     }

@@ -13,6 +13,8 @@ class DataCoordinator: FitbitAPIDelegate {
     var stepsJson: JSON?
     var distancesJson: JSON?
     var sleepTimeJson: JSON?
+    var intradaySleepTimeJson: JSON?
+    var intradaySedentaryJson: JSON?
     var sedentaryJson: JSON?
     var lightlyActiveJson: JSON?
     var fairlyActiveJson: JSON?
@@ -26,6 +28,8 @@ class DataCoordinator: FitbitAPIDelegate {
     var gettingLightlyActive = true
     var gettingFairlyActive = true
     var gettingVeryActive = true
+    var gettingIntradaySleep = true
+    var gettingIntradaySedentary = true
     
     
     static var sharedInstance: DataCoordinator = {
@@ -63,12 +67,14 @@ class DataCoordinator: FitbitAPIDelegate {
         
         if (userData.summary?.count == 0) {
             print("Load All Data")
-            self.fitbitAPI.getDaily(typeOfData: "steps", startDate: "2016-01-01", toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "distance", startDate: "2016-01-01", toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesSedentary", startDate: "2016-01-01", toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesLightlyActive", startDate: "2016-01-01", toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesFairlyActive", startDate: "2016-01-01", toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesVeryActive", startDate: "2016-01-01", toEndDate: "today")
+            let dateTime = "2016-02-01"
+            self.fitbitAPI.getDaily(typeOfData: "steps", startDate: dateTime, toEndDate: "today")
+            self.fitbitAPI.getDaily(typeOfData: "distance", startDate: dateTime, toEndDate: "today")
+            self.fitbitAPI.getDaily(typeOfData: "minutesLightlyActive", startDate: dateTime, toEndDate: "today")
+            self.fitbitAPI.getDaily(typeOfData: "minutesFairlyActive", startDate: dateTime, toEndDate: "today")
+            self.fitbitAPI.getDaily(typeOfData: "minutesVeryActive", startDate: dateTime, toEndDate: "today")
+            self.fitbitAPI.getDaily(typeOfData: "minutesSedentary", startDate: dateTime, toEndDate: "today")
+
         } else {
             print("Update Needed Data")
             gettingSteps = false
@@ -80,9 +86,7 @@ class DataCoordinator: FitbitAPIDelegate {
             sleepTimeFinish = false
         }
         
-        while(gettingDataFlag()){
-            
-        }
+        while(gettingDataFlag()){}
         
         if let stepsJson = stepsJson {
             if (stepsJson["activities-steps"].count > 0)  {
@@ -92,8 +96,8 @@ class DataCoordinator: FitbitAPIDelegate {
                     let dateTime = stepsJson["activities-steps"][index]["dateTime"].stringValue
                     let stepsValue = stepsJson["activities-steps"][index]["value"].numberValue
                     let distanceValue = distancesJson!["activities-distance"][index]["value"].numberValue
-                    let minutesSedentaryValue = sedentaryJson!["activities-minutesSedentary"][index]["value"].numberValue
                     let minutesLightlyActiveValue = lightlyActiveJson!["activities-minutesLightlyActive"][index]["value"].numberValue
+                    let sedentaryValue = sedentaryJson!["activities-minutesSedentary"][index]["value"].numberValue
                     let minutesActive = fairlyActiveJson!["activities-minutesFairlyActive"][index]["value"].int64Value
                         + veryActiveJson!["activities-minutesVeryActive"][index]["value"].int64Value
                     
@@ -105,14 +109,34 @@ class DataCoordinator: FitbitAPIDelegate {
                         summary.distances = distanceValue
                         summary.minutesActive = NSNumber(longLong: minutesActive)
                         summary.minutesLightlyActive = minutesLightlyActiveValue
-                        summary.minutesSedentary = minutesSedentaryValue
+                        summary.minutesSedentary = sedentaryValue
+                        
+//                        self.fitbitAPI.getIntradayDataOf("sleep", onDate: dateTime)
+//                        self.fitbitAPI.getIntradayDataOf("minutesSedentary", onDate: dateTime)
+//                        
+//                        while(gettingIntradayDataFlag()){}
+//                        
+//                        let sedentaryValue = sedentaryJson!["activities-minutesSedentary"][0]["value"].numberValue
+//                        summary.minutesSedentary = sedentaryValue
+//                        print(sedentaryJson)
+//                        print(intradaySleepTimeJson)
+//                        
+//                        gettingIntradaySleep = true
+//                        gettingIntradaySedentary = true
                         
                         dataManager.saveContext()
                     }
                 }
             }
         }
-        
+    }
+    
+    func gettingDataFlag() -> Bool {
+        return (gettingSteps||gettingDistance||gettingLightlyActive||gettingFairlyActive||gettingVeryActive||gettingSedentary)
+    }
+    
+    func gettingIntradayDataFlag() -> Bool {
+        return (gettingIntradaySedentary||gettingIntradaySleep)
     }
     
     func handleDailyOf(dataType: String, data: NSData)
@@ -124,9 +148,6 @@ class DataCoordinator: FitbitAPIDelegate {
             case "distance":
                 distancesJson = JSON(data: data)
                 gettingDistance = false
-            case "minutesSedentary":
-                sedentaryJson = JSON(data: data)
-                gettingSedentary = false
             case "minutesLightlyActive":
                 lightlyActiveJson = JSON(data: data)
                 gettingLightlyActive = false
@@ -136,12 +157,28 @@ class DataCoordinator: FitbitAPIDelegate {
             case "minutesVeryActive":
                 veryActiveJson = JSON(data: data)
                 gettingVeryActive = false
+            case "minutesSedentary":
+                sedentaryJson = JSON(data: data)
+                gettingSedentary = false
             default:
                 break
         }
     }
     
-    func gettingDataFlag() -> Bool {
-        return (gettingSteps||gettingDistance||gettingSedentary||gettingLightlyActive||gettingFairlyActive||gettingVeryActive)
+    func handleIntradayOf(dataType: String, data: NSData) {
+        switch dataType {
+            case "sleep":
+                intradaySleepTimeJson = JSON(data: data)
+                gettingIntradaySleep = false
+            case "minutesSedentary":
+                sedentaryJson = JSON(data: data)
+                gettingIntradaySedentary = false
+            default:
+                break
+        }
+        
+        
     }
+    
+    
 }

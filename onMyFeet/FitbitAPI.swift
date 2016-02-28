@@ -10,6 +10,7 @@ import UIKit
 
 protocol FitbitAPIDelegate {
     func handleDailyOf(dataType: String, data: NSData)
+    func handleIntradayOf(dataType: String, data: NSData)
 }
 
 class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
@@ -104,12 +105,14 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         let url = NSURL(string: "https://api.fitbit.com/1/user/-/profile.json")!
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error == nil) {
+                print("error")
                 do{
                     let jsonData: AnyObject?
                     jsonData = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
                     if let jsonData = jsonData {
                         if let name = jsonData.objectForKey("user")?.objectForKey("fullName") {
                             NSUserDefaults.standardUserDefaults().setObject(name, forKey: "CurrentUser")
+                            print(name)
                         }
                     }
                 }
@@ -153,10 +156,33 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         if let accessToken = accessToken {
             runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
         }
-        
     }
     
-    
+    func getIntradayDataOf(dataType:String, onDate dateTime:String) {
+        let url: NSURL!
+        let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            if let data = data {
+                if let delegate = self.delegate {
+                    delegate.handleIntradayOf(dataType, data: data)
+                }
+            }
+        }
+        
+        switch dataType {
+            case "sleep":
+            url = NSURL(string: "https://api.fitbit.com/1/user/-/sleep/date/\(dateTime).json")
+            case "minutesSedentary":
+            url = NSURL(string: "https://api.fitbit.com/1/user/-/activities/minutesSedentary/date/\(dateTime)/1d/15min.json")
+        default:
+            url = NSURL()
+            print("Error Data Type")
+            break
+        }
+        
+        if let accessToken = accessToken {
+            runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
+        }
+    }
     
     func runURLSessionWithURL(url:NSURL, withHTTPMethod method:String, headerValues header:[String: String]?, httpBody body:String?, completionHandler completion: ((data:NSData?, response:NSURLResponse?, error:NSError?)->Void)? ) {
         apiRequest.URL = url
@@ -188,9 +214,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         dataTask.resume()
     }
     
-    
     //MARK: URLSessionDelegate
-    
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
         if let error = error {
             print(error)

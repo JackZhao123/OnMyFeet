@@ -8,19 +8,41 @@
 
 import UIKit
 
-class ProgressViewController: UIViewController {
-    let fitbitAPI = FitbitAPI()
+struct dateFormat {
+    var date: NSDate
+    var year: Int
+    var month: Int
+    var day: Int
+}
 
+class ProgressViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    @IBOutlet weak var dataTableView: UITableView!
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    let fitbitAPI = FitbitAPI()
+    var dailySummary: DailySummary?
+    var currentDate: NSDate?
+    let dataType = ["steps","distances","minutesActive","minutesLightlyActive","minutesSedentary"]
+    var mDate : dateFormat?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Back Button
         self.title = "My Progress"
-        
         let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
-
         
-        // Do any additional setup after loading the view.
+        getCurrentDate()
+
+        //TimeLabel
+        setDateLable()
+        
+        //TableView
+        dataTableView.delegate = self
+        dataTableView.dataSource = self
+        getSummary()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,31 +50,97 @@ class ProgressViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: Date
+    func getCurrentDate() {
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .Month, .Day], fromDate: date)
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        
+        print(components)
+        
+        mDate = dateFormat(date: date, year: year, month: month, day: day)
+    }
+    
+    func setDateLable() {
+        if let mDate = mDate{
+            let lableText = String(format: "%d-%02d-%02d", mDate.year,mDate.month,mDate.day)
+            
+            timeLabel.text = lableText
+        }
+    }
+    
+    func increaseDate() {
+        let calendar = NSCalendar.currentCalendar()
+        let nextDate = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: 1, toDate: (mDate?.date)!, options: NSCalendarOptions(rawValue: 0))
+        
+        let components = calendar.components([.Year, .Month, .Day], fromDate: nextDate!)
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        
+        mDate = dateFormat(date: nextDate!, year: year, month: month, day: day)
+    }
+    
+    @IBAction func nextDay(sender: AnyObject) {
+        increaseDate()
+        setDateLable()
+        getSummary()
+        dataTableView.reloadData()
+    }
+    
+    func decreaseDate() {
+        let calendar = NSCalendar.currentCalendar()
+        let nextDate = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -1, toDate: (mDate?.date)!, options: NSCalendarOptions(rawValue: 0))
+        
+        let components = calendar.components([.Year, .Month, .Day], fromDate: nextDate!)
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        
+        mDate = dateFormat(date: nextDate!, year: year, month: month, day: day)
+    }
+    
+    @IBAction func lastDay(sender: AnyObject) {
+        decreaseDate()
+        setDateLable()
+        getSummary()
+        dataTableView.reloadData()
+    }
+    
+    
+    //MARK: Get Data
+    func getSummary(){
+        let dateTime = timeLabel.text
+        dailySummary = ClientDataManager.sharedInstance().fetchSummaryWith(dateTime!)
+    }
+    
     //MARK: Actions
     func goBack() {
         self.navigationController?.popViewControllerAnimated(true)
     }
-
-    @IBAction func getSteps(sender: AnyObject) {
-
+    
+    //MARK: TableView Delegate
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataType.count
     }
     
-    @IBAction func getDistances(sender: AnyObject) {
-    }
-    
-    @IBAction func getIntensity(sender: AnyObject) {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("summaryCell")
         
-    }
-    
-    @IBAction func getSleep(sender: AnyObject) {
+        cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "summaryCell")
         
+        cell?.textLabel?.text = dataType[indexPath.row]
+        let value = dailySummary?.valueForKey(dataType[indexPath.row])
+        
+        if let value = value {
+            cell?.detailTextLabel?.text = "\(value)"
+        } else {
+            cell?.detailTextLabel?.text = "0"
+        }
+        return cell!
     }
-    
-    @IBAction func setAlarm(sender: AnyObject) {
 
-    }
-    
-    @IBAction func getSedentaryMinutes(sender: AnyObject) {
-    }
-    
 }
