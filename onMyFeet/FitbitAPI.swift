@@ -105,7 +105,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         let url = NSURL(string: "https://api.fitbit.com/1/user/-/profile.json")!
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error == nil) {
-                print("error")
                 do{
                     let jsonData: AnyObject?
                     jsonData = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
@@ -130,7 +129,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         }
     }
     
-    func getDaily(typeOfData dataType:String, startDate:String, toEndDate endDate:String) {
+    func getDaily(typeOfData dataType:String, startDate:String, var toEndDate endDate:String) {
         var dateComponent = endDate
         let url: NSURL!
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
@@ -141,6 +140,11 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             } else {
                 print(error)
             }
+        }
+        
+        if endDate == "today" {
+            let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day], fromDate: NSDate())
+            endDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
         }
         
         if startDate == endDate {

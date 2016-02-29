@@ -59,8 +59,6 @@ class ProgressViewController: UIViewController, UITableViewDelegate, UITableView
         let month = components.month
         let day = components.day
         
-        print(components)
-        
         mDate = dateFormat(date: date, year: year, month: month, day: day)
     }
     

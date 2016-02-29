@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //    MARK: Outlet
     @IBOutlet weak var menuTableView: UITableView!
+    @IBOutlet weak var indicatiorView: UIView!
+    @IBOutlet weak var mIndicator: UIActivityIndicatorView!
     
 //    MARK: Properties
     var userInfo: String!
@@ -21,6 +23,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
+        
+        indicatiorView.layer.cornerRadius = 8.0
+        indicatiorView.clipsToBounds = true
+        hideIndicator()
         
         navigationController?.navigationBar.barTintColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
@@ -75,6 +81,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.navigationController!.pushViewController(desController, animated: true)
         }
     }
+    
+    //MARK: Indicator
+    func showIndicator() {
+        mIndicator.startAnimating()
+        indicatiorView.hidden = false
+    }
+    
+    func hideIndicator() {
+        indicatiorView.hidden = true
+        mIndicator.stopAnimating()
+    }
 
     //MARK: Actions
     @IBAction func logOut(sender: AnyObject) {
@@ -97,7 +114,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func syncData(sender: AnyObject) {
-        DataCoordinator.sharedInstance.syncData()
+        showIndicator()
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            DataCoordinator.sharedInstance.syncData()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.hideIndicator()
+            }
+        }
     }
     
 }

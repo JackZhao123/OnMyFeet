@@ -106,12 +106,43 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YdW-Kh-6Kw">
+                                <rect key="frame" x="193" y="244" width="213" height="113"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="DbC-7B-O5w">
+                                        <rect key="frame" x="96" y="29" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuE-MX-xuf">
+                                        <rect key="frame" x="40" y="57" width="133" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="133" id="ALo-U4-qQc"/>
+                                            <constraint firstAttribute="height" constant="21" id="waV-PX-gYi"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.5450980392" green="0.76470588240000004" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ZuE-MX-xuf" firstAttribute="leading" secondItem="YdW-Kh-6Kw" secondAttribute="leading" constant="40" id="7OT-aS-lrD"/>
+                                    <constraint firstItem="ZuE-MX-xuf" firstAttribute="top" secondItem="DbC-7B-O5w" secondAttribute="bottom" constant="8" symbolic="YES" id="Ah0-Bq-qg2"/>
+                                    <constraint firstItem="ZuE-MX-xuf" firstAttribute="centerX" secondItem="YdW-Kh-6Kw" secondAttribute="centerX" id="bYg-vM-DTh"/>
+                                    <constraint firstItem="DbC-7B-O5w" firstAttribute="centerX" secondItem="YdW-Kh-6Kw" secondAttribute="centerX" id="fWs-p3-5c0"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZuE-MX-xuf" secondAttribute="bottom" constant="35" id="gpI-L2-bav"/>
+                                    <constraint firstItem="DbC-7B-O5w" firstAttribute="leading" secondItem="YdW-Kh-6Kw" secondAttribute="leading" constant="96" id="nFa-m7-eZ6"/>
+                                    <constraint firstAttribute="height" constant="113" id="q30-Ai-8tQ"/>
+                                    <constraint firstAttribute="width" constant="213" id="tmV-HJ-8CE"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="YdW-Kh-6Kw" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3fJ-f8-VRq"/>
                             <constraint firstItem="odv-OU-IUT" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="PcU-Qf-5vm"/>
                             <constraint firstItem="odv-OU-IUT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pdp-de-KHV"/>
                             <constraint firstItem="odv-OU-IUT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ze1-0H-XHH"/>
+                            <constraint firstItem="YdW-Kh-6Kw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fys-N9-vaa"/>
                             <constraint firstItem="odv-OU-IUT" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="yMA-mu-vlR"/>
                         </constraints>
                     </view>
@@ -130,6 +161,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="indicatiorView" destination="YdW-Kh-6Kw" id="x0P-BX-FiJ"/>
+                        <outlet property="mIndicator" destination="DbC-7B-O5w" id="Btn-b3-HyM"/>
                         <outlet property="menuTableView" destination="odv-OU-IUT" id="apT-kC-6N6"/>
                     </connections>
                 </viewController>

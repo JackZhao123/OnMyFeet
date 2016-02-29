@@ -46,8 +46,9 @@ class DataCoordinator: FitbitAPIDelegate {
     var fitbitAPI = FitbitAPI()
     
     
-    //MARK: Method
+    //MARK: Fetching Data
     func syncData() {
+        
         let userName = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as? String
         fitbitAPI.refreshAccessToken()
         fitbitAPI.delegate = self
@@ -66,24 +67,17 @@ class DataCoordinator: FitbitAPIDelegate {
     func updateData(userData: Person) {
         
         if (userData.summary?.count == 0) {
-            print("Load All Data")
             let dateTime = "2016-02-01"
-            self.fitbitAPI.getDaily(typeOfData: "steps", startDate: dateTime, toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "distance", startDate: dateTime, toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesLightlyActive", startDate: dateTime, toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesFairlyActive", startDate: dateTime, toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesVeryActive", startDate: dateTime, toEndDate: "today")
-            self.fitbitAPI.getDaily(typeOfData: "minutesSedentary", startDate: dateTime, toEndDate: "today")
+            print("Load All Data From \(dateTime)")
+            getDataFrom(dateTime, toEndDate: "today")
 
         } else {
-            print("Update Needed Data")
-            gettingSteps = false
-            gettingDistance = false
-            gettingSedentary = false
-            gettingLightlyActive = false
-            gettingFairlyActive = false
-            gettingVeryActive = false
-            sleepTimeFinish = false
+            let currentUser = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as! String
+            let key = "\(currentUser)_UpdateTime"
+            let lastUpdated = NSUserDefaults.standardUserDefaults().objectForKey(key) as! String
+            print("Update Data From \(lastUpdated)")
+            getDataFrom(lastUpdated, toEndDate: "today")
+
         }
         
         while(gettingDataFlag()){}
@@ -101,7 +95,17 @@ class DataCoordinator: FitbitAPIDelegate {
                     let minutesActive = fairlyActiveJson!["activities-minutesFairlyActive"][index]["value"].int64Value
                         + veryActiveJson!["activities-minutesVeryActive"][index]["value"].int64Value
                     
-                    if dataManager.fetchSummaryWith(dateTime) == nil {
+                    if let summary = dataManager.fetchSummaryWith(dateTime) {
+                        summary.dateTime = dateTime
+                        summary.steps = stepsValue
+                        summary.client = userData
+                        summary.distances = distanceValue
+                        summary.minutesActive = NSNumber(longLong: minutesActive)
+                        summary.minutesLightlyActive = minutesLightlyActiveValue
+                        summary.minutesSedentary = sedentaryValue
+                        
+                        dataManager.saveContext()
+                    } else {
                         let summary = DailySummary()
                         summary.dateTime = dateTime
                         summary.steps = stepsValue
@@ -111,26 +115,34 @@ class DataCoordinator: FitbitAPIDelegate {
                         summary.minutesLightlyActive = minutesLightlyActiveValue
                         summary.minutesSedentary = sedentaryValue
                         
-//                        self.fitbitAPI.getIntradayDataOf("sleep", onDate: dateTime)
-//                        self.fitbitAPI.getIntradayDataOf("minutesSedentary", onDate: dateTime)
-//                        
-//                        while(gettingIntradayDataFlag()){}
-//                        
-//                        let sedentaryValue = sedentaryJson!["activities-minutesSedentary"][0]["value"].numberValue
-//                        summary.minutesSedentary = sedentaryValue
-//                        print(sedentaryJson)
-//                        print(intradaySleepTimeJson)
-//                        
-//                        gettingIntradaySleep = true
-//                        gettingIntradaySedentary = true
-                        
                         dataManager.saveContext()
                     }
                 }
             }
         }
+        
+        setLastUpdateTime()
     }
     
+    func setLastUpdateTime() {
+        let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day], fromDate: NSDate())
+        let lastUpdateTime = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
+        let currentUser = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as! String
+        let key = "\(currentUser)_UpdateTime"
+        NSUserDefaults.standardUserDefaults().setObject(lastUpdateTime, forKey: key)
+    }
+    
+    func getDataFrom(startDate: String, toEndDate endDate: String) {
+        self.fitbitAPI.getDaily(typeOfData: "steps", startDate: startDate, toEndDate: endDate)
+        self.fitbitAPI.getDaily(typeOfData: "distance", startDate: startDate, toEndDate: endDate)
+        self.fitbitAPI.getDaily(typeOfData: "minutesLightlyActive", startDate: startDate, toEndDate: endDate)
+        self.fitbitAPI.getDaily(typeOfData: "minutesFairlyActive", startDate: startDate, toEndDate: endDate)
+        self.fitbitAPI.getDaily(typeOfData: "minutesVeryActive", startDate: startDate, toEndDate: endDate)
+        self.fitbitAPI.getDaily(typeOfData: "minutesSedentary", startDate: startDate, toEndDate: endDate)
+    }
+    
+    
+    //MARK: Flag
     func gettingDataFlag() -> Bool {
         return (gettingSteps||gettingDistance||gettingLightlyActive||gettingFairlyActive||gettingVeryActive||gettingSedentary)
     }
@@ -139,6 +151,8 @@ class DataCoordinator: FitbitAPIDelegate {
         return (gettingIntradaySedentary||gettingIntradaySleep)
     }
     
+    
+    //MARK: FitbitAPI delegate
     func handleDailyOf(dataType: String, data: NSData)
     {
         switch dataType {
