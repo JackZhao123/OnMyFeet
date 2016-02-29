@@ -17,12 +17,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //    MARK: Properties
     var userInfo: String!
     var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
+    var refreshControl: UIRefreshControl!
     
 //    MARK: view initialize
     override func viewDidLoad() {
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.menuTableView.addSubview(refreshControl)
         
         indicatiorView.layer.cornerRadius = 8.0
         indicatiorView.clipsToBounds = true
@@ -114,13 +119,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func syncData(sender: AnyObject) {
-        showIndicator()
+        
+        self.refreshControl.beginRefreshing()
+        menuTableView.setContentOffset(CGPoint(x: 0.0, y: -(self.refreshControl.frame.size.height)), animated: true)
+        refresh()
+    }
+    
+    func refresh() {
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Syncing")
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             DataCoordinator.sharedInstance.syncData()
             dispatch_async(dispatch_get_main_queue()) {
-                self.hideIndicator()
+                self.refreshControl.endRefreshing()
+                self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
             }
         }
+
     }
     
 }
