@@ -459,7 +459,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeetTests;
 				PRODUCT_NAME = OnMyFeet;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnMyFeet.app/OnMyFeet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename.app/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -471,7 +471,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeetTests;
 				PRODUCT_NAME = OnMyFeet;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnMyFeet.app/OnMyFeet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename.app/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};

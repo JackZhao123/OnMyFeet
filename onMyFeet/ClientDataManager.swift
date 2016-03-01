@@ -30,7 +30,7 @@ class ClientDataManager {
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         let modelURL = NSBundle.mainBundle().URLForResource("OnMyFeet", withExtension: "momd")!
-        
+
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     

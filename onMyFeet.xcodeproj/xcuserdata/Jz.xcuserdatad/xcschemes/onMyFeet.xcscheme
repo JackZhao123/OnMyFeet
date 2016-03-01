@@ -17,7 +17,7 @@
                BlueprintIdentifier = "2AAA60D71C72960300957BEF"
                BuildableName = "OnMyFeet.app"
                BlueprintName = "OnMyFeet"
-               ReferencedContainer = "container:onMyFeet.xcodeproj">
+               ReferencedContainer = "container:OnMyFeet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "2AAA60EE1C72960300957BEF"
                BuildableName = "OnMyFeet.xctest"
                BlueprintName = "OnMyFeetTests"
-               ReferencedContainer = "container:onMyFeet.xcodeproj">
+               ReferencedContainer = "container:OnMyFeet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -45,7 +45,7 @@
             BlueprintIdentifier = "2AAA60D71C72960300957BEF"
             BuildableName = "OnMyFeet.app"
             BlueprintName = "OnMyFeet"
-            ReferencedContainer = "container:onMyFeet.xcodeproj">
+            ReferencedContainer = "container:OnMyFeet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -68,7 +68,7 @@
             BlueprintIdentifier = "2AAA60D71C72960300957BEF"
             BuildableName = "OnMyFeet.app"
             BlueprintName = "OnMyFeet"
-            ReferencedContainer = "container:onMyFeet.xcodeproj">
+            ReferencedContainer = "container:OnMyFeet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -87,7 +87,7 @@
             BlueprintIdentifier = "2AAA60D71C72960300957BEF"
             BuildableName = "OnMyFeet.app"
             BlueprintName = "OnMyFeet"
-            ReferencedContainer = "container:onMyFeet.xcodeproj">
+            ReferencedContainer = "container:OnMyFeet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
