@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import onMyFeet
+@testable import OnMyFeet
 
 class onMyFeetTests: XCTestCase {
     

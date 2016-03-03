@@ -76,7 +76,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 0:
             storyboardIdentifier = "GoalsController"
         case 1:
-            storyboardIdentifier = "ProgressController"
+            storyboardIdentifier = "progressTabBarController"//"progressTabBarController"
         default:
             storyboardIdentifier = nil
         }

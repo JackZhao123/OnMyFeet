@@ -15,7 +15,7 @@ struct dateFormat {
     var day: Int
 }
 
-class ProgressViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DailyProgressViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var dataTableView: UITableView!
     @IBOutlet weak var timeLabel: UILabel!
@@ -29,7 +29,6 @@ class ProgressViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         //Back Button
-        self.title = "My Progress"
         let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn

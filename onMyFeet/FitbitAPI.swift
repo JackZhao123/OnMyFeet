@@ -232,6 +232,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         do{
             jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
             if let jsonData = jsonData {
+                print(jsonData)
                 let refreshCode = jsonData.objectForKey("refresh_token") as? String
                 if let refreshCode = refreshCode {
                     NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")

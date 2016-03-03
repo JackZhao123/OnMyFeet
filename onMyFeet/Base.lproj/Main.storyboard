@@ -188,10 +188,10 @@
             </objects>
             <point key="canvasLocation" x="1951" y="149"/>
         </scene>
-        <!--Progress View Controller-->
+        <!--Daily Progress-->
         <scene sceneID="cfN-qM-nR3">
             <objects>
-                <viewController storyboardIdentifier="ProgressController" id="uRk-LZ-uvB" customClass="ProgressViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DailyProgressController" title="Daily Progress" id="uRk-LZ-uvB" customClass="DailyProgressViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s1k-w3-hCk"/>
                         <viewControllerLayoutGuide type="bottom" id="5Fh-cs-uo9"/>
@@ -237,7 +237,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="59" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="M1C-2x-wA9">
-                                <rect key="frame" x="20" y="79" width="560" height="513"/>
+                                <rect key="frame" x="20" y="79" width="560" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="summaryCell" textLabel="Z9C-Jz-n6D" detailTextLabel="ULD-gC-zjc" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="4MY-Xn-foN">
@@ -269,7 +269,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="5Fh-cs-uo9" firstAttribute="top" secondItem="M1C-2x-wA9" secondAttribute="bottom" constant="8" id="1Th-G0-2PA"/>
+                            <constraint firstItem="5Fh-cs-uo9" firstAttribute="top" secondItem="M1C-2x-wA9" secondAttribute="bottom" constant="71" id="1Th-G0-2PA"/>
                             <constraint firstItem="iQg-wf-ao8" firstAttribute="centerX" secondItem="Bt0-Dt-YxB" secondAttribute="centerX" id="5wF-dm-Lwr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M1C-2x-wA9" secondAttribute="trailing" id="CHm-VB-PSO"/>
                             <constraint firstItem="hJU-C1-XNA" firstAttribute="top" secondItem="s1k-w3-hCk" secondAttribute="bottom" constant="21" id="FTp-IL-cmZ"/>
@@ -282,6 +282,7 @@
                             <constraint firstItem="iQg-wf-ao8" firstAttribute="leading" secondItem="ZGe-9l-zXk" secondAttribute="trailing" constant="13" id="rh2-G4-FXl"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="dGv-cR-pgb"/>
                     <connections>
                         <outlet property="dataTableView" destination="M1C-2x-wA9" id="wJa-7O-RCA"/>
                         <outlet property="timeLabel" destination="iQg-wf-ao8" id="nnf-Co-aud"/>
@@ -289,7 +290,64 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXX-mq-GzN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1947" y="835"/>
+            <point key="canvasLocation" x="2721" y="519"/>
+        </scene>
+        <!--Weekly Progress-->
+        <scene sceneID="YXh-GU-h02">
+            <objects>
+                <viewController storyboardIdentifier="WeeklyProgressController" title="Weekly Progress" id="fqn-PP-ON2" customClass="WeeklyProgressViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ofA-8U-aOp"/>
+                        <viewControllerLayoutGuide type="bottom" id="Qqn-T4-HNB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RBs-YH-pNF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I'm Weekly Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8eu-0e-1Db">
+                                <rect key="frame" x="228" y="287" width="145" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="DFS-bE-ymP"/>
+                                    <constraint firstAttribute="width" constant="145" id="fXP-wJ-H2g"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="8eu-0e-1Db" firstAttribute="centerY" secondItem="RBs-YH-pNF" secondAttribute="centerY" id="3Eo-qp-jYr"/>
+                            <constraint firstItem="8eu-0e-1Db" firstAttribute="centerX" secondItem="RBs-YH-pNF" secondAttribute="centerX" id="L9B-MU-eKP"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="auF-ld-uga"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EsY-ki-EqT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2721" y="1204"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="WMC-h3-3Ke">
+            <objects>
+                <tabBarController storyboardIdentifier="progressTabBarController" id="7DB-Ig-YEl" customClass="mTabBarController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="11R-z4-fPd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="barTintColor">
+                                <color key="value" red="0.5450980392" green="0.76470588240000004" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbr-kZ-GFF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1951" y="885"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OLG-bb-euE">
