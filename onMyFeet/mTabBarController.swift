@@ -22,10 +22,12 @@ class mTabBarController: UITabBarController {
     
     func addViewcontrollers() {
         let dailyController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("DailyProgressController") as! DailyProgressViewController
-        dailyController.title = "Daily Progress"
+        let dailyTabBarItem: UITabBarItem = UITabBarItem(title: "Daily Progress", image: UIImage(named: "Daily"), tag: 0)
+        dailyController.tabBarItem = dailyTabBarItem
         
         let weeklyController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WeeklyProgressController") as! WeeklyProgressViewController
-        weeklyController.title = "Weekly Progress"
+        let weeklyTabBarItem: UITabBarItem = UITabBarItem(title: "Weekly Progress", image: UIImage(named: "Weekly"), tag: 1)
+        weeklyController.tabBarItem = weeklyTabBarItem
         
         self.viewControllers = [dailyController, weeklyController]
     }

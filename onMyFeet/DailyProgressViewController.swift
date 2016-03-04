@@ -13,6 +13,15 @@ struct dateFormat {
     var year: Int
     var month: Int
     var day: Int
+    
+    init( date:NSDate, year:Int, month:Int, day:Int)
+    {
+        self.date = date
+        self.year = year
+        self.month = month
+        self.day = day
+    }
+    
 }
 
 class DailyProgressViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
