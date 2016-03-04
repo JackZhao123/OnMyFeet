@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Log In View Controller-->
@@ -323,10 +322,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAj-5x-Ssu">
-                                <rect key="frame" x="0.0" y="79" width="600" height="521"/>
-                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uz7-DA-ImB">
                                 <rect key="frame" x="390" y="41" width="32" height="30"/>
                                 <state key="normal" title="Next">
@@ -337,18 +332,21 @@
                                     <action selector="nextWeek:" destination="fqn-PP-ON2" eventType="touchUpInside" id="CLh-pG-iRa"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAj-5x-Ssu">
+                                <rect key="frame" x="0.0" y="79" width="600" height="521"/>
+                            </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="cAj-5x-Ssu" firstAttribute="top" secondItem="ofA-8U-aOp" secondAttribute="bottom" constant="59" id="5A5-fX-H1e"/>
                             <constraint firstItem="lWo-xd-g15" firstAttribute="top" secondItem="ofA-8U-aOp" secondAttribute="bottom" constant="22" id="8fm-gi-ydN"/>
+                            <constraint firstItem="cAj-5x-Ssu" firstAttribute="top" secondItem="MPN-Tr-y3y" secondAttribute="bottom" constant="8" symbolic="YES" id="9xm-ac-5qg"/>
                             <constraint firstItem="MPN-Tr-y3y" firstAttribute="top" secondItem="ofA-8U-aOp" secondAttribute="bottom" constant="21" id="DEG-NE-xoQ"/>
-                            <constraint firstItem="Qqn-T4-HNB" firstAttribute="top" secondItem="cAj-5x-Ssu" secondAttribute="bottom" id="H8c-w0-qki"/>
                             <constraint firstItem="Uz7-DA-ImB" firstAttribute="top" secondItem="ofA-8U-aOp" secondAttribute="bottom" constant="21" id="JhY-gL-9yT"/>
                             <constraint firstItem="lWo-xd-g15" firstAttribute="leading" secondItem="MPN-Tr-y3y" secondAttribute="trailing" constant="13" id="Yeb-Jr-ArT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cAj-5x-Ssu" secondAttribute="trailing" constant="-20" id="aNG-cm-fp2"/>
+                            <constraint firstItem="cAj-5x-Ssu" firstAttribute="bottom" secondItem="Qqn-T4-HNB" secondAttribute="top" id="Zdm-pG-KXj"/>
                             <constraint firstItem="Uz7-DA-ImB" firstAttribute="leading" secondItem="lWo-xd-g15" secondAttribute="trailing" constant="13" id="aYo-GR-ilD"/>
-                            <constraint firstItem="cAj-5x-Ssu" firstAttribute="leading" secondItem="RBs-YH-pNF" secondAttribute="leadingMargin" constant="-20" id="uTR-fn-MKc"/>
+                            <constraint firstItem="cAj-5x-Ssu" firstAttribute="leading" secondItem="RBs-YH-pNF" secondAttribute="leading" id="e7Y-I3-YLD"/>
+                            <constraint firstItem="cAj-5x-Ssu" firstAttribute="centerX" secondItem="lWo-xd-g15" secondAttribute="centerX" id="nSp-d5-GXE"/>
                             <constraint firstItem="lWo-xd-g15" firstAttribute="centerX" secondItem="RBs-YH-pNF" secondAttribute="centerX" id="uyE-CN-ct4"/>
                         </constraints>
                     </view>
@@ -360,7 +358,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EsY-ki-EqT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2721" y="1204"/>
+            <point key="canvasLocation" x="2721" y="1361"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="WMC-h3-3Ke">
@@ -383,6 +381,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbr-kZ-GFF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1951" y="885"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="4ba-y0-P09">
+            <objects>
+                <viewController id="J0c-Ny-G1B" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NL2-1r-i5C"/>
+                        <viewControllerLayoutGuide type="bottom" id="vJ8-Bq-oi1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tns-7b-AJG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6M8-dd-4pW" customClass="GraphView" customModule="OnMyFeet" customModuleProvider="target">
+                                <rect key="frame" x="8" y="4" width="359" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2zv-Y1-qBV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1951" y="1605"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OLG-bb-euE">

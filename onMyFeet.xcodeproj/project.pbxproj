@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A1179211C8961140095FBB6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1179201C8961140095FBB6 /* GraphView.swift */; };
 		2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */; };
 		2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DD1C80AE8700E78A37 /* Person.swift */; };
 		2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A1179201C8961140095FBB6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A2E41DD1C80AE8700E78A37 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DailySummary+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -94,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A1179221C8961240095FBB6 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				2A1179201C8961140095FBB6 /* GraphView.swift */,
+			);
+			name = CustomView;
+			sourceTree = "<group>";
+		};
 		2A2E41E51C80AEA600E78A37 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 				2AF835871C7B8C3D00287892 /* GoalsTracking */,
 				2AF835861C7B8C2A00287892 /* ProgressTracking */,
 				2A2E41E51C80AEA600E78A37 /* DataBase */,
+				2A1179221C8961240095FBB6 /* CustomView */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
 				2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */,
 				2AAA60E51C72960300957BEF /* Assets.xcassets */,
@@ -297,6 +308,7 @@
 				2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */,
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
+				2A1179211C8961140095FBB6 /* GraphView.swift in Sources */,
 				2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
 				2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */,

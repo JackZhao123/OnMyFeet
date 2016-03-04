@@ -14,6 +14,8 @@ class WeeklyProgressViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var chartScrolView: UIScrollView!
     
+    var graphCollection = [GraphView]()
+    let graphTitle = ["Steps","Distances","MinutesActive","MinutesLightlyActive","MinutesSedentary"]
     
     var today: dateFormat!
     var firstDayOfWeek: dateFormat!
@@ -26,12 +28,60 @@ class WeeklyProgressViewController: UIViewController {
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        chartScrolView.contentSize = CGSize(width: chartScrolView.frame.width, height: 1000)
-        
         getWeekDay()
         setLabelText()
-        
         getWeeklyData()
+        initGraphViews(200.0)
+        
+       
+    }
+    
+    func initGraphViews(height: CGFloat) {
+        
+        for i in 0..<graphTitle.count {
+            let graph = GraphView(frame: CGRect(x: 8, y: 4 + (4 + height) * CGFloat(i), width: UIScreen.mainScreen().bounds.width - 16, height: height))
+            graph.backgroundColor = UIColor.whiteColor()
+            graph.label.text = graphTitle[i]
+            graph.graphPoints = returnGraphData()[i]
+            self.chartScrolView.addSubview(graph)
+            self.graphCollection.append(graph)
+        }
+        self.chartScrolView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: (height * CGFloat(graphTitle.count)) + 24)
+    }
+    
+    func returnGraphData() -> [[Int]] {
+        var steps = [Int]()
+        var distances = [Int]()
+        var minutesActive = [Int]()
+        var minutesLightlyActive = [Int]()
+        var minutesSedentary = [Int]()
+        
+        for i in 0..<7 {
+            if let summary = weeklyData[i] {
+                steps.append((summary.steps?.integerValue)!)
+                distances.append((summary.distances?.integerValue)!)
+                minutesActive.append((summary.minutesActive?.integerValue)!)
+                minutesLightlyActive.append((summary.minutesLightlyActive?.integerValue)!)
+                minutesSedentary.append((summary.minutesSedentary?.integerValue)!)
+            } else {
+                steps.append(0)
+                distances.append(0)
+                minutesActive.append(0)
+                minutesLightlyActive.append(0)
+                minutesSedentary.append(0)
+                
+            }
+        }
+        
+        let data = [steps,distances,minutesActive,minutesLightlyActive,minutesSedentary]
+        return data
+    }
+    
+    func redrawGraph() {
+        for i in 0..<graphTitle.count {
+            let graph = self.graphCollection[i]
+            graph.graphPoints = returnGraphData()[i]
+        }
     }
     
     func getWeekDay() {
@@ -70,18 +120,18 @@ class WeeklyProgressViewController: UIViewController {
     
     func getWeeklyData() {
         
-//        var startDate = firstDayOfWeek
-//        let formatter = NSDateFormatter()
-//        var dateString: String!
-//        formatter.dateFormat = "yyyy-MM-dd"
-//        
-//        for _ in 1...7 {
-//            dateString = formatter.stringFromDate(startDate.date)
-//            let summary = ClientDataManager.sharedInstance().fetchSummaryWith(dateString)
-//            
-//            
-//            startDate = getDateByInterval(1, from: startDate.date)
-//        }
+        var startDate = firstDayOfWeek
+        let formatter = NSDateFormatter()
+        var dateString: String!
+        formatter.dateFormat = "yyyy-MM-dd"
+        weeklyData.removeAll()
+        
+        for _ in 1...7 {
+            dateString = formatter.stringFromDate(startDate.date)
+            let summary = ClientDataManager.sharedInstance().fetchSummaryWith(dateString)
+            weeklyData.append(summary)
+            startDate = getDateByInterval(1, from: startDate.date)
+        }
         
     }
 
@@ -94,11 +144,15 @@ class WeeklyProgressViewController: UIViewController {
         lastDayOfWeek = getDateByInterval(-7, from: lastDayOfWeek.date)
         firstDayOfWeek = getDateByInterval(-7, from: firstDayOfWeek.date)
         setLabelText()
+        getWeeklyData()
+        redrawGraph()
     }
     
     @IBAction func nextWeek(sender: AnyObject) {
         lastDayOfWeek = getDateByInterval(7, from: lastDayOfWeek.date)
         firstDayOfWeek = getDateByInterval(7, from: firstDayOfWeek.date)
         setLabelText()
+        getWeeklyData()
+        redrawGraph()
     }
 }
