@@ -8,25 +8,23 @@
 
 import UIKit
 
-class WeeklyProgressViewController: UIViewController {
+class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     
     //MARK: Outlets
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var chartScrolView: UIScrollView!
     
     var graphCollection = [GraphView]()
-    let graphTitle = ["Steps","Distances","MinutesActive","MinutesLightlyActive","MinutesSedentary"]
+    let graphTitle = ["Steps","Distances","MinutesSedentary","MinutesActive","MinutesLightlyActive"]
     
     var today: dateFormat!
     var firstDayOfWeek: dateFormat!
     var lastDayOfWeek: dateFormat!
     var weeklyData = [DailySummary?]()
+    var dateArray = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
         
         getWeekDay()
         setLabelText()
@@ -40,12 +38,18 @@ class WeeklyProgressViewController: UIViewController {
         
         for i in 0..<graphTitle.count {
             let graph = GraphView(frame: CGRect(x: 8, y: 4 + (4 + height) * CGFloat(i), width: UIScreen.mainScreen().bounds.width - 16, height: height))
+            graph.delegate = self
             graph.backgroundColor = UIColor.whiteColor()
             graph.label.text = graphTitle[i]
+            graph.tag = i
             graph.graphPoints = returnGraphData()[i]
+            graph.dateArray = dateArray
+            graph.currentDate = String(format: "%d-%02d-%02d", arguments: [today.year,today.month,today.day])
             self.chartScrolView.addSubview(graph)
             self.graphCollection.append(graph)
         }
+        
+        
         self.chartScrolView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: (height * CGFloat(graphTitle.count)) + 24)
     }
     
@@ -73,14 +77,27 @@ class WeeklyProgressViewController: UIViewController {
             }
         }
         
-        let data = [steps,distances,minutesActive,minutesLightlyActive,minutesSedentary]
+        let data = [steps,distances,minutesSedentary,minutesActive,minutesLightlyActive]
         return data
+    }
+    
+    func getDateText() -> [String]{
+        var date = [String]()
+        
+        for i in 0..<7 {
+            if let summary = weeklyData[i] {
+                date.append(summary.dateTime!)
+            }
+        }
+        
+        return date
     }
     
     func redrawGraph() {
         for i in 0..<graphTitle.count {
             let graph = self.graphCollection[i]
             graph.graphPoints = returnGraphData()[i]
+            graph.dateArray = dateArray
         }
     }
     
@@ -125,9 +142,11 @@ class WeeklyProgressViewController: UIViewController {
         var dateString: String!
         formatter.dateFormat = "yyyy-MM-dd"
         weeklyData.removeAll()
+        dateArray.removeAll()
         
         for _ in 1...7 {
             dateString = formatter.stringFromDate(startDate.date)
+            dateArray.append(dateString)
             let summary = ClientDataManager.sharedInstance().fetchSummaryWith(dateString)
             weeklyData.append(summary)
             startDate = getDateByInterval(1, from: startDate.date)
@@ -155,4 +174,16 @@ class WeeklyProgressViewController: UIViewController {
         getWeeklyData()
         redrawGraph()
     }
+    
+    func handleTap(sender: GraphView) {
+
+        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("detailController") as! detailGraphController
+        desController.graphTitle = sender.label.text
+        desController.dateArray = sender.dateArray
+        desController.graphPoints = sender.graphPoints
+        desController.category = graphTitle[sender.tag]
+        self.navigationController?.pushViewController(desController, animated: true)
+        
+    }
+    
 }

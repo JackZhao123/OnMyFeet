@@ -13,9 +13,6 @@ class mTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "My Progress"
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
         addViewcontrollers()
         
     }
