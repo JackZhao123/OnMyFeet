@@ -28,8 +28,8 @@
     </entity>
     <elements>
         <element name="DailySummary" positionX="0" positionY="45" width="128" height="195"/>
-        <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="IntradaySedentary" positionX="-18" positionY="90" width="128" height="90"/>
         <element name="IntradaySleepTime" positionX="-9" positionY="99" width="128" height="90"/>
+        <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>

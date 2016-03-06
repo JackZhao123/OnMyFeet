@@ -191,8 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
-				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
 				2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */,
+				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
 			);
 			name = FitbitAPI;
 			sourceTree = "<group>";

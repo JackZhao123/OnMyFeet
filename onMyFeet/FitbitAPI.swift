@@ -73,7 +73,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     }
     
     func requestAccessToken() {
-        
         if let authorizationCode = authorizationCode {
             
             if let encodedSecret = encodedSecret {
@@ -88,15 +87,33 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     
     func refreshAccessToken() {
-
-        if let refreshCode = refreshCode {
-            let url = NSURL(string: authorizationHost)
-            
-            if let encodedSecret = encodedSecret {
-                let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
-                let body = refreshTokenBody + refreshCode
+        let lastAccessTokenTime = NSUserDefaults.standardUserDefaults().objectForKey("AccessTokenTime") as? NSDate
+        var syncFlag = false
+        print(accessToken)
+        
+        if let lastAccessTokenTime = lastAccessTokenTime {
+            print(lastAccessTokenTime)
+            print(NSDate())
+            let interval = NSDate().timeIntervalSinceDate(lastAccessTokenTime)
+            if interval > 3600.0 {
+                print("accesstoken expired")
+                syncFlag = true
+            }
+        } else {
+            print("First time refreshaccesstoken")
+            syncFlag = true
+        }
+        
+        if syncFlag {
+            if let refreshCode = refreshCode {
+                let url = NSURL(string: authorizationHost)
                 
-                runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
+                if let encodedSecret = encodedSecret {
+                    let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
+                    let body = refreshTokenBody + refreshCode
+                    
+                    runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
+                }
             }
         }
     }
@@ -236,11 +253,13 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                 let refreshCode = jsonData.objectForKey("refresh_token") as? String
                 if let refreshCode = refreshCode {
                     NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
+                    
                 }
                 
                 let accessToken = jsonData.objectForKey("access_token") as? String
                 if let accessToken = accessToken {
                     NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
+                    NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "AccessTokenTime")
                 }
             }
         } catch {

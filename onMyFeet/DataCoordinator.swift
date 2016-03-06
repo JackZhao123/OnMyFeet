@@ -50,6 +50,7 @@ class DataCoordinator: FitbitAPIDelegate {
     func syncData() {
         
         let userName = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as? String
+        
         fitbitAPI.refreshAccessToken()
         fitbitAPI.delegate = self
         
@@ -190,9 +191,5 @@ class DataCoordinator: FitbitAPIDelegate {
             default:
                 break
         }
-        
-        
     }
-    
-    
 }
