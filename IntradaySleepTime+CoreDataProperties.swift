@@ -15,6 +15,7 @@ import CoreData
 extension IntradaySleepTime {
 
     @NSManaged var time: String?
+    @NSManaged var dateTime: String?
     @NSManaged var value: NSNumber?
     @NSManaged var day: DailySummary?
 

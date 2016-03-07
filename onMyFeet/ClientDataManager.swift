@@ -59,7 +59,6 @@ class ClientDataManager {
         
     }()
     
-    
     lazy var managedObjectContext: NSManagedObjectContext = {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
@@ -148,6 +147,55 @@ class ClientDataManager {
         }
         
         return result?.first
+    }
+    
+    func fetchIntradaySleepWith(dateTime:String, time:String) -> IntradaySleepTime? {
+        let fetchRequest = NSFetchRequest(entityName: "IntradaySleepTime")
+        fetchRequest.predicate = NSPredicate(format: "dateTime = %@ && time = %@", argumentArray: [dateTime,time])
+        var result: [IntradaySleepTime]?
+        
+        do {
+            try result = self.managedObjectContext.executeFetchRequest(fetchRequest) as? [IntradaySleepTime]
+        } catch {
+            print(error)
+        }
+        
+        return result?.first
+    }
+    
+    func fetchSingleDaySleepWith(dateTime:String) -> [IntradaySleepTime]? {
+        let fetchRequest = NSFetchRequest(entityName: "IntradaySleepTime")
+        fetchRequest.predicate = NSPredicate(format: "dateTime = %@", argumentArray: [dateTime])
+        var result: [IntradaySleepTime]?
+        
+        do {
+            try result = self.managedObjectContext.executeFetchRequest(fetchRequest) as? [IntradaySleepTime]
+        } catch {
+            print(error)
+        }
+        
+        return result
+    }
+    
+    func fetchDataOf(entity:String, parameter:[String], argument:[String]) -> [AnyObject]? {
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        var formatString = "\(parameter.first!) = %@"
+        if parameter.count > 1 {
+            for index in 1...parameter.count - 1 {
+                formatString = NSString(string: formatString).stringByAppendingString("&& \(parameter[index]) = %@")
+            }
+        }
+        
+        fetchRequest.predicate = NSPredicate(format: formatString, argumentArray: argument)
+        var result: [AnyObject]?
+        
+        do {
+            try result = self.managedObjectContext.executeFetchRequest(fetchRequest)
+        } catch {
+            print(error)
+        }
+        
+        return result
     }
     
     func deleteAllPersonData() {

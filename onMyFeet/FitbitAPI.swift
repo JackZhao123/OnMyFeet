@@ -95,6 +95,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             print(lastAccessTokenTime)
             print(NSDate())
             let interval = NSDate().timeIntervalSinceDate(lastAccessTokenTime)
+            
             if interval > 3600.0 {
                 print("accesstoken expired")
                 syncFlag = true
@@ -146,9 +147,10 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         }
     }
     
-    func getDaily(typeOfData dataType:String, startDate:String, var toEndDate endDate:String) {
+    func getDaily(let typeOfData dataType:String, startDate:String, var toEndDate endDate:String) {
         var dateComponent = endDate
         let url: NSURL!
+        var urlString: String!
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error == nil) {
                 if let delegate = self.delegate {
@@ -164,15 +166,20 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             endDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
         }
         
+        if dataType == "sleep" {
+            urlString = "https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/"
+        } else {
+            urlString = "https://api.fitbit.com/1/user/-/activities/\(dataType)/date/"
+        }
+        
         if startDate == endDate {
             //Get one day data
-            url = NSURL(string: "https://api.fitbit.com/1/user/-/activities/\(dataType)/date/\(dateComponent)/1d.json")
+            url = NSURL(string: urlString + "\(dateComponent)/1d.json")
         } else {
             //Get interval data
             dateComponent = startDate + "/\(dateComponent)"
-            url = NSURL(string: "https://api.fitbit.com/1/user/-/activities/\(dataType)/date/\(dateComponent).json")
+            url = NSURL(string: urlString + "\(dateComponent).json")
         }
-        
         
         if let accessToken = accessToken {
             runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)

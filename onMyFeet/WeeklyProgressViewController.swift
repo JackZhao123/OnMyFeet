@@ -15,7 +15,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     @IBOutlet weak var chartScrolView: UIScrollView!
     
     var graphCollection = [GraphView]()
-    let graphTitle = ["Steps","Distances","MinutesSedentary","MinutesActive","MinutesLightlyActive"]
+    let graphTitle = ["Steps","Distances","MinutesSedentary","MinutesActive","MinutesLightlyActive","SleepTime"]
     
     var today: dateFormat!
     var firstDayOfWeek: dateFormat!
@@ -59,6 +59,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         var minutesActive = [Int]()
         var minutesLightlyActive = [Int]()
         var minutesSedentary = [Int]()
+        var sleepTime = [Int]()
         
         for i in 0..<7 {
             if let summary = weeklyData[i] {
@@ -67,17 +68,18 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
                 minutesActive.append((summary.minutesActive?.integerValue)!)
                 minutesLightlyActive.append((summary.minutesLightlyActive?.integerValue)!)
                 minutesSedentary.append((summary.minutesSedentary?.integerValue)!)
+                sleepTime.append((summary.sleepTime?.integerValue)!)
             } else {
                 steps.append(0)
                 distances.append(0)
                 minutesActive.append(0)
                 minutesLightlyActive.append(0)
                 minutesSedentary.append(0)
-                
+                sleepTime.append(0)
             }
         }
         
-        let data = [steps,distances,minutesSedentary,minutesActive,minutesLightlyActive]
+        let data = [steps,distances,minutesSedentary,minutesActive,minutesLightlyActive,sleepTime]
         return data
     }
     

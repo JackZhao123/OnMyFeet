@@ -32,7 +32,7 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
     let fitbitAPI = FitbitAPI()
     var dailySummary: DailySummary?
     var currentDate: NSDate?
-    let dataType = ["steps","distances","minutesActive","minutesLightlyActive","minutesSedentary"]
+    let dataType = ["steps","distances","minutesActive","minutesLightlyActive","minutesSedentary","sleepTime"]
     var mDate : dateFormat?
     
     override func viewDidLoad() {
@@ -110,6 +110,28 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
         setDateLable()
         getSummary()
         dataTableView.reloadData()
+        
+//        DataCoordinator.sharedInstance.getIntradaySedentary()
+        
+//        if let intradaySedentary = ClientDataManager.sharedInstance().fetchDataOf("IntradaySedentary", parameter: ["dateTime"], argument: ["2016-03-02"]) as? [IntradaySedentary] {
+//            for i in intradaySedentary {
+//                print(i.dateTime)
+//                print(i.time)
+//                print(i.value)
+//            }
+//        }
+        
+        
+//        DataCoordinator.sharedInstance.getIntradayData()
+        
+//        if let intradayData = ClientDataManager.sharedInstance().fetchSingleDaySleepWith("2016-03-02") {
+//            for intraday in intradayData {
+//                
+//                print(intraday.dateTime)
+//                print(intraday.time)
+//                print(intraday.value)
+//            }
+//        }
     }
     
     

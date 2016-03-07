@@ -17,6 +17,7 @@
 		2A42953D1C88CB97002F9917 /* mTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42953C1C88CB97002F9917 /* mTabBarController.swift */; };
 		2A42953F1C88E3D4002F9917 /* WeeklyProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */; };
 		2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */; };
+		2A58B3871C8CF0120088B3E8 /* IntradayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A58B3861C8CF0120088B3E8 /* IntradayChartView.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */; };
 		2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */; };
@@ -57,6 +58,7 @@
 		2A42953C1C88CB97002F9917 /* mTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mTabBarController.swift; sourceTree = "<group>"; };
 		2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyProgressViewController.swift; sourceTree = "<group>"; };
 		2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailGraphController.swift; sourceTree = "<group>"; };
+		2A58B3861C8CF0120088B3E8 /* IntradayChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntradayChartView.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "IntradaySedentary+CoreDataProperties.swift"; path = "../IntradaySedentary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntradaySedentary.swift; path = ../IntradaySedentary.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				2A1179201C8961140095FBB6 /* GraphView.swift */,
+				2A58B3861C8CF0120088B3E8 /* IntradayChartView.swift */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */,
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
+				2A58B3871C8CF0120088B3E8 /* IntradayChartView.swift in Sources */,
 				2A1179211C8961140095FBB6 /* GraphView.swift in Sources */,
 				2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */,
 				2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */,

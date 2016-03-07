@@ -13,11 +13,13 @@
         <relationship name="intradaySleep" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="IntradaySleepTime" inverseName="day" inverseEntity="IntradaySleepTime" syncable="YES"/>
     </entity>
     <entity name="IntradaySedentary" representedClassName=".IntradaySedentary" syncable="YES">
+        <attribute name="dateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailySummary" inverseName="intradaySedentary" inverseEntity="DailySummary" syncable="YES"/>
     </entity>
     <entity name="IntradaySleepTime" representedClassName=".IntradaySleepTime" syncable="YES">
+        <attribute name="dateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailySummary" inverseName="intradaySleep" inverseEntity="DailySummary" syncable="YES"/>
@@ -28,8 +30,8 @@
     </entity>
     <elements>
         <element name="DailySummary" positionX="0" positionY="45" width="128" height="195"/>
-        <element name="IntradaySedentary" positionX="-18" positionY="90" width="128" height="90"/>
-        <element name="IntradaySleepTime" positionX="-9" positionY="99" width="128" height="90"/>
+        <element name="IntradaySedentary" positionX="-18" positionY="90" width="128" height="105"/>
+        <element name="IntradaySleepTime" positionX="-9" positionY="99" width="128" height="105"/>
         <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>
