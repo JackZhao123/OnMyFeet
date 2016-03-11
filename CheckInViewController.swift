@@ -20,6 +20,11 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
         
+        if NSUserDefaults.standardUserDefaults().boolForKey("NoNeed") == false {
+            ClientDataManager.sharedInstance().initQuestionSetData()
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NoNeed")
+        }
+        
         if let questions = ClientDataManager.sharedInstance().fetchQuestionSet() {
             allQuestionnaire = questions
         }
@@ -56,18 +61,6 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    //Actions
-    @IBAction func toQuestionView(sender: AnyObject) {
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("questionView") as! QuestionnaireViewController
-        let sample = QuestionnaireSample()
-        
-        let questionnaireSet = ClientDataManager.sharedInstance().fetchQuestionSet()
-        
-        if let questionnaireSet = questionnaireSet {
-            print(questionnaireSet.count)
-        }
-    }
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allQuestionnaire.count
     }
@@ -79,7 +72,7 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         let q = allQuestionnaire[indexPath.row]
         let ques = NSKeyedUnarchiver.unarchiveObjectWithData(q.questionnaire!) as! Questionnaire
-        cell?.textLabel?.text = q.title
+        cell?.textLabel?.text = q.symptom
         cell?.detailTextLabel?.text = "\(ques.questionSet.count)"
         return cell!
     }

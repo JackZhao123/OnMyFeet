@@ -28,6 +28,8 @@ class QuestionnaireViewController: UIViewController {
     var resultArray: [Float] = [Float]()
     var resultLabelArray: [UILabel] = [UILabel]()
     
+    var answerFlag:[Bool] = [Bool]()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +54,7 @@ class QuestionnaireViewController: UIViewController {
     
     func initAllLabel() {
         
-        testEntryView = UITextView(frame: CGRect(x: 8.0, y: 8.0, width: screenWidth, height: 100.0))
+        testEntryView = UITextView(frame: CGRect(x: 8.0, y: 72.0, width: screenWidth, height: 100.0))
         testEntryView.backgroundColor = .None
         testEntryView.textColor = UIColor.whiteColor()
 
@@ -68,24 +70,29 @@ class QuestionnaireViewController: UIViewController {
         
         fitSizeWithContent(testEntryView)
         
-        let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: testEntryView.frame.height + 8))
+        let backgroundView = UIView(frame: CGRect(x: 0, y: 64, width: screenWidth, height: testEntryView.frame.height + 8))
         backgroundView.backgroundColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
         
-        mScrollView.addSubview(backgroundView)
-        mScrollView.addSubview(testEntryView)
+        self.view.addSubview(backgroundView)
+        self.view.addSubview(testEntryView)
         
         let startPoint = testEntryView.bounds.height + 16
         var margin:CGFloat = 0.0
         
         if let questionSet = questionSet {
             for index in 0...questionSet.count - 1 {
+                answerFlag.append(false)
                 resultArray.append(0)
                 //QuestionTextView
                 let questionTextView = UITextView(frame: CGRect(x: 8.0, y: startPoint + margin, width: screenWidth - 16.0, height: 32.0))
                 questionTextView.textAlignment = .Left
                 questionTextView.userInteractionEnabled = false
                 questionTextView.font = UIFont.systemFontOfSize(18.0)
-                questionTextView.text = questionSet[index]
+                let mark = NSMutableAttributedString(string: "\(index+1)/\(questionSet.count), ", attributes: [NSForegroundColorAttributeName:UIColor.grayColor(), NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+                
+                mark.appendAttributedString( NSAttributedString(string: questionSet[index], attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)]) )
+                
+                questionTextView.attributedText =  mark
                 
                 
                 fitSizeWithContent(questionTextView)
@@ -171,6 +178,7 @@ class QuestionnaireViewController: UIViewController {
             let halfPoint: Int = Int(slider.value + 0.5)
             slider.setValue( Float(halfPoint), animated: false)
             resultArray[slider.tag] = slider.value
+            answerFlag[slider.tag] = true
             
             if let string = labelDic[halfPoint] {
                 if onlyTextEnable {
@@ -178,15 +186,33 @@ class QuestionnaireViewController: UIViewController {
                 } else {
                     resultLabelArray[slider.tag].text = "\(halfPoint), " + string
                 }
-                
             } else {
                 resultLabelArray[slider.tag].text = "\(halfPoint)"
-
             }
         }
     }
     
     func submit() {
+        var notAnswerList = [Int]()
+        for index in 0...answerFlag.count - 1 {
+            if answerFlag[index] == false {
+                notAnswerList.append(index + 1)
+            }
+        }
         
+        if notAnswerList.count > 0 {
+            let title = "Please answer all the questions before submit."
+            var message = "Please answer question\nNo "
+            for i in notAnswerList {
+                message = message + "\(i). "
+            }
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Sure", style: .Default, handler: {(action) -> Void in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }
