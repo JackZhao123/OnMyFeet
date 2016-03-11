@@ -233,7 +233,7 @@
                                     <constraint firstAttribute="height" constant="29" id="NNw-5R-Dyg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="59" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="M1C-2x-wA9">
@@ -258,7 +258,7 @@
                                                     <rect key="frame" x="15" y="31" width="73" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -291,30 +291,6 @@
             </objects>
             <point key="canvasLocation" x="2721" y="519"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Ind-cj-ZZp">
-            <objects>
-                <viewController id="rHr-Cj-Dsq" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vUf-UO-RMe"/>
-                        <viewControllerLayoutGuide type="bottom" id="mZc-33-OF5"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="EcL-wQ-SDP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wcd-cC-hey" customClass="IntradayChartView" customModule="OnMyFeet" customModuleProvider="target">
-                                <rect key="frame" x="20" y="28" width="560" height="200"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="80H-Cy-mUz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3373" y="433"/>
-        </scene>
         <!--Weekly Progress-->
         <scene sceneID="YXh-GU-h02">
             <objects>
@@ -344,7 +320,7 @@
                                     <constraint firstAttribute="height" constant="29" id="Svo-hK-xZR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uz7-DA-ImB">
@@ -384,6 +360,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EsY-ki-EqT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2721" y="1361"/>
+        </scene>
+        <!--Check In View Controller-->
+        <scene sceneID="Mb9-Jj-apZ">
+            <objects>
+                <viewController storyboardIdentifier="checkIn" id="84g-hs-uod" customClass="CheckInViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5yC-fq-0GM"/>
+                        <viewControllerLayoutGuide type="bottom" id="HfE-TR-WjO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dZ9-91-QUq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r3r-In-cPs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1951" y="1756"/>
+        </scene>
+        <!--Questionnaire View Controller-->
+        <scene sceneID="zq1-tM-DvB">
+            <objects>
+                <viewController storyboardIdentifier="questionView" id="8zL-D1-BVa" customClass="QuestionnaireViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XIN-T5-3h0"/>
+                        <viewControllerLayoutGuide type="bottom" id="xCX-5C-iEh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ICz-aP-Hhr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iu4-Bo-kdh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2721" y="2050"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="WMC-h3-3Ke">
@@ -434,7 +446,7 @@
                                                     <rect key="frame" x="15" y="12" width="32" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SEg-eM-8Ik">

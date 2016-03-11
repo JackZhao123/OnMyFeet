@@ -77,7 +77,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             storyboardIdentifier = "GoalsController"
         case 1:
             storyboardIdentifier = "progressTabBarController"//"progressTabBarController"
+        case 2:
+            storyboardIdentifier = "checkIn"
         default:
+            BackendOperation.postData()
             storyboardIdentifier = nil
         }
         

@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		278865DA0F1EDD802FAF8DBD /* Pods_OnMyFeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */; };
 		2A1179211C8961140095FBB6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1179201C8961140095FBB6 /* GraphView.swift */; };
+		2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */; };
+		2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */; };
 		2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */; };
 		2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DD1C80AE8700E78A37 /* Person.swift */; };
 		2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */; };
 		2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */; };
 		2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */; };
 		2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */; };
+		2A3F56821C91D3E5006349F5 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */; };
+		2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */; };
 		2A42953D1C88CB97002F9917 /* mTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42953C1C88CB97002F9917 /* mTabBarController.swift */; };
 		2A42953F1C88E3D4002F9917 /* WeeklyProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */; };
 		2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */; };
-		2A58B3871C8CF0120088B3E8 /* IntradayChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A58B3861C8CF0120088B3E8 /* IntradayChartView.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */; };
 		2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */; };
@@ -31,6 +35,8 @@
 		2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */; };
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
 		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
+		2AE7662D1C921E590065471B /* Questionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662C1C921E590065471B /* Questionnaire.swift */; };
+		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
 		2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF8357E1C7B560000287892 /* LogInViewController.swift */; };
 		2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835801C7B7E9F00287892 /* MenuCell.swift */; };
 		2AF835831C7B84BC00287892 /* DailyProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835821C7B84BC00287892 /* DailyProgressViewController.swift */; };
@@ -49,16 +55,19 @@
 
 /* Begin PBXFileReference section */
 		2A1179201C8961140095FBB6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuestionSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
 		2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A2E41DD1C80AE8700E78A37 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DailySummary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataManager.swift; sourceTree = "<group>"; };
 		2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
+		2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
+		2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionnaireViewController.swift; sourceTree = "<group>"; };
 		2A42953C1C88CB97002F9917 /* mTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mTabBarController.swift; sourceTree = "<group>"; };
 		2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyProgressViewController.swift; sourceTree = "<group>"; };
 		2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailGraphController.swift; sourceTree = "<group>"; };
-		2A58B3861C8CF0120088B3E8 /* IntradayChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntradayChartView.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "IntradaySedentary+CoreDataProperties.swift"; path = "../IntradaySedentary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2AA5B8881C826A6400186BDD /* IntradaySedentary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntradaySedentary.swift; path = ../IntradaySedentary.swift; sourceTree = "<group>"; };
@@ -76,10 +85,15 @@
 		2AAA60F31C72960300957BEF /* onMyFeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMyFeetTests.swift; sourceTree = "<group>"; };
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		2AE7662C1C921E590065471B /* Questionnaire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Questionnaire.swift; sourceTree = "<group>"; };
+		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
 		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		2AF835801C7B7E9F00287892 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		2AF835821C7B84BC00287892 /* DailyProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyProgressViewController.swift; sourceTree = "<group>"; };
 		2AF835841C7B84F300287892 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
+		A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnMyFeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9B1226655717A11AB60C84B /* Pods-OnMyFeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.release.xcconfig"; sourceTree = "<group>"; };
+		D935031F20E2855BB481DE90 /* Pods-OnMyFeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				278865DA0F1EDD802FAF8DBD /* Pods_OnMyFeet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,11 +115,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05697E44A25EE63F60609FAD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2A1179221C8961240095FBB6 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
 				2A1179201C8961140095FBB6 /* GraphView.swift */,
-				2A58B3861C8CF0120088B3E8 /* IntradayChartView.swift */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -114,6 +136,8 @@
 			children = (
 				2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */,
 				2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */,
+				2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */,
+				2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */,
 				2A2E41DD1C80AE8700E78A37 /* Person.swift */,
 				2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */,
 				2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */,
@@ -125,12 +149,25 @@
 			name = DataBase;
 			sourceTree = "<group>";
 		};
+		2A3F56801C91D2AF006349F5 /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */,
+				2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */,
+				2AE7662C1C921E590065471B /* Questionnaire.swift */,
+			);
+			name = CheckIn;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		2AAA60CF1C72960300957BEF = {
 			isa = PBXGroup;
 			children = (
 				2AAA60DA1C72960300957BEF /* onMyFeet */,
 				2AAA60F21C72960300957BEF /* onMyFeetTests */,
 				2AAA60D91C72960300957BEF /* Products */,
+				C761AADF3EFEB1FAF511CD42 /* Pods */,
+				05697E44A25EE63F60609FAD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,8 +188,10 @@
 				2AF835881C7B8C4C00287892 /* FitbitAPI */,
 				2AF835871C7B8C3D00287892 /* GoalsTracking */,
 				2AF835861C7B8C2A00287892 /* ProgressTracking */,
+				2A3F56801C91D2AF006349F5 /* CheckIn */,
 				2A2E41E51C80AEA600E78A37 /* DataBase */,
 				2A1179221C8961240095FBB6 /* CustomView */,
+				2AE7662E1C9270620065471B /* BackendServer */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
 				2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */,
 				2AAA60E51C72960300957BEF /* Assets.xcassets */,
@@ -169,6 +208,14 @@
 				2AAA60F51C72960300957BEF /* Info.plist */,
 			);
 			path = onMyFeetTests;
+			sourceTree = "<group>";
+		};
+		2AE7662E1C9270620065471B /* BackendServer */ = {
+			isa = PBXGroup;
+			children = (
+				2AE7662F1C9270D80065471B /* BackendOperation.swift */,
+			);
+			name = BackendServer;
 			sourceTree = "<group>";
 		};
 		2AF835861C7B8C2A00287892 /* ProgressTracking */ = {
@@ -210,6 +257,15 @@
 			name = LogInMenu;
 			sourceTree = "<group>";
 		};
+		C761AADF3EFEB1FAF511CD42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D935031F20E2855BB481DE90 /* Pods-OnMyFeet.debug.xcconfig */,
+				B9B1226655717A11AB60C84B /* Pods-OnMyFeet.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -217,9 +273,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2AAA60F81C72960300957BEF /* Build configuration list for PBXNativeTarget "OnMyFeet" */;
 			buildPhases = (
+				0505F82537E1E77D9675635E /* Check Pods Manifest.lock */,
 				2AAA60D41C72960300957BEF /* Sources */,
 				2AAA60D51C72960300957BEF /* Frameworks */,
 				2AAA60D61C72960300957BEF /* Resources */,
+				124E3AA8B158B47665426BFE /* Embed Pods Frameworks */,
+				BFA0C77F05F23BB269910510 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -306,6 +365,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0505F82537E1E77D9675635E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		124E3AA8B158B47665426BFE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BFA0C77F05F23BB269910510 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2AAA60D41C72960300957BEF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -314,19 +421,23 @@
 				2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */,
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
-				2A58B3871C8CF0120088B3E8 /* IntradayChartView.swift in Sources */,
 				2A1179211C8961140095FBB6 /* GraphView.swift in Sources */,
 				2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */,
 				2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
+				2AE7662D1C921E590065471B /* Questionnaire.swift in Sources */,
 				2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */,
 				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
+				2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */,
 				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */,
+				2AE766301C9270D80065471B /* BackendOperation.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
+				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
 				2AF835831C7B84BC00287892 /* DailyProgressViewController.swift in Sources */,
 				2AA5B88E1C826A6400186BDD /* IntradaySleepTime.swift in Sources */,
+				2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */,
 				2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */,
 				2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
@@ -335,6 +446,7 @@
 				2AF835851C7B84F300287892 /* GoalsViewController.swift in Sources */,
 				2A42953F1C88E3D4002F9917 /* WeeklyProgressViewController.swift in Sources */,
 				2A42953D1C88CB97002F9917 /* mTabBarController.swift in Sources */,
+				2A3F56821C91D3E5006349F5 /* CheckInViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +571,7 @@
 		};
 		2AAA60F91C72960300957BEF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D935031F20E2855BB481DE90 /* Pods-OnMyFeet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
@@ -470,6 +583,7 @@
 		};
 		2AAA60FA1C72960300957BEF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9B1226655717A11AB60C84B /* Pods-OnMyFeet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = onMyFeet/Info.plist;

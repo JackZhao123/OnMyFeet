@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     
@@ -14,7 +15,6 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var chartScrolView: UIScrollView!
     
-    var graphCollection = [GraphView]()
     let graphTitle = ["Steps","Distances","MinutesSedentary","MinutesActive","MinutesLightlyActive","SleepTime"]
     
     var today: dateFormat!
@@ -22,6 +22,16 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     var lastDayOfWeek: dateFormat!
     var weeklyData = [DailySummary?]()
     var dateArray = [String]()
+    
+    var stepChart:BarChartView!
+    var distanceChart: LineChartView!
+    var intensityChart: BarChartView!
+    
+    let screenWidth = UIScreen.mainScreen().bounds.width
+    let screenHeight = UIScreen.mainScreen().bounds.height
+    let chartHeight:CGFloat = 200.0
+    let weekDay = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,48 +39,111 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         getWeekDay()
         setLabelText()
         getWeeklyData()
-        initGraphViews(200.0)
         
-       
+        initStepsChart()
+        self.chartScrolView.contentSize = CGSize(width: screenWidth, height: 3 * (chartHeight + 8))
     }
     
-    func initGraphViews(height: CGFloat) {
+    func initStepsChart() {
+        stepChart = BarChartView(frame: CGRect(x: 8, y: 4, width: screenWidth - 16 , height: chartHeight ))
+        distanceChart = LineChartView(frame: CGRect(x: 8, y: 8 + chartHeight, width: screenWidth - 16 , height: chartHeight ))
+        intensityChart = BarChartView(frame: CGRect(x: 8, y: 16 + 2 * chartHeight, width: screenWidth - 16 , height: chartHeight ))
         
-        for i in 0..<graphTitle.count {
-            let graph = GraphView(frame: CGRect(x: 8, y: 4 + (4 + height) * CGFloat(i), width: UIScreen.mainScreen().bounds.width - 16, height: height))
-            graph.delegate = self
-            graph.backgroundColor = UIColor.whiteColor()
-            graph.label.text = graphTitle[i]
-            graph.tag = i
-            graph.graphPoints = returnGraphData()[i]
-            graph.dateArray = dateArray
-            graph.currentDate = String(format: "%d-%02d-%02d", arguments: [today.year,today.month,today.day])
-            self.chartScrolView.addSubview(graph)
-            self.graphCollection.append(graph)
+        populateChartData()
+        
+        configureView(stepChart)
+        configureView(distanceChart)
+        configureView(intensityChart)
+        
+    }
+    
+    func configureView(chartView: BarLineChartViewBase) {
+        chartView.rightAxis.enabled = false
+        chartView.leftAxis.customAxisMin = 0.0
+        chartView.rightAxis.customAxisMin = 0.0
+        chartView.notifyDataSetChanged()
+        
+        chartView.xAxis.setLabelsToSkip(0)
+        chartView.xAxis.drawGridLinesEnabled = false
+        chartView.xAxis.labelPosition = .Bottom
+        chartView.descriptionText = ""
+        chartView.userInteractionEnabled = false
+        
+        self.chartScrolView.addSubview(chartView)
+    }
+    
+    func populateChartData() {
+        let steps = returnGraphData()[0]
+        let distance = returnGraphData()[1]
+        let sedentary = returnGraphData()[2]
+        let active = returnGraphData()[3]
+        let lightly = returnGraphData()[4]
+        
+        var dataEntries: [BarChartDataEntry] = []
+        var distanceEntries: [ChartDataEntry] = []
+        var sedentaryEntries: [BarChartDataEntry] = []
+        var activeEntries: [BarChartDataEntry] = []
+        var lightlyEntries: [BarChartDataEntry] = []
+        
+        for i in 0..<steps.count {
+            let dataEntry = BarChartDataEntry(value: steps[i] , xIndex: i)
+            dataEntries.append(dataEntry)
+            
+            let sedentaryEntry = BarChartDataEntry(value: sedentary[i], xIndex: i)
+            sedentaryEntries.append(sedentaryEntry)
+            
+            let activeEntry = BarChartDataEntry(value: active[i], xIndex: i)
+            activeEntries.append(activeEntry)
+            
+            let lightlyEntry = BarChartDataEntry(value: lightly[i], xIndex: i)
+            lightlyEntries.append(lightlyEntry)
+            
+            let distanceEntry = ChartDataEntry(value: distance[i], xIndex: i)
+            distanceEntries.append(distanceEntry)
         }
         
+        let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Steps")
+        let chartData = BarChartData(xVals: weekDay, dataSet: chartDataSet)
         
-        self.chartScrolView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: (height * CGFloat(graphTitle.count)) + 24)
+        let lineDataSet = LineChartDataSet(yVals: distanceEntries, label: "Distance (meters)")
+        let lineData = LineChartData(xVals: weekDay, dataSet: lineDataSet)
+        
+        let sedentaryDataSet = BarChartDataSet(yVals: sedentaryEntries, label: "sedentary")
+        sedentaryDataSet.colors = [UIColor.redColor()]
+        
+        let activeDataSet = BarChartDataSet(yVals: activeEntries, label: "active")
+        activeDataSet.colors = [UIColor.greenColor()]
+        
+        let lightlyDataSet = BarChartDataSet(yVals: lightlyEntries, label: "lightly")
+        lightlyDataSet.colors = [UIColor.yellowColor()]
+        
+        let intensityData = BarChartData(xVals: weekDay, dataSets: [sedentaryDataSet,lightlyDataSet,activeDataSet])
+
+        
+        stepChart.data = chartData
+        distanceChart.data = lineData
+        intensityChart.data = intensityData
     }
     
-    func returnGraphData() -> [[Int]] {
-        var steps = [Int]()
-        var distances = [Int]()
-        var minutesActive = [Int]()
-        var minutesLightlyActive = [Int]()
-        var minutesSedentary = [Int]()
-        var sleepTime = [Int]()
+    //MARK: GetData
+    func returnGraphData() -> [[Double]] {
+        var steps = [Double]()
+        var distances = [Double]()
+        var minutesActive = [Double]()
+        var minutesLightlyActive = [Double]()
+        var minutesSedentary = [Double]()
+        var sleepTime = [Double]()
         
         for i in 0..<7 {
             if let summary = weeklyData[i] {
-                steps.append((summary.steps?.integerValue)!)
-                distances.append((summary.distances?.integerValue)!)
-                minutesActive.append((summary.minutesActive?.integerValue)!)
-                minutesLightlyActive.append((summary.minutesLightlyActive?.integerValue)!)
-                minutesSedentary.append((summary.minutesSedentary?.integerValue)!)
-                sleepTime.append((summary.sleepTime?.integerValue)!)
+                steps.append((summary.steps?.doubleValue)!)
+                distances.append((summary.distances?.doubleValue)! * 1000.0)
+                minutesActive.append((summary.minutesActive?.doubleValue)!)
+                minutesLightlyActive.append((summary.minutesLightlyActive?.doubleValue)!)
+                minutesSedentary.append((summary.minutesSedentary?.doubleValue)!)
+                sleepTime.append((summary.sleepTime?.doubleValue)!)
             } else {
-                steps.append(0)
+                steps.append(0.0)
                 distances.append(0)
                 minutesActive.append(0)
                 minutesLightlyActive.append(0)
@@ -93,14 +166,6 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         }
         
         return date
-    }
-    
-    func redrawGraph() {
-        for i in 0..<graphTitle.count {
-            let graph = self.graphCollection[i]
-            graph.graphPoints = returnGraphData()[i]
-            graph.dateArray = dateArray
-        }
     }
     
     func getWeekDay() {
@@ -155,6 +220,25 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         }
         
     }
+    
+    //    func initGraphViews(height: CGFloat) {
+    //
+    //        for i in 0..<graphTitle.count {
+    //            let graph = GraphView(frame: CGRect(x: 8, y: 4 + (4 + height) * CGFloat(i), width: UIScreen.mainScreen().bounds.width - 16, height: height))
+    //            graph.delegate = self
+    //            graph.backgroundColor = UIColor.whiteColor()
+    //            graph.label.text = graphTitle[i]
+    //            graph.tag = i
+    //            graph.graphPoints = returnGraphData()[i]
+    //            graph.dateArray = dateArray
+    //            graph.currentDate = String(format: "%d-%02d-%02d", arguments: [today.year,today.month,today.day])
+    //            self.chartScrolView.addSubview(graph)
+    //            self.graphCollection.append(graph)
+    //        }
+    //
+    //
+    //        self.chartScrolView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: (height * CGFloat(graphTitle.count)) + 24)
+    //    }
 
     //MARK: Actions
     func goBack() {
@@ -166,7 +250,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         firstDayOfWeek = getDateByInterval(-7, from: firstDayOfWeek.date)
         setLabelText()
         getWeeklyData()
-        redrawGraph()
+        populateChartData()
     }
     
     @IBAction func nextWeek(sender: AnyObject) {
@@ -174,7 +258,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         firstDayOfWeek = getDateByInterval(7, from: firstDayOfWeek.date)
         setLabelText()
         getWeeklyData()
-        redrawGraph()
+        populateChartData()
     }
     
     func handleTap(sender: GraphView) {

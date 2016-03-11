@@ -229,10 +229,13 @@ class DataCoordinator: FitbitAPIDelegate {
     //MARK: FitbitAPI delegate
     func handleDailyOf(dataType: String, data: NSData)
     {
+//        let json = JSON(data: data)
+        //print(json)
         switch dataType {
             case "steps":
                 stepsJson = JSON(data: data)
                 gettingSteps = false
+                print(stepsJson)
             case "distance":
                 distancesJson = JSON(data: data)
                 gettingDistance = false
@@ -265,7 +268,7 @@ class DataCoordinator: FitbitAPIDelegate {
             case "minutesSedentary":
                 sedentaryJson = JSON(data: data)
                 gettingSedentary = false
-                print(sedentaryJson)
+                //print(sedentaryJson)
             default:
                 break
         }
