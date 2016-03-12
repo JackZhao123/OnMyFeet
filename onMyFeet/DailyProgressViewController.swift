@@ -32,8 +32,9 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
     let fitbitAPI = FitbitAPI()
     var dailySummary: DailySummary?
     var currentDate: NSDate?
-    let dataType = ["steps","distances","minutesActive","minutesLightlyActive","minutesSedentary","sleepTime"]
+    let dataType = ["steps","distances","activityIntensity","sleepTime"]
     var mDate : dateFormat?
+    var noDataFlag = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,8 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
         //TableView
         dataTableView.delegate = self
         dataTableView.dataSource = self
+        dataTableView.registerClass(GraphCell.self, forCellReuseIdentifier: "graphCell")
+        
         getSummary()
     }
 
@@ -151,20 +154,73 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
         return dataType.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("summaryCell")
-        
-        cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "summaryCell")
-        
-        cell?.textLabel?.text = dataType[indexPath.row]
-        let value = dailySummary?.valueForKey(dataType[indexPath.row])
-        
-        if let value = value {
-            cell?.detailTextLabel?.text = "\(value)"
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let type = dataType[indexPath.row]
+        if (type == "activityIntensity" && noDataFlag == false) {
+            return 330.0
         } else {
-            cell?.detailTextLabel?.text = "0"
+            return 50.0
         }
-        return cell!
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let type = dataType[indexPath.row]
+        
+        if (type == "activityIntensity") {
+            var cell = tableView.dequeueReusableCellWithIdentifier("graphCell") as! GraphCell
+            cell = GraphCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "graphCell")
+            noDataFlag = true
+            
+            var cellData = [Double]()
+            let sValue = dailySummary?.valueForKey("minutesSedentary")
+            if let sValue = sValue {
+                noDataFlag = false
+                cellData.append(sValue as! Double)
+            } else {
+                cellData.append(0.0)
+            }
+            
+            let lValue = dailySummary?.valueForKey("minutesLightlyActive")
+            if let lValue = lValue {
+                noDataFlag = false
+                cellData.append(lValue as! Double)
+            } else {
+                cellData.append(0.0)
+            }
+            
+            let aValue = dailySummary?.valueForKey("minutesActive")
+            if let aValue = aValue {
+                noDataFlag = false
+                cellData.append(aValue as! Double)
+            } else {
+                cellData.append(0.0)
+            }
+            
+            if noDataFlag {
+                cell.textLabel?.text = type
+            } else {
+                cell.titleLabel.text = type
+            }
+            
+            cell.chartData = cellData
+            
+            
+            return cell
+            
+        } else {
+            var cell = tableView.dequeueReusableCellWithIdentifier("summaryCell")
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "summaryCell")
+            cell?.textLabel?.text = type
+            let value = dailySummary?.valueForKey(dataType[indexPath.row])
+            
+            if let value = value {
+                cell?.detailTextLabel?.text = "\(value)"
+            } else {
+                cell?.detailTextLabel?.text = "0"
+            }
+            
+            return cell!
+        }
     }
 
 }
