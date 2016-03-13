@@ -35,6 +35,7 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
     let dataType = ["steps","distances","activityIntensity","sleepTime"]
     var mDate : dateFormat?
     var noDataFlag = true
+    var sleepCellHeight:CGFloat = 200
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,9 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
         dataTableView.delegate = self
         dataTableView.dataSource = self
         dataTableView.registerClass(GraphCell.self, forCellReuseIdentifier: "graphCell")
+        dataTableView.registerClass(SleepTimeCell.self, forCellReuseIdentifier: "sleepCell")
+        
+        DataCoordinator.sharedInstance.getIntradayData()
         
         getSummary()
     }
@@ -113,28 +117,6 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
         setDateLable()
         getSummary()
         dataTableView.reloadData()
-        
-//        DataCoordinator.sharedInstance.getIntradaySedentary()
-        
-//        if let intradaySedentary = ClientDataManager.sharedInstance().fetchDataOf("IntradaySedentary", parameter: ["dateTime"], argument: ["2016-03-02"]) as? [IntradaySedentary] {
-//            for i in intradaySedentary {
-//                print(i.dateTime)
-//                print(i.time)
-//                print(i.value)
-//            }
-//        }
-        
-        
-//        DataCoordinator.sharedInstance.getIntradayData()
-        
-//        if let intradayData = ClientDataManager.sharedInstance().fetchSingleDaySleepWith("2016-03-02") {
-//            for intraday in intradayData {
-//                
-//                print(intraday.dateTime)
-//                print(intraday.time)
-//                print(intraday.value)
-//            }
-//        }
     }
     
     
@@ -158,6 +140,8 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
         let type = dataType[indexPath.row]
         if (type == "activityIntensity" && noDataFlag == false) {
             return 330.0
+        } else if (type == "sleepTime" && noDataFlag == false) {
+            return sleepCellHeight
         } else {
             return 50.0
         }
@@ -207,7 +191,26 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
             
             return cell
             
-        } else {
+        }else if (type == "sleepTime") {
+            var sleepCell = tableView.dequeueReusableCellWithIdentifier("sleepCell") as! SleepTimeCell
+            sleepCell = SleepTimeCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "sleepCell")
+
+            noDataFlag = true
+            let dateTime = dailySummary?.valueForKey("dateTime") as? String
+            if let dateTime = dateTime {
+                let sleepData = ClientDataManager.sharedInstance().fetchDataOf("IntradaySleepTime", parameter: ["dateTime"], argument: [dateTime]) as! [IntradaySleepTime]
+                if sleepData.count > 0 {
+                    noDataFlag = false
+                    let sleepJson:JSON = JSON(data: (sleepData.first?.sleepJson)!)
+                    let dataArray = JSONHandler.handlerIntradaySleepJson(sleepJson)
+                    sleepCellHeight = CGFloat(dataArray.count) * 200 + 16
+                    sleepCell.sleepTimeData = dataArray
+                }
+            }
+            
+            return sleepCell
+            
+        }else {
             var cell = tableView.dequeueReusableCellWithIdentifier("summaryCell")
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "summaryCell")
             cell?.textLabel?.text = type

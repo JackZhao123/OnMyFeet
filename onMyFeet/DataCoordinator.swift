@@ -157,27 +157,16 @@ class DataCoordinator: FitbitAPIDelegate {
         if let intradaySleepTimeJson = intradaySleepTimeJson {
             if intradaySleepTimeJson["sleep"].count > 0 {
                 
-                for index in 0...intradaySleepTimeJson["sleep"].count - 1 {
-                    for i in 0...intradaySleepTimeJson["sleep"][index]["minuteData"].count - 1{
-                        let time = intradaySleepTimeJson["sleep"][index]["minuteData"][i]["dateTime"].stringValue
-                        let sleepValue = intradaySleepTimeJson["sleep"][index]["minuteData"][i]["value"].numberValue
-                        
-                        if let intradaySleep = dataManager.fetchIntradaySleepWith("2016-03-02", time: time) {
-                            intradaySleep.time = time
-                            intradaySleep.value = sleepValue
-                            
-                            dataManager.saveContext()
-                            
-                        } else {
-                            let intradaySleep = IntradaySleepTime()
-                            intradaySleep.dateTime = dateTime
-                            intradaySleep.time = time
-                            intradaySleep.value = sleepValue
-                            
-                            dataManager.saveContext()
-                        }
+                    let intradaySleep = IntradaySleepTime()
+                    intradaySleep.dateTime = dateTime
+                    
+                    do {
+                        let data = try intradaySleepTimeJson.rawData()
+                        intradaySleep.sleepJson = data
+                    } catch {
+                        print(error)
                     }
-                }
+                    dataManager.saveContext()
             }
         }
     }
@@ -264,7 +253,7 @@ class DataCoordinator: FitbitAPIDelegate {
             case "sleep":
                 intradaySleepTimeJson = JSON(data: data)
                 gettingIntradaySleep = false
-                //print(intradaySleepTimeJson)
+                print(intradaySleepTimeJson)
             case "minutesSedentary":
                 sedentaryJson = JSON(data: data)
                 gettingSedentary = false

@@ -20,7 +20,6 @@ class DailySummary: NSManagedObject {
     init(){
         let entity = NSEntityDescription.entityForName("DailySummary", inManagedObjectContext: ClientDataManager.sharedInstance().managedObjectContext)
         super.init(entity: entity!, insertIntoManagedObjectContext: ClientDataManager.sharedInstance().managedObjectContext)
-        self.setValue(NSOrderedSet(), forKey: "IntradaySleep")
         self.setValue(NSOrderedSet(), forKey: "intradaySedentary")
     }
 }

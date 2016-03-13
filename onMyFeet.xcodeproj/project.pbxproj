@@ -22,6 +22,9 @@
 		2A42953D1C88CB97002F9917 /* mTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42953C1C88CB97002F9917 /* mTabBarController.swift */; };
 		2A42953F1C88E3D4002F9917 /* WeeklyProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */; };
 		2A42C4A91C946C7800EE472D /* GraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4A81C946C7800EE472D /* GraphCell.swift */; };
+		2A42C4AB1C94A84100EE472D /* SleepTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4AA1C94A84100EE472D /* SleepTimeCell.swift */; };
+		2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B01C950FFB00EE472D /* JSONHandler.swift */; };
+		2A42C4B31C951F7400EE472D /* SleepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B21C951F7400EE472D /* SleepChartView.swift */; };
 		2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */; };
@@ -69,6 +72,9 @@
 		2A42953C1C88CB97002F9917 /* mTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mTabBarController.swift; sourceTree = "<group>"; };
 		2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyProgressViewController.swift; sourceTree = "<group>"; };
 		2A42C4A81C946C7800EE472D /* GraphCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphCell.swift; sourceTree = "<group>"; };
+		2A42C4AA1C94A84100EE472D /* SleepTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepTimeCell.swift; sourceTree = "<group>"; };
+		2A42C4B01C950FFB00EE472D /* JSONHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
+		2A42C4B21C951F7400EE472D /* SleepChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepChartView.swift; sourceTree = "<group>"; };
 		2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailGraphController.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		2AA5B8871C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "IntradaySedentary+CoreDataProperties.swift"; path = "../IntradaySedentary+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -128,6 +134,7 @@
 		2A1179221C8961240095FBB6 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				2A42C4B21C951F7400EE472D /* SleepChartView.swift */,
 				2A1179201C8961140095FBB6 /* GraphView.swift */,
 			);
 			name = CustomView;
@@ -225,6 +232,8 @@
 			children = (
 				2A42953C1C88CB97002F9917 /* mTabBarController.swift */,
 				2AF835821C7B84BC00287892 /* DailyProgressViewController.swift */,
+				2A42C4B01C950FFB00EE472D /* JSONHandler.swift */,
+				2A42C4AA1C94A84100EE472D /* SleepTimeCell.swift */,
 				2A42C4A81C946C7800EE472D /* GraphCell.swift */,
 				2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */,
 				2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */,
@@ -425,6 +434,7 @@
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
 				2A1179211C8961140095FBB6 /* GraphView.swift in Sources */,
+				2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */,
 				2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */,
 				2AA5B88C1C826A6400186BDD /* IntradaySedentary.swift in Sources */,
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
@@ -439,7 +449,9 @@
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
 				2AF835831C7B84BC00287892 /* DailyProgressViewController.swift in Sources */,
+				2A42C4B31C951F7400EE472D /* SleepChartView.swift in Sources */,
 				2A42C4A91C946C7800EE472D /* GraphCell.swift in Sources */,
+				2A42C4AB1C94A84100EE472D /* SleepTimeCell.swift in Sources */,
 				2AA5B88E1C826A6400186BDD /* IntradaySleepTime.swift in Sources */,
 				2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */,
 				2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */,

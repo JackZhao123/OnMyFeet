@@ -24,6 +24,5 @@ extension DailySummary {
 
     @NSManaged var client: Person?
     @NSManaged var intradaySedentary: NSOrderedSet?
-    @NSManaged var intradaySleep: NSOrderedSet?
 
 }
