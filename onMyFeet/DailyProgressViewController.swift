@@ -32,7 +32,7 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
     let fitbitAPI = FitbitAPI()
     var dailySummary: DailySummary?
     var currentDate: NSDate?
-    let dataType = ["steps","distances","activityIntensity","sleepTime"]
+    let dataType = ["steps","distance","activityIntensity","sleepTime"]
     var mDate : dateFormat?
     var noDataFlag = true
     var sleepCellHeight:CGFloat = 200
@@ -192,8 +192,8 @@ class DailyProgressViewController: UIViewController, UITableViewDelegate, UITabl
             return cell
             
         }else if (type == "sleepTime") {
-            var sleepCell = tableView.dequeueReusableCellWithIdentifier("sleepCell") as! SleepTimeCell
-            sleepCell = SleepTimeCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "sleepCell")
+//            var sleepCell = tableView.dequeueReusableCellWithIdentifier("sleepCell") as! SleepTimeCell
+            let sleepCell = SleepTimeCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "sleepCell")
 
             noDataFlag = true
             let dateTime = dailySummary?.valueForKey("dateTime") as? String

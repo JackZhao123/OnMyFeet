@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol FitbitAPIDelegate {
     func handleDailyOf(dataType: String, data: NSData)
     func handleIntradayOf(dataType: String, data: NSData)
+    func handleDailySummary(data: NSData, dateTime: String)
 }
 
 class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
@@ -25,6 +27,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     let requestTokenBody = "client_id=227GMP&grant_type=authorization_code&redirect_uri=onmyfeet://&code="
     let refreshTokenBody = "grant_type=refresh_token&refresh_token="
+    static var requestNum = 0
     
     let apiRequest = NSMutableURLRequest()
     
@@ -81,6 +84,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                 let body = requestTokenBody + authorizationCode
                 
                 runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
+                
             }
         }
     }
@@ -121,6 +125,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     func getUserName() {
         let url = NSURL(string: "https://api.fitbit.com/1/user/-/profile.json")!
+        
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error == nil) {
                 do{
@@ -153,6 +158,11 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         var urlString: String!
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if (error == nil) {
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if let remains = httpResponse.allHeaderFields["fitbit-rate-limit-remaining"] {
+                        print(remains)
+                    }
+                }
                 if let delegate = self.delegate {
                     delegate.handleDailyOf(dataType, data: data!)
                 }
@@ -183,6 +193,83 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         if let accessToken = accessToken {
             runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
+//            let headers = [
+//                "Authorization":"Bearer \(accessToken)"
+//            ]
+//            
+//            Alamofire.request(.GET, String(url), headers: headers).responseJSON(completionHandler: { response in
+//                print(response)
+//            })
+        }
+    }
+    
+    //MARK: Get All Daily Data 
+    func getDaily(startDate:String, var toEndDate endDate:String) {
+        if endDate == "today" {
+            let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day], fromDate: NSDate())
+            endDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
+        }
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.calendar = NSCalendar.currentCalendar()
+        formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        
+        if let date1 = formatter.dateFromString(startDate), let date2 = formatter.dateFromString(endDate) {
+            let interval = Int(date2.timeIntervalSinceDate(date1) / 86400.0)
+            print(interval)
+            
+            if let accessToken = accessToken {
+                let headers = [
+                    "Authorization":"Bearer \(accessToken)"
+                ]
+                
+                //************************************************************************
+                //**** Use Time Series to get data when interval bigger than 6 days ******
+                //************************************************************************
+                if interval >= 6 {
+                    for datatype in Constants.dataType {
+                        if let url = Constants.Fitbit.getTimeSeriesUrl(datatype, baseDate: startDate, endDate: endDate) {
+                            
+                            
+                            Alamofire.request(.GET, String(url), headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
+                                guard error == nil else {
+                                    print(error)
+                                    return
+                                }
+                                print(urlRequest?.allHeaderFields["Fitbit-Rate-Limit-Remaining"])
+                                self.delegate?.handleDailyOf(datatype, data: data!)
+                            })
+                        } else {
+                            print("Can't get url")
+                        }
+                    }
+                    
+                }
+                     //************************************************************************
+                     //**** Use Time Series to get data when interval less than 6 days ********
+                     //************************************************************************
+                else
+                {
+                    
+                    let count = interval + 1
+                    for index in 0...count - 1 {
+                        let date = date1.dateByAddingTimeInterval(86400.0 * Double(index))
+                        let dateString = formatter.stringFromDate(date)
+                        
+                        if let url = Constants.Fitbit.getDailySummaryURL(dateString) {
+                            Alamofire.request(.GET, String(url), headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
+                                guard error == nil else {
+                                    print(error)
+                                    return
+                                }
+                                print(urlRequest?.allHeaderFields["Fitbit-Rate-Limit-Remaining"])
+                                self.delegate?.handleDailySummary(data!, dateTime: dateString)
+                            })
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -233,6 +320,9 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         //Start URLSession
         let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
         let dataTask: NSURLSessionDataTask!
+        
+        //**************** Sending Request ***********************
+        
         if let completion = completion {
             dataTask = urlSession.dataTaskWithRequest(apiRequest, completionHandler: completion)
         } else {
@@ -256,7 +346,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         do{
             jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
             if let jsonData = jsonData {
-                print(jsonData)
+//                print(jsonData)
                 let refreshCode = jsonData.objectForKey("refresh_token") as? String
                 if let refreshCode = refreshCode {
                     NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")

@@ -16,11 +16,13 @@ extension DailySummary {
 
     @NSManaged var dateTime: String?
     @NSManaged var steps: NSNumber?
-    @NSManaged var distances: NSNumber?
+    @NSManaged var distance: NSNumber?
     @NSManaged var sleepTime: NSNumber?
     @NSManaged var minutesActive: NSNumber?
+//    @NSManaged var minutesFairlyActive: NSNumber?
     @NSManaged var minutesLightlyActive: NSNumber?
     @NSManaged var minutesSedentary: NSNumber?
+//    @NSManaged var minutesVeryActive: NSNumber?
 
     @NSManaged var client: Person?
     @NSManaged var intradaySedentary: NSOrderedSet?

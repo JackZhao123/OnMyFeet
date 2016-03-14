@@ -2,7 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
     <entity name="DailySummary" representedClassName=".DailySummary" syncable="YES">
         <attribute name="dateTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="distances" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="minutesActive" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="minutesLightlyActive" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="minutesSedentary" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>

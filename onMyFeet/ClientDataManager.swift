@@ -63,7 +63,7 @@ class ClientDataManager {
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
-        managedObjectContext.mergePolicy = NSOverwriteMergePolicy
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }()
     
@@ -91,6 +91,8 @@ class ClientDataManager {
             for p in result {
                 p.summary?.count
             }
+        } else {
+            print("There is no data")
         }
         
         return result
@@ -105,12 +107,12 @@ class ClientDataManager {
             print(error)
         }
         
-        if let result = result {
-            for d in result {
-                print(d.dateTime)
-                print(d.steps)
-            }
-        }
+//        if let result = result {
+//            for d in result {
+//                print(d.dateTime)
+//                print(d.minutesActive)
+//            }
+//        }
         
         return result
     }

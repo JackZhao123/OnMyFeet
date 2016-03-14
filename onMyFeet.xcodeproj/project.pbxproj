@@ -38,6 +38,7 @@
 		2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E51C72960300957BEF /* Assets.xcassets */; };
 		2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */; };
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
+		2ABFEC701C960EE00093D574 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC6F1C960EE00093D574 /* constants.swift */; };
 		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
 		2AE7662D1C921E590065471B /* Questionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662C1C921E590065471B /* Questionnaire.swift */; };
 		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
@@ -92,6 +93,7 @@
 		2AAA60EF1C72960300957BEF /* OnMyFeet.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnMyFeet.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60F31C72960300957BEF /* onMyFeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onMyFeetTests.swift; sourceTree = "<group>"; };
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ABFEC6F1C960EE00093D574 /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2AE7662C1C921E590065471B /* Questionnaire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Questionnaire.swift; sourceTree = "<group>"; };
 		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
 				2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */,
 				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
+				2ABFEC6F1C960EE00093D574 /* constants.swift */,
 			);
 			name = FitbitAPI;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				2A42953F1C88E3D4002F9917 /* WeeklyProgressViewController.swift in Sources */,
 				2A42953D1C88CB97002F9917 /* mTabBarController.swift in Sources */,
 				2A3F56821C91D3E5006349F5 /* CheckInViewController.swift in Sources */,
+				2ABFEC701C960EE00093D574 /* constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
