@@ -13,12 +13,13 @@ protocol FitbitAPIDelegate {
     func handleDailyOf(dataType: String, data: NSData)
     func handleIntradayOf(dataType: String, data: NSData)
     func handleDailySummary(data: NSData, dateTime: String)
+    func handleMinutesAsleep(data: NSData)
 }
 
 class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     //MARK: Properties
-    static let authenticationURL = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight"
+//    static let authenticationURL = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight"
     
     let authorizationHost = "https://api.fitbit.com/oauth2/token"
     let clientId = "227GMP"
@@ -62,9 +63,9 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         let url: NSURL!
         if flag {
-            url = NSURL(string: authenticationURL + "&prompt=login")
+            url = NSURL(string: Constants.Fitbit.AuthenticationURL + "&prompt=login")
         } else {
-            url = NSURL(string: authenticationURL)
+            url = NSURL(string: Constants.Fitbit.AuthenticationURL)
         }
         
         UIApplication.sharedApplication().openURL(url)
@@ -75,25 +76,37 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         NSUserDefaults.standardUserDefaults().setObject(authorizationCode, forKey: "AuthorizationCode")
     }
     
-    func requestAccessToken() {
-        if let authorizationCode = authorizationCode {
-            
-            if let encodedSecret = encodedSecret {
-                let url = NSURL(string: authorizationHost)
-                let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
-                let body = requestTokenBody + authorizationCode
-                
-                runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
-                
-            }
-        }
-    }
     
+    //MARK: Request and refresh AccessToken
+    func requestAccessToken() {
+            let components = NSURLComponents()
+            components.scheme = Constants.Fitbit.APIScheme
+            components.host = Constants.Fitbit.APIHost
+            components.path = Constants.Fitbit.AuthorizationPath
+            let url = components.URL
+            
+            let headerValues = [Constants.FitbitParameterKey.Authorization: Constants.FitbitParameterValue.Authorization,
+                Constants.FitbitParameterKey.ContentType: Constants.FitbitParameterValue.ContentType]
+            
+            let parameters = [Constants.FitbitParameterKey.ClientID: Constants.FitbitParameterValue.ClientID,
+                Constants.FitbitParameterKey.GrantTyoe: Constants.FitbitParameterValue.GrantType_AuthorizationCode,
+                Constants.FitbitParameterKey.RedirectURI: Constants.FitbitParameterValue.RedirectURI,
+                Constants.FitbitParameterKey.AuthorizationCode: Constants.FitbitParameterValue.AuthorizationCode!
+            ]
+            
+            Alamofire.request(.POST, String(url!), headers:headerValues, parameters: parameters).response(completionHandler: {(request, urlrequest, data, error) -> Void in
+                if error != nil {
+                    print(error)
+                }
+                
+                self.saveAccessOrRefeshTokenFrom(data!)
+            })
+        }
     
     func refreshAccessToken() {
-        let lastAccessTokenTime = NSUserDefaults.standardUserDefaults().objectForKey("AccessTokenTime") as? NSDate
+        let lastAccessTokenTime = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.AccessTokenTime) as? NSDate
         var syncFlag = false
-        print(accessToken)
+//        print(accessToken)
         
         if let lastAccessTokenTime = lastAccessTokenTime {
             print(lastAccessTokenTime)
@@ -110,15 +123,67 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         }
         
         if syncFlag {
-            if let refreshCode = refreshCode {
-                let url = NSURL(string: authorizationHost)
+                let components = NSURLComponents()
+                components.scheme = Constants.Fitbit.APIScheme
+                components.host = Constants.Fitbit.APIHost
+                components.path = Constants.Fitbit.AuthorizationPath
+                let url = components.URL
                 
-                if let encodedSecret = encodedSecret {
-                    let headerValues = ["Authorization":"Basic \(encodedSecret)", "Content-Type": contentType]
-                    let body = refreshTokenBody + refreshCode
+                let headerValues = [Constants.FitbitParameterKey.Authorization: Constants.FitbitParameterValue.Authorization,
+                    Constants.FitbitParameterKey.ContentType: Constants.FitbitParameterValue.ContentType ]
+                
+                let parameters = [Constants.FitbitParameterKey.GrantTyoe: Constants.FitbitParameterValue.GrantType_RefreshToken,
+                    Constants.FitbitParameterKey.RefreshToken: Constants.FitbitParameterValue.RefreshCode!
+                ]
+            
+                Alamofire.request(.POST, String(url!), headers:headerValues, parameters: parameters).response(completionHandler: {(request, urlrequest, data, error) -> Void in
+                    if error != nil {
+                        print(error)
+                    }
                     
-                    runURLSessionWithURL(url!, withHTTPMethod: "POST", headerValues: headerValues, httpBody: body, completionHandler: nil)
-                }
+                    self.saveAccessOrRefeshTokenFrom(data!)
+                })
+        }
+    }
+    
+    
+    //MARK: Save AccessToken & RefreshToken
+    func saveAccessOrRefeshTokenFrom(jsonData: NSData) {
+        let json = JSON(data: jsonData)
+        print(json)
+        
+        if let accessToken = json["access_token"].string {
+            NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: Constants.UserDefaultsKey.AccessToken)
+            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: Constants.UserDefaultsKey.AccessTokenTime)
+        }
+        
+        if let refreshCode = json["refresh_token"].string {
+            NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: Constants.UserDefaultsKey.RefreshCode)
+        }
+    }
+    
+    func getFitbitID() {
+        let components = NSURLComponents()
+        components.scheme = Constants.Fitbit.APIScheme
+        components.host = Constants.Fitbit.APIHost
+        components.path = Constants.Fitbit.DevicesInfoPath
+        
+        if let url = components.URL {
+            if let accessToken = accessToken {
+                let headers = ["Authorization":"Bearer \(accessToken)"]
+                
+                Alamofire.request(.GET, String(url), headers:headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
+                    guard error == nil else {
+                        print(error)
+                        return
+                    }
+                    let json = JSON(data: data!)
+                    if NSUserDefaults.standardUserDefaults().valueForKey("CurrentDeviceID") == nil {
+                        let value = json[0]["id"].stringValue
+                        NSUserDefaults.standardUserDefaults().setValue(value, forKey: "CurrentDeviceID")
+                    }
+                })
+
             }
         }
     }
@@ -193,13 +258,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         if let accessToken = accessToken {
             runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
-//            let headers = [
-//                "Authorization":"Bearer \(accessToken)"
-//            ]
-//            
-//            Alamofire.request(.GET, String(url), headers: headers).responseJSON(completionHandler: { response in
-//                print(response)
-//            })
         }
     }
     
@@ -224,13 +282,29 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                     "Authorization":"Bearer \(accessToken)"
                 ]
                 
-                //************************************************************************
-                //**** Use Time Series to get data when interval bigger than 6 days ******
-                //************************************************************************
+//************************************************************************
+//*************************** Get Sleep Time *****************************
+//************************************************************************
+                
+                if let url = Constants.Fitbit.getMinutesAsleepURL(startDate, endDate: endDate) {
+                    Alamofire.request(.GET, String(url), headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
+                        guard error == nil else {
+                            print(error)
+                            return
+                        }
+                        self.delegate?.handleMinutesAsleep(data!)
+                    })
+                }
+                
+                
+                
+//************************************************************************
+//**** Use Time Series to get data when interval bigger than 6 days ******
+//************************************************************************
+                
                 if interval >= 6 {
                     for datatype in Constants.dataType {
                         if let url = Constants.Fitbit.getTimeSeriesUrl(datatype, baseDate: startDate, endDate: endDate) {
-                            
                             
                             Alamofire.request(.GET, String(url), headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
                                 guard error == nil else {
@@ -246,12 +320,11 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                     }
                     
                 }
-                     //************************************************************************
-                     //**** Use Time Series to get data when interval less than 6 days ********
-                     //************************************************************************
+//************************************************************************
+//**** Use Time Series to get data when interval less than 6 days ********
+//************************************************************************
                 else
                 {
-                    
                     let count = interval + 1
                     for index in 0...count - 1 {
                         let date = date1.dateByAddingTimeInterval(86400.0 * Double(index))
@@ -333,35 +406,35 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     }
     
     //MARK: URLSessionDelegate
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-        if let error = error {
-            print(error)
-        }
-    }
-
-    
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-        let jsonData: AnyObject?
-        
-        do{
-            jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-            if let jsonData = jsonData {
-//                print(jsonData)
-                let refreshCode = jsonData.objectForKey("refresh_token") as? String
-                if let refreshCode = refreshCode {
-                    NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
-                    
-                }
-                
-                let accessToken = jsonData.objectForKey("access_token") as? String
-                if let accessToken = accessToken {
-                    NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
-                    NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "AccessTokenTime")
-                }
-            }
-        } catch {
-            print(error)
-        }
-    }
+//    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+//        if let error = error {
+//            print(error)
+//        }
+//    }
+//
+//    
+//    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+//        let jsonData: AnyObject?
+//        
+//        do{
+//            jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+//            if let jsonData = jsonData {
+//                print("Refreshing Token" + "\(jsonData)")
+//                let refreshCode = jsonData.objectForKey("refresh_token") as? String
+//                if let refreshCode = refreshCode {
+//                    NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
+//                    
+//                }
+//                
+//                let accessToken = jsonData.objectForKey("access_token") as? String
+//                if let accessToken = accessToken {
+//                    NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
+//                    NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "AccessTokenTime")
+//                }
+//            }
+//        } catch {
+//            print(error)
+//        }
+//    }
     
 }

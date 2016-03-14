@@ -15,7 +15,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var chartScrolView: UIScrollView!
     
-    let graphTitle = ["Steps","Distance","MinutesSedentary","MinutesActive","MinutesLightlyActive","SleepTime"]
+    let graphTitle = ["Steps","Distance","MinutesSedentary","MinutesActive","MinutesLightlyActive","minutesAsleep"]
     
     var today: dateFormat!
     var firstDayOfWeek: dateFormat!
@@ -26,6 +26,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
     var stepChart:BarChartView!
     var distanceChart: LineChartView!
     var intensityChart: BarChartView!
+    var sleepTimeChart: BarChartView!
     
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
@@ -41,19 +42,21 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         getWeeklyData()
         
         initStepsChart()
-        self.chartScrolView.contentSize = CGSize(width: screenWidth, height: 3 * (chartHeight + 8))
+        self.chartScrolView.contentSize = CGSize(width: screenWidth, height: 4 * (chartHeight + 8))
     }
     
     func initStepsChart() {
         stepChart = BarChartView(frame: CGRect(x: 8, y: 4, width: screenWidth - 16 , height: chartHeight ))
         distanceChart = LineChartView(frame: CGRect(x: 8, y: 8 + chartHeight, width: screenWidth - 16 , height: chartHeight ))
         intensityChart = BarChartView(frame: CGRect(x: 8, y: 16 + 2 * chartHeight, width: screenWidth - 16 , height: chartHeight ))
+        sleepTimeChart = BarChartView(frame: CGRect(x: 8, y: 16 + 3 * chartHeight, width: screenWidth - 16, height: chartHeight))
         
         populateChartData()
         
         configureView(stepChart)
         configureView(distanceChart)
         configureView(intensityChart)
+        configureView(sleepTimeChart)
         
     }
     
@@ -69,60 +72,79 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         chartView.descriptionText = ""
         chartView.userInteractionEnabled = false
         
+        chartView.animate(yAxisDuration: 1.5)
+        
         self.chartScrolView.addSubview(chartView)
     }
     
     func populateChartData() {
+        //ReturnGraphData = [steps,distances,minutesSedentary,minutesActive,minutesLightlyActive,minutesAsleep]
+        
         let steps = returnGraphData()[0]
         let distance = returnGraphData()[1]
         let sedentary = returnGraphData()[2]
         let active = returnGraphData()[3]
         let lightly = returnGraphData()[4]
+        let timeAsleep = returnGraphData()[5]
         
         var dataEntries: [BarChartDataEntry] = []
         var distanceEntries: [ChartDataEntry] = []
         var sedentaryEntries: [BarChartDataEntry] = []
         var activeEntries: [BarChartDataEntry] = []
         var lightlyEntries: [BarChartDataEntry] = []
+        var sleepEntries: [BarChartDataEntry] = []
         
         for i in 0..<steps.count {
             let dataEntry = BarChartDataEntry(value: steps[i] , xIndex: i)
             dataEntries.append(dataEntry)
             
-            let sedentaryEntry = BarChartDataEntry(value: sedentary[i], xIndex: i)
+            let sedentaryEntry = BarChartDataEntry(value: (sedentary[i] / 60), xIndex: i)
             sedentaryEntries.append(sedentaryEntry)
             
-            let activeEntry = BarChartDataEntry(value: active[i], xIndex: i)
+            let activeEntry = BarChartDataEntry(value: (active[i] / 60), xIndex: i)
             activeEntries.append(activeEntry)
             
-            let lightlyEntry = BarChartDataEntry(value: lightly[i], xIndex: i)
+            let lightlyEntry = BarChartDataEntry(value: (lightly[i] / 60), xIndex: i)
             lightlyEntries.append(lightlyEntry)
             
             let distanceEntry = ChartDataEntry(value: distance[i], xIndex: i)
             distanceEntries.append(distanceEntry)
+            
+            let sleepEntry = BarChartDataEntry(value: (timeAsleep[i] / 60), xIndex: i)
+            sleepEntries.append(sleepEntry)
         }
         
         let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Steps")
+        chartDataSet.colors = [UIColor(red: 1.000, green: 0.808, blue: 0.212, alpha: 1.00)]
         let chartData = BarChartData(xVals: weekDay, dataSet: chartDataSet)
         
         let lineDataSet = LineChartDataSet(yVals: distanceEntries, label: "Distance (meters)")
+        lineDataSet.colors = [UIColor(red: 0.000, green: 0.988, blue: 0.694, alpha: 1.00)]
+        lineDataSet.circleColors = [UIColor(red: 0.000, green: 0.988, blue: 0.694, alpha: 1.00)]
+        lineDataSet.circleHoleColor = UIColor(red: 0.000, green: 0.988, blue: 0.694, alpha: 1.00)
+        lineDataSet.circleRadius = 3.0
         let lineData = LineChartData(xVals: weekDay, dataSet: lineDataSet)
         
         let sedentaryDataSet = BarChartDataSet(yVals: sedentaryEntries, label: "sedentary")
-        sedentaryDataSet.colors = [UIColor.redColor()]
+        sedentaryDataSet.colors = [UIColor(red: 1.000, green: 0.506, blue: 0.588, alpha: 1.00)]
         
         let activeDataSet = BarChartDataSet(yVals: activeEntries, label: "active")
-        activeDataSet.colors = [UIColor.greenColor()]
+        activeDataSet.colors = [UIColor(red: 0.675, green: 1.000, blue: 0.545, alpha: 1.00)]
         
         let lightlyDataSet = BarChartDataSet(yVals: lightlyEntries, label: "lightly")
-        lightlyDataSet.colors = [UIColor.yellowColor()]
+        lightlyDataSet.colors = [UIColor(red: 1.000, green: 0.808, blue: 0.212, alpha: 1.00)]
         
         let intensityData = BarChartData(xVals: weekDay, dataSets: [sedentaryDataSet,lightlyDataSet,activeDataSet])
+        
+        let sleepDataSet = BarChartDataSet(yVals: sleepEntries, label: "Time Asleep (Hours)")
+        sleepDataSet.colors = [UIColor(red: 0.149, green: 0.282, blue: 0.475, alpha: 0.8)]
+        let sleepData = BarChartData(xVals: weekDay, dataSet: sleepDataSet)
 
         
         stepChart.data = chartData
         distanceChart.data = lineData
         intensityChart.data = intensityData
+        sleepTimeChart.data = sleepData
     }
     
     //MARK: GetData
@@ -132,7 +154,7 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
         var minutesActive = [Double]()
         var minutesLightlyActive = [Double]()
         var minutesSedentary = [Double]()
-        var sleepTime = [Double]()
+        var minutesAsleep = [Double]()
         
         for i in 0..<7 {
             if let summary = weeklyData[i] {
@@ -141,18 +163,18 @@ class WeeklyProgressViewController: UIViewController,graphViewDelegate {
                 minutesActive.append((summary.minutesActive?.doubleValue)!)
                 minutesLightlyActive.append((summary.minutesLightlyActive?.doubleValue)!)
                 minutesSedentary.append((summary.minutesSedentary?.doubleValue)!)
-                sleepTime.append((summary.sleepTime?.doubleValue)!)
+                minutesAsleep.append((summary.minutesAsleep?.doubleValue)!)
             } else {
                 steps.append(0.0)
                 distances.append(0)
                 minutesActive.append(0)
                 minutesLightlyActive.append(0)
                 minutesSedentary.append(0)
-                sleepTime.append(0)
+                minutesAsleep.append(0)
             }
         }
         
-        let data = [steps,distances,minutesSedentary,minutesActive,minutesLightlyActive,sleepTime]
+        let data = [steps,distances,minutesSedentary,minutesActive,minutesLightlyActive,minutesAsleep]
         return data
     }
     

@@ -4,9 +4,9 @@
         <attribute name="dateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="minutesActive" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="minutesAsleep" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="minutesLightlyActive" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="minutesSedentary" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="sleepTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="steps" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="summary" inverseEntity="Person" syncable="YES"/>
         <relationship name="intradaySedentary" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="IntradaySedentary" inverseName="day" inverseEntity="IntradaySedentary" syncable="YES"/>

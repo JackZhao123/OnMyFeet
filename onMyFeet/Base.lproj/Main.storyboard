@@ -478,6 +478,83 @@
             </objects>
             <point key="canvasLocation" x="3381" y="1361"/>
         </scene>
+        <!--Test View Controller-->
+        <scene sceneID="dq0-as-R8r">
+            <objects>
+                <viewController storyboardIdentifier="testModule" id="gBF-Nz-SNl" customClass="TestViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vd1-ZN-8aN"/>
+                        <viewControllerLayoutGuide type="bottom" id="LAZ-Ff-DCb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pBI-5L-GqT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bV7-lh-ohq">
+                                <rect key="frame" x="206" y="35" width="188" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="EhE-DF-mdL"/>
+                                    <constraint firstAttribute="width" constant="188" id="Xia-zf-lhG"/>
+                                </constraints>
+                                <state key="normal" title="Steps"/>
+                                <connections>
+                                    <action selector="sendSteps:" destination="gBF-Nz-SNl" eventType="touchUpInside" id="gdL-S7-jzI"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="As5-TD-YkM">
+                                <rect key="frame" x="0.0" y="96" width="600" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="SyU-ZO-bbJ"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdE-0b-iA3">
+                                <rect key="frame" x="238" y="232" width="125" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="EE6-BU-e90"/>
+                                    <constraint firstAttribute="width" constant="125" id="asc-iG-gZm"/>
+                                </constraints>
+                                <state key="normal" title="Get System Token"/>
+                                <connections>
+                                    <action selector="getSystemToken:" destination="gBF-Nz-SNl" eventType="touchUpInside" id="eep-PM-v63"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wf-yl-Dpy">
+                                <rect key="frame" x="251" y="270" width="98" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="98" id="lb6-vi-C8g"/>
+                                    <constraint firstAttribute="height" constant="30" id="pNU-5b-A6W"/>
+                                </constraints>
+                                <state key="normal" title="Refresh Token"/>
+                                <connections>
+                                    <action selector="refreshToken:" destination="gBF-Nz-SNl" eventType="touchUpInside" id="ayG-aF-khM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bV7-lh-ohq" firstAttribute="top" secondItem="Vd1-ZN-8aN" secondAttribute="bottom" constant="15" id="DEi-Sz-xaY"/>
+                            <constraint firstItem="As5-TD-YkM" firstAttribute="centerX" secondItem="pBI-5L-GqT" secondAttribute="centerX" id="F4e-Va-agk"/>
+                            <constraint firstItem="zdE-0b-iA3" firstAttribute="top" secondItem="As5-TD-YkM" secondAttribute="bottom" constant="8" id="HbR-Sr-Rth"/>
+                            <constraint firstItem="zdE-0b-iA3" firstAttribute="centerX" secondItem="pBI-5L-GqT" secondAttribute="centerX" id="UJx-zs-9eF"/>
+                            <constraint firstItem="As5-TD-YkM" firstAttribute="width" secondItem="pBI-5L-GqT" secondAttribute="width" id="Zgh-LZ-vAK"/>
+                            <constraint firstItem="bV7-lh-ohq" firstAttribute="centerX" secondItem="pBI-5L-GqT" secondAttribute="centerX" id="cCa-eq-V5a"/>
+                            <constraint firstItem="5Wf-yl-Dpy" firstAttribute="centerX" secondItem="pBI-5L-GqT" secondAttribute="centerX" id="ibS-kM-hhm"/>
+                            <constraint firstItem="5Wf-yl-Dpy" firstAttribute="top" secondItem="zdE-0b-iA3" secondAttribute="bottom" constant="8" id="vLw-35-siy"/>
+                            <constraint firstItem="As5-TD-YkM" firstAttribute="top" secondItem="Vd1-ZN-8aN" secondAttribute="bottom" constant="76" id="xVC-m1-xkj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="displayTextView" destination="As5-TD-YkM" id="Lgt-j2-n8t"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2xx-Mc-Eox" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3381" y="2095"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="OLG-bb-euE">
             <objects>

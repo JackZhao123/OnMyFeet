@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
 //    MARK: Properties
     var userInfo: String!
-    var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
+    var categories = ["My Goals", "Monitoring Progress", "Checking in"/*, "Taking Action", "Test Module"*/]
     var refreshControl: UIRefreshControl!
     
 //    MARK: view initialize
@@ -79,8 +79,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             storyboardIdentifier = "progressTabBarController"//"progressTabBarController"
         case 2:
             storyboardIdentifier = "checkIn"
+        case 4:
+            storyboardIdentifier = "testModule"
         default:
-            BackendOperation.postData()
             storyboardIdentifier = nil
         }
         

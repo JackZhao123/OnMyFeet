@@ -45,7 +45,7 @@ class GraphCell: UITableViewCell {
             
             if xTypeArray.count > 0{
                 pieChart = PieChartView(frame: CGRect(x: 24, y: 29, width: screenWidth - 24 - 8, height: 300))
-                
+
                 let sedentaryDataSet = PieChartDataSet(yVals: dataEntries, label: "(minutes)")
                 sedentaryDataSet.colors = [sedentartColor, lightlyColor, activeColor]
                 

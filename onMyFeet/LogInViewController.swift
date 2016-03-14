@@ -31,6 +31,7 @@ class LogInViewController: UIViewController {
         if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
             FitbitAPI.sharedAPI().refreshAccessToken()
             FitbitAPI.sharedAPI().getUserName()
+            FitbitAPI.sharedAPI().getFitbitID()
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }

@@ -17,7 +17,7 @@ extension DailySummary {
     @NSManaged var dateTime: String?
     @NSManaged var steps: NSNumber?
     @NSManaged var distance: NSNumber?
-    @NSManaged var sleepTime: NSNumber?
+    @NSManaged var minutesAsleep: NSNumber?
     @NSManaged var minutesActive: NSNumber?
 //    @NSManaged var minutesFairlyActive: NSNumber?
     @NSManaged var minutesLightlyActive: NSNumber?
