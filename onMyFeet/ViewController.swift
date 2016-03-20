@@ -74,7 +74,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var storyboardIdentifier: String?
         switch indexPath.row {
         case 0:
-            storyboardIdentifier = "GoalsController"
+            storyboardIdentifier = "ViewGoalsViewController"
         case 1:
             storyboardIdentifier = "progressTabBarController"//"progressTabBarController"
         case 2:
