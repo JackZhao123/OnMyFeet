@@ -35,11 +35,11 @@ class ChooseActivitiesTableViewController: UITableViewController {
         goals = GoalDataManager().fetchGoals()!
         theGoal = goals[index]
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "done")
+        let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
         nextBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = nextBtn
 

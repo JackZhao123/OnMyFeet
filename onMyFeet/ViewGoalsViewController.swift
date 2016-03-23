@@ -54,11 +54,11 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.title = "My Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewGoalsViewController.goBack))
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        let nextBtn = UIBarButtonItem(title: "Add Goals", style: UIBarButtonItemStyle.Plain, target: self, action: "goNext")
+        let nextBtn = UIBarButtonItem(title: "Add Goals", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewGoalsViewController.goNext))
         nextBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = nextBtn
         

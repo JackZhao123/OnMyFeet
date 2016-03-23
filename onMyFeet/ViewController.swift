@@ -26,7 +26,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.menuTableView.dataSource = self
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: #selector(ViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
         self.menuTableView.addSubview(refreshControl)
         
         indicatiorView.layer.cornerRadius = 8.0
@@ -130,12 +130,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func refresh() {
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Syncing")
+        //self.indicatiorView.hidden = false
+        //self.mIndicator.startAnimating()
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             DataCoordinator.sharedInstance.syncData()
             dispatch_async(dispatch_get_main_queue()) {
-                self.refreshControl.endRefreshing()
-                self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+                //self.mIndicator.stopAnimating()
+                //self.indicatiorView.hidden = true
             }
         }
 

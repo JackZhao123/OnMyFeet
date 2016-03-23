@@ -85,7 +85,7 @@ protocol graphViewDelegate {
         noDataLabel?.textColor = UIColor.whiteColor()
         noDataLabel?.text = "No Data"
         
-        let tapRecognizor = UITapGestureRecognizer(target: self, action: "handleTap")
+        let tapRecognizor = UITapGestureRecognizer(target: self, action: #selector(GraphView.handleTap))
         self.addGestureRecognizer(tapRecognizor)
         
     }

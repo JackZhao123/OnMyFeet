@@ -217,8 +217,9 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         }
     }
     
-    func getDaily(let typeOfData dataType:String, startDate:String, var toEndDate endDate:String) {
+    func getDaily(typeOfData dataType:String, startDate:String, toEndDate endDate:String) {
         var dateComponent = endDate
+        var mEndDate = endDate
         let url: NSURL!
         var urlString: String!
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
@@ -236,9 +237,9 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             }
         }
         
-        if endDate == "today" {
+        if mEndDate == "today" {
             let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day], fromDate: NSDate())
-            endDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
+            mEndDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
         }
         
         if dataType == "sleep" {
@@ -262,10 +263,11 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     }
     
     //MARK: Get All Daily Data 
-    func getDaily(startDate:String, var toEndDate endDate:String) {
-        if endDate == "today" {
+    func getDaily(startDate:String, toEndDate endDate:String) {
+        var mEndDate = endDate
+        if mEndDate == "today" {
             let components = NSCalendar.currentCalendar().components([.Year, .Month, .Day], fromDate: NSDate())
-            endDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
+            mEndDate = String(format: "%d-%02d-%02d", components.year,components.month,components.day)
         }
         
         let formatter = NSDateFormatter()
@@ -273,7 +275,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         formatter.calendar = NSCalendar.currentCalendar()
         formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         
-        if let date1 = formatter.dateFromString(startDate), let date2 = formatter.dateFromString(endDate) {
+        if let date1 = formatter.dateFromString(startDate), let date2 = formatter.dateFromString(mEndDate) {
             let interval = Int(date2.timeIntervalSinceDate(date1) / 86400.0)
             print(interval)
             
@@ -286,7 +288,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
 //*************************** Get Sleep Time *****************************
 //************************************************************************
                 
-                if let url = Constants.Fitbit.getMinutesAsleepURL(startDate, endDate: endDate) {
+                if let url = Constants.Fitbit.getMinutesAsleepURL(startDate, endDate: mEndDate) {
                     Alamofire.request(.GET, String(url), headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
                         guard error == nil else {
                             print(error)
@@ -304,7 +306,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                 
                 if interval >= 6 {
                     for datatype in Constants.dataType {
-                        if let url = Constants.Fitbit.getTimeSeriesUrl(datatype, baseDate: startDate, endDate: endDate) {
+                        if let url = Constants.Fitbit.getTimeSeriesUrl(datatype, baseDate: startDate, endDate: mEndDate) {
                             
                             Alamofire.request(.GET, String(url), headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
                                 guard error == nil else {

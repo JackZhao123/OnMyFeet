@@ -46,11 +46,11 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
         super.viewDidLoad()
         self.title = "Prioritizing Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goBack))
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: "goHome")
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = homeBtn
         

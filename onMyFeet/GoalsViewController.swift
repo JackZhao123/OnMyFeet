@@ -76,11 +76,11 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         super.viewDidLoad()
         self.title = "Setting Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goBack))
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: "goHome")
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = homeBtn
 
@@ -141,16 +141,16 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     //MARK: Animations
     func animation() {
         
-        for var i = 0; i < self.selectedImages.count; ++i {
+        for i in 0..<self.selectedImages.count {
             
             let goal = UIImageView()
             let b1 = goal.bounds
             var b2 = self.BoxView.bounds
-                b2.size.width = 120
-                b2.size.height = 120
+            b2.size.width = 120
+            b2.size.height = 120
             let b3 = self.goalView.bounds
-                let width = b3.size.width
-                let height = b3.size.height
+            let width = b3.size.width
+            let height = b3.size.height
             let b4 = self.collectionView.bounds
             let b5 = self.selectLabel.bounds
             
@@ -162,19 +162,19 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             let fullRotation = CGFloat(M_PI * 2)
             let duration = 2.0
             let delay = 0.0
-
+            
             
             
             UIView.animateKeyframesWithDuration(duration, delay: delay, options: UIViewKeyframeAnimationOptions.CalculationModePaced, animations: {
-                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
-                        goal.transform = CGAffineTransformMakeRotation (1/3 * fullRotation)
-                    })
-                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
-                        goal.transform = CGAffineTransformMakeRotation (2/3 * fullRotation)
-                    })
-              UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
-                        goal.transform = CGAffineTransformMakeRotation (3/3 * fullRotation)
-                    })
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                    goal.transform = CGAffineTransformMakeRotation (1/3 * fullRotation)
+                })
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                    goal.transform = CGAffineTransformMakeRotation (2/3 * fullRotation)
+                })
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                    goal.transform = CGAffineTransformMakeRotation (3/3 * fullRotation)
+                })
                 }, completion: { finished in
                     goal.bounds = CGRect(x: b1.origin.x, y: b1.origin.y, width: 0, height: 0)
                     
@@ -195,7 +195,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             }else {
                 path.moveToPoint(CGPoint (x: w1*CGFloat(i), y: h1))
             }
-
+            
             path.addLineToPoint(CGPoint(x: width/2, y: height-150))
             
             let anim = CAKeyframeAnimation (keyPath: "position")
@@ -205,7 +205,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             anim.timeOffset = delay
             
             goal.layer.addAnimation (anim, forKey: "animate position along path")
-    
+            
         }
 
     }

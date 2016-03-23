@@ -36,7 +36,7 @@ class QuestionnaireViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         self.automaticallyAdjustsScrollViewInsets = false
         
-        let finishButton = UIBarButtonItem(title: "Submit", style: .Done, target: self, action: "submit")
+        let finishButton = UIBarButtonItem(title: "Submit", style: .Done, target: self, action: #selector(QuestionnaireViewController.submit))
         finishButton.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = finishButton
         
@@ -107,7 +107,7 @@ class QuestionnaireViewController: UIViewController {
                 defaultValue = (slider.maximumValue) / 2
             
                 slider.value = defaultValue
-                slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+                slider.addTarget(self, action: #selector(QuestionnaireViewController.sliderValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
                 
                 self.mScrollView.addSubview(slider)
                 

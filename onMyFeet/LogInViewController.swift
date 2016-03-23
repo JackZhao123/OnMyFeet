@@ -19,7 +19,7 @@ class LogInViewController: UIViewController {
         logInBtn.layer.cornerRadius = 8.0;
         logInBtn.clipsToBounds = true;
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LogInViewController.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {

@@ -97,8 +97,8 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         }
 
         textView.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         if (index <= 0) {
             previousBtn.enabled = false
@@ -115,11 +115,11 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         
         self.title = "Personalizing Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PersonalizeGoalsViewController.goBack))
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: "goHome")
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PersonalizeGoalsViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = homeBtn
         

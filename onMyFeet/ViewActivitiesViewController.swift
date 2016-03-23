@@ -49,11 +49,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         stackView.hidden = false
         textView.hidden = false
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: "goBack")
+        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goBack))
         backBtn.tintColor = UIColor.whiteColor()
         navigationItem.leftBarButtonItem = backBtn
         
-        let nextBtn = UIBarButtonItem(title: "Delete All", style: UIBarButtonItemStyle.Plain, target: self, action: "deleteAll")
+        let nextBtn = UIBarButtonItem(title: "Delete All", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.deleteAll))
         nextBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = nextBtn
         
@@ -196,7 +196,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         footerView!.backgroundColor = UIColor.whiteColor()
         let button = UIButton (frame: CGRectMake (tableView.frame.width/2-30, 5, 60, 60))
         button.setImage(UIImage (named: "addBtn"), forState: UIControlState.Normal)
-        button.addTarget(self, action: "goNext", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), forControlEvents: UIControlEvents.TouchUpInside)
         footerView!.addSubview(button)
         
         return footerView
