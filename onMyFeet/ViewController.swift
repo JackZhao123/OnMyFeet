@@ -24,9 +24,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
+        
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.backgroundColor = UIColor(red: 0.831, green: 0.859, blue: 0.710, alpha: 1.00)
+        self.refreshControl.tintColor = UIColor.grayColor()
+        
+        self.refreshControl.attributedTitle = NSAttributedString(string:"Push to refresh", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
         self.refreshControl.addTarget(self, action: #selector(ViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+        
         self.menuTableView.addSubview(refreshControl)
         
         indicatiorView.layer.cornerRadius = 8.0
@@ -123,20 +128,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func syncData(sender: AnyObject) {
+        UIView.animateWithDuration(2.0, animations: {()->Void in
+            self.menuTableView.contentOffset = CGPoint(x: 0.0, y: -100.0)
+            }, completion: {(finish)-> Void in self.menuTableView.contentOffset = CGPoint(x: 0.0, y: 0.0 )})
         
         self.refreshControl.beginRefreshing()
-        menuTableView.setContentOffset(CGPoint(x: 0.0, y: -(self.refreshControl.frame.size.height)), animated: true)
-        refresh()
+        self.refreshControl.attributedTitle = NSAttributedString(string:"Syncing", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+        //refresh()
+        
+//        UIView.beginAnimations(nil, context: nil)
+//        UIView.setAnimationDuration(1.0)
+//        self.menuTableView.contentOffset = CGPoint(x: 0.0, y: 0.0)
+//        UIView.commitAnimations()
     }
     
     func refresh() {
-        //self.indicatiorView.hidden = false
-        //self.mIndicator.startAnimating()
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             DataCoordinator.sharedInstance.syncData()
             dispatch_async(dispatch_get_main_queue()) {
-                //self.mIndicator.stopAnimating()
-                //self.indicatiorView.hidden = true
+                self.refreshControl.endRefreshing()
             }
         }
 
