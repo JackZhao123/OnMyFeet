@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		278865DA0F1EDD802FAF8DBD /* Pods_OnMyFeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */; };
 		2A1179211C8961140095FBB6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1179201C8961140095FBB6 /* GraphView.swift */; };
+		2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */; };
 		2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */; };
 		2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */; };
 		2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */; };
@@ -16,6 +17,7 @@
 		2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */; };
 		2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */; };
 		2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */; };
+		2A3562B01CA7260500C20CEF /* DateStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3562AF1CA7260500C20CEF /* DateStruct.swift */; };
 		2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */; };
 		2A3F56821C91D3E5006349F5 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */; };
 		2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */; };
@@ -26,6 +28,8 @@
 		2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B01C950FFB00EE472D /* JSONHandler.swift */; };
 		2A42C4B31C951F7400EE472D /* SleepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B21C951F7400EE472D /* SleepChartView.swift */; };
 		2A53DA001C8B28C700082DF6 /* detailGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */; };
+		2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60D87C1CA6F07500205B01 /* DashView.swift */; };
+		2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60D8801CA7026F00205B01 /* DataItem.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
 		2A8259A21C97AB3B00019104 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8259931C97AB3B00019104 /* Goal.swift */; };
 		2A8259A31C97AB3B00019104 /* GoalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8259941C97AB3B00019104 /* GoalDataManager.swift */; };
@@ -56,6 +60,7 @@
 		2ABFEC701C960EE00093D574 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC6F1C960EE00093D574 /* Constants.swift */; };
 		2ABFEC731C9699630093D574 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC721C9699630093D574 /* TestViewController.swift */; };
 		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
+		2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */; };
 		2AE7662D1C921E590065471B /* Questionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662C1C921E590065471B /* Questionnaire.swift */; };
 		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
 		2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF8357E1C7B560000287892 /* LogInViewController.swift */; };
@@ -75,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		2A1179201C8961140095FBB6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuestionSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
 		2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 		2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DailySummary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataManager.swift; sourceTree = "<group>"; };
+		2A3562AF1CA7260500C20CEF /* DateStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateStruct.swift; sourceTree = "<group>"; };
 		2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
 		2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 		2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionnaireViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +99,8 @@
 		2A42C4B01C950FFB00EE472D /* JSONHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
 		2A42C4B21C951F7400EE472D /* SleepChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepChartView.swift; sourceTree = "<group>"; };
 		2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailGraphController.swift; sourceTree = "<group>"; };
+		2A60D87C1CA6F07500205B01 /* DashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashView.swift; sourceTree = "<group>"; };
+		2A60D8801CA7026F00205B01 /* DataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItem.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		2A8259931C97AB3B00019104 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		2A8259941C97AB3B00019104 /* GoalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalDataManager.swift; sourceTree = "<group>"; };
@@ -126,6 +135,7 @@
 		2ABFEC6F1C960EE00093D574 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2ABFEC721C9699630093D574 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		2AE7662C1C921E590065471B /* Questionnaire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Questionnaire.swift; sourceTree = "<group>"; };
 		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
 		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +270,46 @@
 			name = TestViewController;
 			sourceTree = "<group>";
 		};
+		2AE39B151CA48F92000BAC6B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */,
+				2AF835821C7B84BC00287892 /* DailyProgressViewController.swift */,
+				2A42953C1C88CB97002F9917 /* mTabBarController.swift */,
+				2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */,
+				2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2AE39B161CA48FA7000BAC6B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2A42C4AA1C94A84100EE472D /* SleepTimeCell.swift */,
+				2A42C4A81C946C7800EE472D /* GraphCell.swift */,
+				2A60D87C1CA6F07500205B01 /* DashView.swift */,
+				2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2AE39B171CA48FB5000BAC6B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2A60D8801CA7026F00205B01 /* DataItem.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2AE39B181CA48FC0000BAC6B /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2A42C4B01C950FFB00EE472D /* JSONHandler.swift */,
+				2A3562AF1CA7260500C20CEF /* DateStruct.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		2AE7662E1C9270620065471B /* BackendServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,13 +321,10 @@
 		2AF835861C7B8C2A00287892 /* ProgressTracking */ = {
 			isa = PBXGroup;
 			children = (
-				2A42953C1C88CB97002F9917 /* mTabBarController.swift */,
-				2AF835821C7B84BC00287892 /* DailyProgressViewController.swift */,
-				2A42C4B01C950FFB00EE472D /* JSONHandler.swift */,
-				2A42C4AA1C94A84100EE472D /* SleepTimeCell.swift */,
-				2A42C4A81C946C7800EE472D /* GraphCell.swift */,
-				2A42953E1C88E3D4002F9917 /* WeeklyProgressViewController.swift */,
-				2A53D9FF1C8B28C700082DF6 /* detailGraphController.swift */,
+				2AE39B151CA48F92000BAC6B /* Controller */,
+				2AE39B171CA48FB5000BAC6B /* Model */,
+				2AE39B161CA48FA7000BAC6B /* View */,
+				2AE39B181CA48FC0000BAC6B /* Helper */,
 			);
 			name = ProgressTracking;
 			sourceTree = "<group>";
@@ -511,10 +558,12 @@
 				2AE766301C9270D80065471B /* BackendOperation.swift in Sources */,
 				2A8259A81C97AB3B00019104 /* PersonalizeGoalsViewController.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
+				2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
 				2AF835831C7B84BC00287892 /* DailyProgressViewController.swift in Sources */,
 				2A8259AC1C97AB3B00019104 /* ViewActivitiesTableViewCell.swift in Sources */,
+				2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */,
 				2A8259AE1C97AB3B00019104 /* ChooseActivitiesTableViewCell.swift in Sources */,
 				2A42C4B31C951F7400EE472D /* SleepChartView.swift in Sources */,
 				2A42C4A91C946C7800EE472D /* GraphCell.swift in Sources */,
@@ -523,8 +572,11 @@
 				2AA5B88E1C826A6400186BDD /* IntradaySleepTime.swift in Sources */,
 				2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */,
 				2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */,
+				2A3562B01CA7260500C20CEF /* DateStruct.swift in Sources */,
 				2A8259AA1C97AB3B00019104 /* ViewGoalsTableViewCell.swift in Sources */,
 				2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */,
+				2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */,
+				2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
 				2A8259B01C97AB3B00019104 /* GradientSlider.swift in Sources */,

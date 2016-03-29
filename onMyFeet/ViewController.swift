@@ -38,7 +38,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         indicatiorView.clipsToBounds = true
         hideIndicator()
         
-        navigationController?.navigationBar.barTintColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
     }
     
@@ -81,7 +81,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 0:
             storyboardIdentifier = "ViewGoalsViewController"
         case 1:
-            storyboardIdentifier = "progressTabBarController"//"progressTabBarController"
+            storyboardIdentifier = "ProgressController"
         case 2:
             storyboardIdentifier = "checkIn"
         case 4:
@@ -128,18 +128,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func syncData(sender: AnyObject) {
-        UIView.animateWithDuration(2.0, animations: {()->Void in
-            self.menuTableView.contentOffset = CGPoint(x: 0.0, y: -100.0)
-            }, completion: {(finish)-> Void in self.menuTableView.contentOffset = CGPoint(x: 0.0, y: 0.0 )})
-        
-        self.refreshControl.beginRefreshing()
-        self.refreshControl.attributedTitle = NSAttributedString(string:"Syncing", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        //refresh()
-        
-//        UIView.beginAnimations(nil, context: nil)
-//        UIView.setAnimationDuration(1.0)
-//        self.menuTableView.contentOffset = CGPoint(x: 0.0, y: 0.0)
-//        UIView.commitAnimations()
+        UIApplication.sharedApplication().openURL(NSURL(string: "fitbit://")!)
+        self.scheduleLocal(self)
     }
     
     func refresh() {
@@ -150,6 +140,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
 
+    }
+    
+    func scheduleLocal(sender: AnyObject) {
+        let setting = UIApplication.sharedApplication().currentUserNotificationSettings()
+        
+        if setting?.types == .None {
+            let ac = UIAlertController(title: "Can't Schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            presentViewController(ac, animated: true, completion: nil)
+            return
+        }
+        
+        let notification = UILocalNotification()
+        notification.fireDate = NSDate(timeIntervalSinceNow: 5)
+        notification.alertBody = "Get back to OnMyFeet, once you have Fitbit running"
+        notification.alertAction = "get back to OnMyFeet"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
 }

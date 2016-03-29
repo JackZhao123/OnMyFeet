@@ -27,6 +27,7 @@ protocol graphViewDelegate {
             setNeedsDisplay()
         }
     }
+    
     var label:UILabel!
     var dateLabelArray = [UILabel]()
     var currentDate: String?
@@ -87,7 +88,6 @@ protocol graphViewDelegate {
         
         let tapRecognizor = UITapGestureRecognizer(target: self, action: #selector(GraphView.handleTap))
         self.addGestureRecognizer(tapRecognizor)
-        
     }
     
     func handleTap() {

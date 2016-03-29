@@ -46,7 +46,5 @@ class SleepTimeCell: UITableViewCell {
             }
 
         }
-        
-        
     }
 }

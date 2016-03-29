@@ -20,14 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] {
             initFitbitAPI(url as! NSURL)
+            
         }
 
         return true
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        
         initFitbitAPI(url)
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories:nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
         return true
     }
     
