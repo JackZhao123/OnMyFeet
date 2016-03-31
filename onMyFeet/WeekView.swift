@@ -9,7 +9,11 @@
 import UIKit
 import Charts
 
-class WeekView: UIView {
+protocol WeekViewDelegate {
+    func chartValueSelected(onDate: String)
+}
+
+class WeekView: UIView, ChartViewDelegate {
     
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
@@ -24,6 +28,9 @@ class WeekView: UIView {
     
     //DataModel
     var dataItem: DataItem?
+    
+    //Delegate
+    var delegate: WeekViewDelegate?
     
     let yColor = UIColor(red: 0.925, green: 0.839, blue: 0.247, alpha: 1.00)
     
@@ -77,6 +84,7 @@ class WeekView: UIView {
         configureView(mGraph)
         self.addSubview(mGraph)
         
+        
         //Constraint
         let viewsDictionary = ["graph":mGraph]
         
@@ -95,11 +103,14 @@ class WeekView: UIView {
         chartView.rightAxis.customAxisMin = 0.0
         chartView.notifyDataSetChanged()
         
+        chartView.scaleXEnabled = false
+        chartView.scaleYEnabled = false
+        
         chartView.xAxis.setLabelsToSkip(0)
         chartView.xAxis.drawGridLinesEnabled = false
         chartView.xAxis.labelPosition = .Bottom
         chartView.descriptionText = ""
-        chartView.userInteractionEnabled = false
+        chartView.delegate = self
         
         chartView.animate(yAxisDuration: 1.5)
     }
@@ -109,26 +120,57 @@ class WeekView: UIView {
         let weekDay = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"]
         var data:[Double] = [0,0,0,0,0,0,0]
         
+        
+        
         if let dataItem = dataItem {
             data = dataItem.weeklyData
+            if dataItem.title == "Intensity" {
+                
+                var yVals = [BarChartDataEntry]()
+                for i in 0..<data.count {
+                    let val1 = data[i] / 1440
+                    let val2 = dataItem.weeklyLightly[i] / 1440
+                    let val3 = dataItem.weeklyActive[i] / 1440
+                    
+                    let entry = BarChartDataEntry(values: [val1,val2,val3], xIndex: i)
+                    yVals.append(entry)
+                }
+                
+                let chartDataSet = BarChartDataSet(yVals: yVals, label: "Intensity")
+                chartDataSet.colors = [UIColor(red: 1.000, green: 0.506, blue: 0.588, alpha: 1.00),UIColor(red: 0.925, green: 0.839, blue: 0.247, alpha: 1.00),UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)]
+                chartDataSet.stackLabels = ["Sedentary","Lightly","Active"]
+                chartDataSet.drawValuesEnabled = false
+                
+                let chartData = BarChartData(xVals: weekDay, dataSet: chartDataSet)
+                let formatter = NSNumberFormatter()
+                formatter.numberStyle = .PercentStyle
+
+                mGraph.data = chartData
+                mGraph.leftAxis.valueFormatter = formatter
+            } else {
+                var dataEntries: [BarChartDataEntry] = []
+                
+                for i in 0..<data.count {
+                    let dataEntry = BarChartDataEntry(value: data[i], xIndex: i)
+                    dataEntries.append(dataEntry)
+                }
+                
+                let chartDataSet = BarChartDataSet(yVals: dataEntries, label: dataItem.title)
+                chartDataSet.colors = [UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)]
+                let chartData = BarChartData(xVals: weekDay, dataSet: chartDataSet)
+                
+                mGraph.data = chartData
+                mGraph.drawValueAboveBarEnabled = true
+                
+                let formatter = NSNumberFormatter()
+                formatter.numberStyle = .DecimalStyle
+                
+                mGraph.leftAxis.valueFormatter = formatter
+            }
         }
-        
-        var dataEntries: [BarChartDataEntry] = []
-        
-        for i in 0..<data.count {
-            let dataEntry = BarChartDataEntry(value: data[i], xIndex: i)
-            dataEntries.append(dataEntry)
-        }
-        
-        let chartDataSet = BarChartDataSet(yVals: dataEntries, label: dataItem!.title)
-        chartDataSet.colors = [UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)]
-        let chartData = BarChartData(xVals: weekDay, dataSet: chartDataSet)
-        
-        mGraph.data = chartData
     }
     
     func next(){
-        print("Next")
         
         let firstDate = dataItem!.firstDayOfWeek
         let lastDate = dataItem!.lastDayOfWeek
@@ -142,11 +184,9 @@ class WeekView: UIView {
         reloadChart()
         
         dateLabel.text = firstDay + " - " + lastDay
-
     }
     
     func last(){
-        print("Last")
         let firstDate = dataItem!.firstDayOfWeek
         let lastDate = dataItem!.lastDayOfWeek
         dataItem!.firstDayOfWeek = DateStruct.dateValueChangeFrom(firstDate, by: -7)
@@ -159,5 +199,16 @@ class WeekView: UIView {
         reloadChart()
         
         dateLabel.text = firstDay + " - " + lastDay
+    }
+    
+    //MARK: Chart View Delegate
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+
+        if let dataItem = dataItem {
+            let selectedDate = DateStruct.dateValueChangeFrom(dataItem.firstDayOfWeek, by: entry.xIndex)
+            if let delegate = delegate {
+                delegate.chartValueSelected(selectedDate)
+            }
+        }
     }
 }

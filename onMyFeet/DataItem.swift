@@ -23,6 +23,8 @@ class DataItem: NSObject {
     var firstDayOfWeek = "2016-03-20"
     var lastDayOfWeek = "2016-03-26"
     var weeklyData: [Double] = [0,0,0,0,0,0,0]
+    var weeklyActive: [Double] = [0,0,0,0,0,0,0]
+    var weeklyLightly: [Double] = [0,0,0,0,0,0,0]
     
   
     init(title:String, date:String) {
@@ -45,10 +47,10 @@ class DataItem: NSObject {
         let key = titleDictionary[title]
         
         let dailySummary = ClientDataManager.sharedInstance().fetchSummaryWith(date)
-        
-        let active = dailySummary?.valueForKey("minutesActive")
-        let sedentary = dailySummary?.valueForKey("minutesSedentary")
-        let lightly = dailySummary?.valueForKey("minutesLightlyActive")
+        if let dailySummary = dailySummary {
+        let active = dailySummary.valueForKey("minutesActive")
+        let sedentary = dailySummary.valueForKey("minutesSedentary")
+        let lightly = dailySummary.valueForKey("minutesLightlyActive")
         
         if let active = active {
             self.activeNum = active as! Double
@@ -62,19 +64,26 @@ class DataItem: NSObject {
             self.lightlyNum = lightly as! Double
         }
         
-        if let dailySummary = dailySummary {
+        
             if let key = key {
                 let num = dailySummary.valueForKey(key)
                 if let num = num {
                     self.number = num as! Double
                 }
             }
+        } else {
+            activeNum = 0
+            sedentaryNum = 0
+            lightlyNum = 0
+            number = 0
         }
     }
     
     func getWeeklyData() {
         var startDate = firstDayOfWeek
         weeklyData = [0,0,0,0,0,0,0]
+        weeklyActive = [0,0,0,0,0,0,0]
+        weeklyLightly = [0,0,0,0,0,0,0]
         
         let titleDictionary = ["Steps":"steps", "Distance":"distance","Sleep Hours":"minutesAsleep", "Intensity":"minutesSedentary"]
         let key = titleDictionary[title]
@@ -83,7 +92,21 @@ class DataItem: NSObject {
             for i in 0..<7 {
                 let summary = ClientDataManager.sharedInstance().fetchSummaryWith(startDate)
                 if let num = summary?.valueForKey(key) {
-                    weeklyData[i] = num as! Double
+                    var temp = num as! Double
+                    if title == "Distance" {
+                        temp = temp * 1000
+                    }
+                    weeklyData[i] = temp
+                }
+                
+                if key == "minutesSedentary" {
+                    if let num = summary?.valueForKey("minutesLightlyActive") {
+                        weeklyLightly[i] = num as! Double
+                    }
+                    
+                    if let num = summary?.valueForKey("minutesActive") {
+                        weeklyActive[i] = num as! Double
+                    }
                 }
                 startDate = DateStruct.dateValueChangeFrom(startDate, by: 1)
             }

@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ProgressViewController: UIViewController, UIToolbarDelegate, DashViewDelegate {
+class ProgressViewController: UIViewController, UIToolbarDelegate, DashViewDelegate, WeekViewDelegate {
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
     var displayDate = DateStruct.getCurrentDate()
@@ -54,9 +54,10 @@ class ProgressViewController: UIViewController, UIToolbarDelegate, DashViewDeleg
         briefView.delegate = self
         self.view.addSubview(briefView)
         
-        //Chart View
+        //Week View
         chartView = WeekView(item: dataItem)
         chartView.translatesAutoresizingMaskIntoConstraints = false
+        chartView.delegate = self
         self.view.addSubview(chartView)
         
         //Constraint
@@ -106,5 +107,10 @@ class ProgressViewController: UIViewController, UIToolbarDelegate, DashViewDeleg
         displayDate = newDateTime
         briefView.setLabelText()
     }
-
+    
+    func chartValueSelected(onDate: String) {
+        displayDate = onDate
+        briefView.dataItem.date = onDate
+        briefView.setLabelText()
+    }
 }
