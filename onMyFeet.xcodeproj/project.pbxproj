@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		278865DA0F1EDD802FAF8DBD /* Pods_OnMyFeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */; };
-		2A1179211C8961140095FBB6 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1179201C8961140095FBB6 /* GraphView.swift */; };
 		2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */; };
 		2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */; };
 		2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */; };
@@ -22,7 +21,6 @@
 		2A3F56821C91D3E5006349F5 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */; };
 		2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */; };
 		2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B01C950FFB00EE472D /* JSONHandler.swift */; };
-		2A42C4B31C951F7400EE472D /* SleepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B21C951F7400EE472D /* SleepChartView.swift */; };
 		2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60D87C1CA6F07500205B01 /* DashView.swift */; };
 		2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60D8801CA7026F00205B01 /* DataItem.swift */; };
 		2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A780F331C750B51000B2424 /* FitbitAPI.swift */; };
@@ -73,7 +71,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2A1179201C8961140095FBB6 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuestionSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
@@ -87,7 +84,6 @@
 		2A3F56811C91D3E5006349F5 /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 		2A3F56831C91DE16006349F5 /* QuestionnaireViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionnaireViewController.swift; sourceTree = "<group>"; };
 		2A42C4B01C950FFB00EE472D /* JSONHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
-		2A42C4B21C951F7400EE472D /* SleepChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepChartView.swift; sourceTree = "<group>"; };
 		2A60D87C1CA6F07500205B01 /* DashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashView.swift; sourceTree = "<group>"; };
 		2A60D8801CA7026F00205B01 /* DataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItem.swift; sourceTree = "<group>"; };
 		2A780F331C750B51000B2424 /* FitbitAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
@@ -161,15 +157,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2A1179221C8961240095FBB6 /* CustomView */ = {
-			isa = PBXGroup;
-			children = (
-				2A42C4B21C951F7400EE472D /* SleepChartView.swift */,
-				2A1179201C8961140095FBB6 /* GraphView.swift */,
-			);
-			name = CustomView;
-			sourceTree = "<group>";
-		};
 		2A2E41E51C80AEA600E78A37 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,7 +216,6 @@
 				2AF835861C7B8C2A00287892 /* ProgressTracking */,
 				2A3F56801C91D2AF006349F5 /* CheckIn */,
 				2A2E41E51C80AEA600E78A37 /* DataBase */,
-				2A1179221C8961240095FBB6 /* CustomView */,
 				2AE7662E1C9270620065471B /* BackendServer */,
 				2ABFEC711C9698F10093D574 /* TestViewController */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
@@ -522,7 +508,6 @@
 				2A8259AF1C97AB3B00019104 /* HeaderCell.swift in Sources */,
 				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
 				2A8259AD1C97AB3B00019104 /* ChooseActivitiesTableViewController.swift in Sources */,
-				2A1179211C8961140095FBB6 /* GraphView.swift in Sources */,
 				2A8259A41C97AB3B00019104 /* GoalsViewController.swift in Sources */,
 				2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */,
 				2A8259AB1C97AB3B00019104 /* ViewActivitiesViewController.swift in Sources */,
@@ -545,7 +530,6 @@
 				2A8259AC1C97AB3B00019104 /* ViewActivitiesTableViewCell.swift in Sources */,
 				2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */,
 				2A8259AE1C97AB3B00019104 /* ChooseActivitiesTableViewCell.swift in Sources */,
-				2A42C4B31C951F7400EE472D /* SleepChartView.swift in Sources */,
 				2A8259A31C97AB3B00019104 /* GoalDataManager.swift in Sources */,
 				2AA5B88E1C826A6400186BDD /* IntradaySleepTime.swift in Sources */,
 				2A3F56841C91DE16006349F5 /* QuestionnaireViewController.swift in Sources */,

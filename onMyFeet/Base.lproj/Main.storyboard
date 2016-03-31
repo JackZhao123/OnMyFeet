@@ -38,14 +38,14 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <state key="normal" title="Log In">
-                                    <color key="titleColor" red="0.5450980392" green="0.76470588240000004" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.74117647060000003" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="logIn:" destination="jTg-a9-Sfb" eventType="touchUpInside" id="szO-JJ-hCw"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.54509803921568623" green="0.76470588235294112" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.74117647058823533" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="skM-Ys-QvZ" firstAttribute="top" secondItem="70C-LB-xPR" secondAttribute="bottom" constant="55" id="QtG-vv-yzg"/>
                             <constraint firstItem="70C-LB-xPR" firstAttribute="centerX" secondItem="OYy-v6-Mqa" secondAttribute="centerX" id="Tul-fl-9ut"/>
@@ -54,6 +54,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="AppLabel" destination="70C-LB-xPR" id="5eo-ya-vng"/>
                         <outlet property="logInBtn" destination="skM-Ys-QvZ" id="REQ-Xg-Fn7"/>
                     </connections>
                 </viewController>

@@ -132,7 +132,6 @@ class QuestionnaireViewController: UIViewController {
                     leftLabel.text = "0"
                 }
                 
-//                leftLabel.text = "cannot do it"
                 self.mScrollView.addSubview(leftLabel)
                 
                 let rightLabel = UILabel(frame:(CGRect(x:screenWidth - 91 - 4, y: slider.frame.origin.y + 32, width:91, height:21)))

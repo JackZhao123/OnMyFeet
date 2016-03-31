@@ -10,9 +10,11 @@ import UIKit
 import SafariServices
 
 class LogInViewController: UIViewController {
+    let screenHeight = UIScreen.mainScreen().bounds.height
     
       //MARK: Outlets
     @IBOutlet weak var logInBtn: UIButton!
+    @IBOutlet weak var appLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,7 @@ class LogInViewController: UIViewController {
         logInBtn.clipsToBounds = true;
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LogInViewController.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {

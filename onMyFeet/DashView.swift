@@ -193,7 +193,7 @@ class DashView: UIView {
                 numLabel.text = String(format: "%.2f m", arguments: [number])
             case "Sleep Hours":
                 let hours = dataItem.number / 60.0
-                numLabel.text = String(format: "%.0f", arguments: [hours])
+                numLabel.text = String(format: "%.1f", arguments: [hours])
             case "Intensity":
                 activeLabel.text = String(format: "%.0f", arguments: [dataItem.activeNum])
                 sedentaryLabel.text = String(format: "%.0f", arguments: [dataItem.sedentaryNum])

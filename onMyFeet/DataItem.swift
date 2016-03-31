@@ -96,6 +96,10 @@ class DataItem: NSObject {
                     if title == "Distance" {
                         temp = temp * 1000
                     }
+                    
+                    if title == "Sleep Hours" {
+                        temp = temp / 60
+                    }
                     weeklyData[i] = temp
                 }
                 
