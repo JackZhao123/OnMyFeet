@@ -9,6 +9,13 @@
 import Foundation
 
 struct DateStruct {
+    
+    static func getCurrentCalendar() -> NSCalendar {
+        let calendar = NSCalendar.currentCalendar()
+        calendar.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        return calendar
+    }
+    
     static let MonthDict = [
         "01":"Jan",
         "02":"Feb",
@@ -52,9 +59,7 @@ struct DateStruct {
     
     static func dateValueChangeFrom(dateTime:String, by interval:Int) -> String {
         let currentDate = getDateFromDefaultFormat(dateTime)
-        let calendar = NSCalendar.currentCalendar()
-        calendar.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-        let resultDate = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: interval, toDate: currentDate!, options: NSCalendarOptions(rawValue: 0))
+        let resultDate = getCurrentCalendar().dateByAddingUnit(NSCalendarUnit.Day, value: interval, toDate: currentDate!, options: NSCalendarOptions(rawValue: 0))
         let dateTime = getDateStringFromDate(resultDate!)
         
         return dateTime!
@@ -72,7 +77,7 @@ struct DateStruct {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         
-        let components = NSCalendar.currentCalendar().components([.Year,.Month,.Day,.Weekday], fromDate: NSDate())
+        let components = getCurrentCalendar().components([.Year,.Month,.Day,.Weekday], fromDate: NSDate())
         let day = components.day
         let month = components.month
         let year = components.year
@@ -83,6 +88,14 @@ struct DateStruct {
         let lastDayOfWeek = dateValueChangeFrom(todayDate, by: 7-weekDay)
         
         return [firstDayOfWeek, lastDayOfWeek]
+    }
+    
+    static func compare(startDate:String, with endDate:String) -> Double {
+        let date1 = getDateFromDefaultFormat(startDate)
+        let date2 = getDateFromDefaultFormat(endDate)
+        
+        let interval = date1!.timeIntervalSinceDate(date2!) as Double
+        return interval
     }
     
 }

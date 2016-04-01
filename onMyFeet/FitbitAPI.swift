@@ -63,7 +63,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         let url: NSURL!
         if flag {
-            url = NSURL(string: Constants.Fitbit.AuthenticationURL + "&prompt=login")
+            url = NSURL(string: Constants.Fitbit.AuthenticationURL )//+ "&prompt=login")
         } else {
             url = NSURL(string: Constants.Fitbit.AuthenticationURL)
         }
@@ -73,7 +73,9 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     func getAuthorizationCodeFromURL(url:NSURL) {
         let authorizationCode = String(url).componentsSeparatedByString("=")[1]
-        NSUserDefaults.standardUserDefaults().setObject(authorizationCode, forKey: "AuthorizationCode")
+        let code = authorizationCode.componentsSeparatedByString("#")[0]
+        print(code)
+        NSUserDefaults.standardUserDefaults().setObject(code, forKey: "AuthorizationCode")
     }
     
     
@@ -298,8 +300,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                     })
                 }
                 
-                
-                
 //************************************************************************
 //**** Use Time Series to get data when interval bigger than 6 days ******
 //************************************************************************
@@ -364,8 +364,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             case "minutesSedentary":
             url = NSURL(string: "https://api.fitbit.com/1/user/-/activities/minutesSedentary/date/\(dateTime)/1d/15min.json")
         default:
-            url = NSURL()
-            print("Error Data Type")
+            url = NSURL(string: "https://api.fitbit.com/1/user/-/activities/\(dataType)/date/\(dateTime)/1d/15min.json")
             break
         }
         
@@ -373,6 +372,8 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
             runURLSessionWithURL(url!, withHTTPMethod: "GET", headerValues: ["Authorization":"Bearer \(accessToken)"], httpBody: nil, completionHandler: completionHandler)
         }
     }
+    
+    
     
     func runURLSessionWithURL(url:NSURL, withHTTPMethod method:String, headerValues header:[String: String]?, httpBody body:String?, completionHandler completion: ((data:NSData?, response:NSURLResponse?, error:NSError?)->Void)? ) {
         apiRequest.URL = url
@@ -406,37 +407,4 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         dataTask.resume()
     }
-    
-    //MARK: URLSessionDelegate
-//    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-//        if let error = error {
-//            print(error)
-//        }
-//    }
-//
-//    
-//    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-//        let jsonData: AnyObject?
-//        
-//        do{
-//            jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-//            if let jsonData = jsonData {
-//                print("Refreshing Token" + "\(jsonData)")
-//                let refreshCode = jsonData.objectForKey("refresh_token") as? String
-//                if let refreshCode = refreshCode {
-//                    NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: "RefreshCode")
-//                    
-//                }
-//                
-//                let accessToken = jsonData.objectForKey("access_token") as? String
-//                if let accessToken = accessToken {
-//                    NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "AccessToken")
-//                    NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "AccessTokenTime")
-//                }
-//            }
-//        } catch {
-//            print(error)
-//        }
-//    }
-    
 }

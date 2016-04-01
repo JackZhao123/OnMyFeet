@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
 //    MARK: Properties
     var userInfo: String!
-    var categories = ["My Goals", "Monitoring Progress", "Checking in"/*, "Taking Action", "Test Module"*/]
+    var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action", "Test Module"]
     var refreshControl: UIRefreshControl!
     
 //    MARK: view initialize
@@ -134,12 +134,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func refresh() {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            DataCoordinator.sharedInstance.syncData()
+//            DataCoordinator.sharedInstance.syncData()
+//            BackendOperation.sendData("2016-02-02", end: "2016-03-31")
+//            DataCoordinator.sharedInstance.getIntradaySleep()
+            DataCoordinator.sharedInstance.getIntradaySedentary()
+            
             dispatch_async(dispatch_get_main_queue()) {
                 self.refreshControl.endRefreshing()
             }
         }
-
     }
     
     func scheduleLocal(sender: AnyObject) {

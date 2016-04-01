@@ -71,20 +71,22 @@ class DataCoordinator: FitbitAPIDelegate {
     }
     
     func updateData(userData: Person) {
+        let today = DateStruct.getCurrentDate()
         
         client = userData
         if (userData.summary?.count == 0) {
             let dateTime = "2016-02-01"
             print("Load All Data From \(dateTime)")
-            getDataFrom(dateTime, toEndDate: "today")
-
+            NSUserDefaults.standardUserDefaults().setValue(dateTime, forKey: "JustUdated")
+            getDataFrom(dateTime, toEndDate: today)
         } else {
             let currentUser = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as! String
             let key = "\(currentUser)_UpdateTime"
             let lastUpdated = NSUserDefaults.standardUserDefaults().objectForKey(key) as! String
             print("Update Data From \(lastUpdated)")
-            getDataFrom(lastUpdated, toEndDate: "today")
+            NSUserDefaults.standardUserDefaults().setValue(lastUpdated, forKey: "JustUdated")
 
+            getDataFrom(lastUpdated, toEndDate: today)
         }
         
         setLastUpdateTime()
@@ -103,69 +105,90 @@ class DataCoordinator: FitbitAPIDelegate {
         self.fitbitAPI.getDaily(startDate, toEndDate: endDate)
     }
     
-    func getIntradayData() {
-        let dateTime = "2016-03-02"
+    func getIntradaySleep() {
+        var startTime = "2016-03-27"
+        let endTime = "2016-03-31"
+        var interval = DateStruct.compare(startTime, with: endTime)
         self.fitbitAPI.delegate = self
-        self.fitbitAPI.getIntradayDataOf("sleep", onDate: dateTime)
+
+        var sleepData = [String:AnyObject]()
         
-        while(gettingIntradaySleep){}
-        
-        if let intradaySleepTimeJson = intradaySleepTimeJson {
-            if intradaySleepTimeJson["sleep"].count > 0 {
-                
-                    let intradaySleep = IntradaySleepTime()
-                    intradaySleep.dateTime = dateTime
+        while interval <= 0 {
+            self.fitbitAPI.getIntradayDataOf("sleep", onDate: startTime)
+            while(gettingIntradaySleep){}
+            
+            if let intradaySleepTimeJson = intradaySleepTimeJson {
+                for i in 0..<intradaySleepTimeJson["sleep"].count {
+                    var sleepStart = intradaySleepTimeJson["sleep"][i]["startTime"].stringValue
+                    sleepStart = sleepStart.componentsSeparatedByString(".")[0]
                     
-                    do {
-                        let data = try intradaySleepTimeJson.rawData()
-                        intradaySleep.sleepJson = data
-                    } catch {
-                        print(error)
+                    var sleepDict = [String:Int]()
+                    for x in 0..<intradaySleepTimeJson["sleep"][i]["minuteData"].count {
+                        let time = intradaySleepTimeJson["sleep"][i]["minuteData"][x]["dateTime"].stringValue
+                        let sleepValue = intradaySleepTimeJson["sleep"][i]["minuteData"][x]["value"].intValue
+                        sleepDict[time] = sleepValue
                     }
-                    dataManager.saveContext()
+                    sleepData[sleepStart] = sleepDict
+                }
             }
+            startTime = DateStruct.dateValueChangeFrom(startTime, by: 1)
+            interval = DateStruct.compare(startTime, with: endTime)
+            
+            gettingIntradaySleep = true
         }
+        
+        BackendOperation.post(sleepData, dataType: "sleepData")
+        
     }
     
     func getIntradaySedentary() {
-        let dateTime = "2016-03-02"
-        self.fitbitAPI.delegate = self
-        self.fitbitAPI.getIntradayDataOf("minutesSedentary", onDate: dateTime)
         
-        while(gettingSedentary){}
+        var startTime = "2016-03-17"
+        let endTime = "2016-03-31"
+        var interval = DateStruct.compare(startTime, with: endTime)
         
-        if let sedentaryJson = sedentaryJson {
-            if sedentaryJson["activities-minutesSedentary-intraday"]["dataset"].count > 0 {
-                
-                for index in 0...sedentaryJson["activities-minutesSedentary-intraday"]["dataset"].count - 1 {
-                    let time = sedentaryJson["activities-minutesSedentary-intraday"]["dataset"][index]["time"].stringValue
-                    let sedentaryValue = sedentaryJson["activities-minutesSedentary-intraday"]["dataset"][index]["value"].numberValue
+        var intensityData = [String:AnyObject]()
+        
+        fitbitAPI.delegate = self
+        
+        while interval <= 0 {
+            self.fitbitAPI.getIntradayDataOf("minutesSedentary", onDate: startTime)
+            self.fitbitAPI.getIntradayDataOf("minutesLightlyActive", onDate: startTime)
+            
+            while(gettingIntensityDataFlag()){}
+            
+            if let sedentaryJson = sedentaryJson, let lightlyActiveJson = lightlyActiveJson {
+                var intensityDict = [String:AnyObject]()
+                for i in 0..<sedentaryJson["activities-minutesSedentary-intraday"]["dataset"].count {
+                    let time = sedentaryJson["activities-minutesSedentary-intraday"]["dataset"][i]["time"].stringValue
+                    let sedentaryValue = sedentaryJson["activities-minutesSedentary-intraday"]["dataset"][i]["value"].intValue
+                    let lightlyActiveValue = lightlyActiveJson["activities-minutesLightlyActive-intraday"]["dataset"][i]["value"].intValue
                     
-                    if let intradaySedentary = dataManager.fetchDataOf("IntradaySedentary", parameter: ["dateTime", "time"], argument: [dateTime, time]) as? [IntradaySedentary]{
-                        if intradaySedentary.count > 0 {
-                            intradaySedentary.first?.time = time
-                            intradaySedentary.first?.value = sedentaryValue
-                            intradaySedentary.first?.dateTime = dateTime
-                        } else {
-                            let intradaySedentary = IntradaySedentary()
-                            intradaySedentary.time = time
-                            intradaySedentary.value = sedentaryValue
-                            intradaySedentary.dateTime = dateTime
-                        }
-                    }
-                 
-                    dataManager.saveContext()
+                    let activeValue = 15 - sedentaryValue - lightlyActiveValue
+                    
+                    let intensityArray = [activeValue, lightlyActiveValue, sedentaryValue]
+                    intensityDict[time] = intensityArray
                 }
+                intensityData[startTime] = intensityDict
             }
+            
+            startTime = DateStruct.dateValueChangeFrom(startTime, by: 1)
+            interval = DateStruct.compare(startTime, with: endTime)
         }
+        
+        BackendOperation.post(intensityData, dataType: "activityData")
     }
     
     
     //MARK: Flag
-    
     func gettingIntradayDataFlag() -> Bool {
         return (gettingIntradaySedentary||gettingIntradaySleep)
     }
+    
+    func gettingIntensityDataFlag() -> Bool {
+        return (gettingLightlyActive||gettingSedentary)
+    }
+    
     
     
     //MARK: FitbitAPI delegate
@@ -244,6 +267,15 @@ class DataCoordinator: FitbitAPIDelegate {
             case "minutesSedentary":
                 sedentaryJson = JSON(data: data)
                 gettingSedentary = false
+            case "minutesLightlyActive":
+                lightlyActiveJson = JSON(data:data)
+                gettingLightlyActive = false
+            case "minutesFairlyActive":
+                fairlyActiveJson = JSON(data:data)
+                gettingFairlyActive = false
+            case "minutesVeryActive":
+                veryActiveJson = JSON(data:data)
+                gettingVeryActive = false
             default:
                 break
         }

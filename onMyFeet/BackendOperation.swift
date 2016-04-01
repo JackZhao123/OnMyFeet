@@ -11,6 +11,8 @@ import Alamofire
 
 class BackendOperation {
     
+    static var requestFlag = false
+    
     static func getStepsDataWith(dateTime: String) {
         
     }
@@ -50,6 +52,48 @@ class BackendOperation {
                 })
             }
         }
+    }
+    
+    static func post(parameters:[String:AnyObject], dataType:String) {
+        var data:[String:AnyObject] = [dataType:parameters]
+        data["fb_id"] = "00000000"
+        
+        Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/fitbit", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
+                        print("Response, \(response.result.value)")
+            })
+    }
+    
+    static func sendData(start:String, end:String) {
+        var startDate = start
+        let endDate = end
+        var interval = DateStruct.compare(startDate, with: endDate)
+        
+        var data = [String:AnyObject]()
+        var stepsData = [String:Int]()
+        var distanceData = [String:Float]()
+        
+        while interval <= 0 {
+            if let summary = ClientDataManager.sharedInstance().fetchSummaryWith(startDate) {
+                let dateTime = summary.dateTime!
+                let stepsValue = summary.steps?.integerValue
+                let distanceValue = summary.distance?.floatValue
+                
+                stepsData[dateTime] = stepsValue
+                distanceData[dateTime] = distanceValue! * 1000
+            }
+            
+            startDate = DateStruct.dateValueChangeFrom(startDate, by: 1)
+            interval = DateStruct.compare(startDate, with: endDate)
+        }
+        
+        data["stepData"] = stepsData
+        data["distanceData"] = distanceData
+        data["fb_id"] = "00000000"
+        
+//            Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/fitbit", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
+//                print("Response, \(response.result.value)")
+//            })
+//        }
     }
     
 }

@@ -17,7 +17,7 @@ class TestViewController: UIViewController {
     }
     
     @IBAction func sendSteps(sender: AnyObject) {
-        BackendOperation.sendStepsData()
+        
     }
     
     @IBAction func getSystemToken(sender: AnyObject) {
