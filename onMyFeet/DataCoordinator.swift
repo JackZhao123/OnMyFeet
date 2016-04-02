@@ -143,8 +143,8 @@ class DataCoordinator: FitbitAPIDelegate {
     
     func getIntradaySedentary() {
         
-        var startTime = "2016-03-17"
-        let endTime = "2016-03-31"
+        var startTime = "2016-04-01"
+        let endTime = "2016-04-01"
         var interval = DateStruct.compare(startTime, with: endTime)
         
         var intensityData = [String:AnyObject]()
@@ -174,8 +174,11 @@ class DataCoordinator: FitbitAPIDelegate {
             
             startTime = DateStruct.dateValueChangeFrom(startTime, by: 1)
             interval = DateStruct.compare(startTime, with: endTime)
+            
+            gettingSedentary = true
+            gettingLightlyActive = true
         }
-        
+    
         BackendOperation.post(intensityData, dataType: "activityData")
     }
     

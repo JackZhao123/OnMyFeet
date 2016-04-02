@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		278865DA0F1EDD802FAF8DBD /* Pods_OnMyFeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */; };
+		2A03947F1CAE631800B2B1AE /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A03947E1CAE631800B2B1AE /* ActionViewController.swift */; };
 		2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */; };
 		2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */; };
 		2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */; };
@@ -53,6 +54,8 @@
 		2ABFEC701C960EE00093D574 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC6F1C960EE00093D574 /* Constants.swift */; };
 		2ABFEC731C9699630093D574 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC721C9699630093D574 /* TestViewController.swift */; };
 		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
+		2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */; };
+		2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */; };
 		2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */; };
 		2AE7662D1C921E590065471B /* Questionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662C1C921E590065471B /* Questionnaire.swift */; };
 		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
@@ -71,6 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A03947E1CAE631800B2B1AE /* ActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
 		2A18DAE71CA81AAF00FC4D71 /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuestionSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 		2ABFEC6F1C960EE00093D574 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2ABFEC721C9699630093D574 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
+		2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmCell.xib; sourceTree = "<group>"; };
 		2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		2AE7662C1C921E590065471B /* Questionnaire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Questionnaire.swift; sourceTree = "<group>"; };
 		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
@@ -160,6 +166,8 @@
 		2A03947D1CAE621800B2B1AE /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				2ADFEC9A1CAF4DF900DB16DA /* View */,
+				2ADFEC991CAF4DED00DB16DA /* Controller */,
 			);
 			name = Action;
 			sourceTree = "<group>";
@@ -222,10 +230,10 @@
 				2AF835871C7B8C3D00287892 /* GoalsTracking */,
 				2AF835861C7B8C2A00287892 /* ProgressTracking */,
 				2A3F56801C91D2AF006349F5 /* CheckIn */,
+				2A03947D1CAE621800B2B1AE /* Action */,
 				2A2E41E51C80AEA600E78A37 /* DataBase */,
 				2AE7662E1C9270620065471B /* BackendServer */,
 				2ABFEC711C9698F10093D574 /* TestViewController */,
-				2A03947D1CAE621800B2B1AE /* Action */,
 				2AAA60DF1C72960300957BEF /* Main.storyboard */,
 				2AAA60E71C72960300957BEF /* LaunchScreen.storyboard */,
 				2AAA60E51C72960300957BEF /* Assets.xcassets */,
@@ -250,6 +258,23 @@
 				2ABFEC721C9699630093D574 /* TestViewController.swift */,
 			);
 			name = TestViewController;
+			sourceTree = "<group>";
+		};
+		2ADFEC991CAF4DED00DB16DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A03947E1CAE631800B2B1AE /* ActionViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2ADFEC9A1CAF4DF900DB16DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */,
+				2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		2AE39B151CA48F92000BAC6B /* Controller */ = {
@@ -444,6 +469,7 @@
 				2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */,
 				2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */,
 				2AAA60E11C72960300957BEF /* Main.storyboard in Resources */,
+				2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +558,8 @@
 				2AE766301C9270D80065471B /* BackendOperation.swift in Sources */,
 				2A8259A81C97AB3B00019104 /* PersonalizeGoalsViewController.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
+				2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */,
+				2A03947F1CAE631800B2B1AE /* ActionViewController.swift in Sources */,
 				2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,

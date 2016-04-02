@@ -83,9 +83,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 1:
             storyboardIdentifier = "ProgressController"
         case 2:
-            storyboardIdentifier = "checkIn"
+            storyboardIdentifier = "CheckIn"
+        case 3:
+            storyboardIdentifier = "Action"
         case 4:
-            storyboardIdentifier = "testModule"
+            storyboardIdentifier = "TestModule"
         default:
             storyboardIdentifier = nil
         }
