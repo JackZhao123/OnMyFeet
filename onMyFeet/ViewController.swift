@@ -96,6 +96,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
             self.navigationController!.pushViewController(desController, animated: true)
         }
+        
+        menuTableView.cellForRowAtIndexPath(indexPath)?.selected = false
     }
     
     //MARK: Indicator

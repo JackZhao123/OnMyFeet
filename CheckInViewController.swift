@@ -85,5 +85,7 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
         desController.question = ques
         
         self.navigationController?.pushViewController(desController, animated: true)
+        
+        buttonTableView.cellForRowAtIndexPath(indexPath)?.selected = false
     }
 }

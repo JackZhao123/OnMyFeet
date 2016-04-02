@@ -22,7 +22,7 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
         actionTableView.delegate = self
         actionTableView.dataSource = self
         actionTableView.backgroundColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1.00)
-        actionTableView.registerClass(AlarmCell.self, forCellReuseIdentifier: "AlarmCell")
+        actionTableView.registerNib(UINib(nibName: "AlarmCell", bundle: nil), forCellReuseIdentifier: "AlarmCell")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,6 +62,7 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if section == 2 {
             let footer = UIView()
             let textView = UITextView(frame: CGRect(x: 8, y: 0.0, width: screenWidth - 16, height: 60))
+            textView.userInteractionEnabled = false
             textView.backgroundColor = UIColor.clearColor()
             textView.text = "Wear your tracker to bed, and the alarm will use quiet vibrations to wake you. Or just use them to discreetly remind yourself to do things during the day"
             textView.textColor = UIColor(red: 0.651, green: 0.690, blue: 0.694, alpha: 1.00)
@@ -88,8 +89,17 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
             default:
                 cell?.textLabel?.text = "Error"
         }
-        
-        
         return cell!
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 2 {
+            let desController = NewAlarmController()
+            let navb = UINavigationController(rootViewController: desController)
+            self.presentViewController(navb, animated: true, completion: nil)
+        }
+        
+        actionTableView.cellForRowAtIndexPath(indexPath)?.selected = false
+    }
+    
 }

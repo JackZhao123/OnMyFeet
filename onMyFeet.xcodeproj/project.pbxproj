@@ -56,6 +56,16 @@
 		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
 		2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */; };
 		2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */; };
+		2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */; };
+		2ADFECA21CAF556E00DB16DA /* NewAlarmController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECA01CAF556E00DB16DA /* NewAlarmController.xib */; };
+		2ADFECA81CAF615100DB16DA /* TimePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFECA61CAF615100DB16DA /* TimePickerCell.swift */; };
+		2ADFECA91CAF615100DB16DA /* TimePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECA71CAF615100DB16DA /* TimePickerCell.xib */; };
+		2ADFECAC1CAF6C9300DB16DA /* RepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFECAA1CAF6C9300DB16DA /* RepeatViewController.swift */; };
+		2ADFECAD1CAF6C9300DB16DA /* RepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECAB1CAF6C9300DB16DA /* RepeatViewController.xib */; };
+		2ADFECB01CAF742500DB16DA /* AlarmLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFECAE1CAF742500DB16DA /* AlarmLabelViewController.swift */; };
+		2ADFECB11CAF742500DB16DA /* AlarmLabelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECAF1CAF742500DB16DA /* AlarmLabelViewController.xib */; };
+		2ADFECB41CAF756E00DB16DA /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFECB21CAF756E00DB16DA /* LabelCell.swift */; };
+		2ADFECB51CAF756E00DB16DA /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECB31CAF756E00DB16DA /* LabelCell.xib */; };
 		2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */; };
 		2AE7662D1C921E590065471B /* Questionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662C1C921E590065471B /* Questionnaire.swift */; };
 		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
@@ -126,6 +136,16 @@
 		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
 		2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmCell.xib; sourceTree = "<group>"; };
+		2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAlarmController.swift; sourceTree = "<group>"; };
+		2ADFECA01CAF556E00DB16DA /* NewAlarmController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAlarmController.xib; sourceTree = "<group>"; };
+		2ADFECA61CAF615100DB16DA /* TimePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerCell.swift; sourceTree = "<group>"; };
+		2ADFECA71CAF615100DB16DA /* TimePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerCell.xib; sourceTree = "<group>"; };
+		2ADFECAA1CAF6C9300DB16DA /* RepeatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatViewController.swift; sourceTree = "<group>"; };
+		2ADFECAB1CAF6C9300DB16DA /* RepeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepeatViewController.xib; sourceTree = "<group>"; };
+		2ADFECAE1CAF742500DB16DA /* AlarmLabelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmLabelViewController.swift; sourceTree = "<group>"; };
+		2ADFECAF1CAF742500DB16DA /* AlarmLabelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmLabelViewController.xib; sourceTree = "<group>"; };
+		2ADFECB21CAF756E00DB16DA /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		2ADFECB31CAF756E00DB16DA /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
 		2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		2AE7662C1C921E590065471B /* Questionnaire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Questionnaire.swift; sourceTree = "<group>"; };
 		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
@@ -264,6 +284,12 @@
 			isa = PBXGroup;
 			children = (
 				2A03947E1CAE631800B2B1AE /* ActionViewController.swift */,
+				2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */,
+				2ADFECA01CAF556E00DB16DA /* NewAlarmController.xib */,
+				2ADFECAA1CAF6C9300DB16DA /* RepeatViewController.swift */,
+				2ADFECAB1CAF6C9300DB16DA /* RepeatViewController.xib */,
+				2ADFECAE1CAF742500DB16DA /* AlarmLabelViewController.swift */,
+				2ADFECAF1CAF742500DB16DA /* AlarmLabelViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -273,6 +299,10 @@
 			children = (
 				2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */,
 				2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */,
+				2ADFECA61CAF615100DB16DA /* TimePickerCell.swift */,
+				2ADFECA71CAF615100DB16DA /* TimePickerCell.xib */,
+				2ADFECB21CAF756E00DB16DA /* LabelCell.swift */,
+				2ADFECB31CAF756E00DB16DA /* LabelCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -466,10 +496,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2ADFECA91CAF615100DB16DA /* TimePickerCell.xib in Resources */,
+				2ADFECB11CAF742500DB16DA /* AlarmLabelViewController.xib in Resources */,
 				2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */,
 				2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */,
+				2ADFECA21CAF556E00DB16DA /* NewAlarmController.xib in Resources */,
 				2AAA60E11C72960300957BEF /* Main.storyboard in Resources */,
+				2ADFECB51CAF756E00DB16DA /* LabelCell.xib in Resources */,
 				2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */,
+				2ADFECAD1CAF6C9300DB16DA /* RepeatViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +575,7 @@
 				2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */,
 				2A8259A51C97AB3B00019104 /* GoalsCollectionViewCell.swift in Sources */,
 				2A8259AF1C97AB3B00019104 /* HeaderCell.swift in Sources */,
+				2ADFECB01CAF742500DB16DA /* AlarmLabelViewController.swift in Sources */,
 				2AA5B88D1C826A6400186BDD /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
 				2A8259AD1C97AB3B00019104 /* ChooseActivitiesTableViewController.swift in Sources */,
 				2A8259A41C97AB3B00019104 /* GoalsViewController.swift in Sources */,
@@ -561,6 +597,7 @@
 				2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */,
 				2A03947F1CAE631800B2B1AE /* ActionViewController.swift in Sources */,
 				2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */,
+				2ADFECA81CAF615100DB16DA /* TimePickerCell.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
 				2A8259AC1C97AB3B00019104 /* ViewActivitiesTableViewCell.swift in Sources */,
@@ -574,15 +611,18 @@
 				2A8259AA1C97AB3B00019104 /* ViewGoalsTableViewCell.swift in Sources */,
 				2AA5B88B1C826A6400186BDD /* IntradaySedentary+CoreDataProperties.swift in Sources */,
 				2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */,
+				2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */,
 				2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
 				2A8259B01C97AB3B00019104 /* GradientSlider.swift in Sources */,
+				2ADFECAC1CAF6C9300DB16DA /* RepeatViewController.swift in Sources */,
 				2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */,
 				2A8259A91C97AB3B00019104 /* ViewGoalsViewController.swift in Sources */,
 				2A8259A61C97AB3B00019104 /* ChooseGoalsViewController.swift in Sources */,
 				2A3F56821C91D3E5006349F5 /* CheckInViewController.swift in Sources */,
 				2ABFEC701C960EE00093D574 /* Constants.swift in Sources */,
+				2ADFECB41CAF756E00DB16DA /* LabelCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
