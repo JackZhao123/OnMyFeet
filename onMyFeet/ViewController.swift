@@ -138,10 +138,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func refresh() {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-//            DataCoordinator.sharedInstance.syncData()
-//            BackendOperation.sendData("2016-02-02", end: "2016-03-31")
+            DataCoordinator.sharedInstance.syncData()
+            BackendOperation.sendStepAndDistanceData("2016-03-27", end: "2016-04-01")
 //            DataCoordinator.sharedInstance.getIntradaySleep()
-            DataCoordinator.sharedInstance.getIntradaySedentary()
+//            DataCoordinator.sharedInstance.getIntradaySedentary()
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.refreshControl.endRefreshing()

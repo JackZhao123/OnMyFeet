@@ -107,7 +107,7 @@ class DataCoordinator: FitbitAPIDelegate {
     
     func getIntradaySleep() {
         var startTime = "2016-03-27"
-        let endTime = "2016-03-31"
+        let endTime = "2016-04-01"
         var interval = DateStruct.compare(startTime, with: endTime)
         self.fitbitAPI.delegate = self
 
@@ -136,14 +136,14 @@ class DataCoordinator: FitbitAPIDelegate {
             
             gettingIntradaySleep = true
         }
-        
+
         BackendOperation.post(sleepData, dataType: "sleepData")
         
     }
     
     func getIntradaySedentary() {
         
-        var startTime = "2016-04-01"
+        var startTime = "2016-03-27"
         let endTime = "2016-04-01"
         var interval = DateStruct.compare(startTime, with: endTime)
         
@@ -178,7 +178,7 @@ class DataCoordinator: FitbitAPIDelegate {
             gettingSedentary = true
             gettingLightlyActive = true
         }
-    
+
         BackendOperation.post(intensityData, dataType: "activityData")
     }
     

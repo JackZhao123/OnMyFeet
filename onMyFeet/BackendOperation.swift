@@ -57,14 +57,14 @@ class BackendOperation {
     static func post(parameters:[String:AnyObject], dataType:String) {
         var data:[String:AnyObject] = [dataType:parameters]
         data["fb_id"] = "00000000"
-        print(data)
         
         Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/fitbit", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
                         print("Response, \(response.result.value)")
             })
+        
     }
     
-    static func sendData(start:String, end:String) {
+    static func sendStepAndDistanceData(start:String, end:String) {
         var startDate = start
         let endDate = end
         var interval = DateStruct.compare(startDate, with: endDate)
@@ -89,12 +89,10 @@ class BackendOperation {
         
         data["stepData"] = stepsData
         data["distanceData"] = distanceData
-        data["fb_id"] = "00000000"
         
-//            Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/fitbit", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
-//                print("Response, \(response.result.value)")
-//            })
-//        }
+//        post(stepsData, dataType: "stepData")
+//        post(distanceData, dataType: "distanceData")
+        
     }
     
 }
