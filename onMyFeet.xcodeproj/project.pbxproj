@@ -45,6 +45,7 @@
 		2A8259AE1C97AB3B00019104 /* ChooseActivitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A82599F1C97AB3B00019104 /* ChooseActivitiesTableViewCell.swift */; };
 		2A8259AF1C97AB3B00019104 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8259A01C97AB3B00019104 /* HeaderCell.swift */; };
 		2A8259B01C97AB3B00019104 /* GradientSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8259A11C97AB3B00019104 /* GradientSlider.swift */; };
+		2A9FD5211CB19C0500CD3BEB /* ArrayDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9FD5201CB19C0500CD3BEB /* ArrayDataConverter.swift */; };
 		2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DB1C72960300957BEF /* AppDelegate.swift */; };
 		2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60DD1C72960300957BEF /* ViewController.swift */; };
 		2AAA60E11C72960300957BEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA60DF1C72960300957BEF /* Main.storyboard */; };
@@ -69,8 +70,12 @@
 		2ADFECB51CAF756E00DB16DA /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECB31CAF756E00DB16DA /* LabelCell.xib */; };
 		2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */; };
 		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
+		2AF69B0E1CB0CC1B00A570E7 /* RepeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF69B0C1CB0CC1B00A570E7 /* RepeatCell.swift */; };
+		2AF69B0F1CB0CC1B00A570E7 /* RepeatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AF69B0D1CB0CC1B00A570E7 /* RepeatCell.xib */; };
 		2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF8357E1C7B560000287892 /* LogInViewController.swift */; };
 		2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835801C7B7E9F00287892 /* MenuCell.swift */; };
+		2AF9BE491CB07F0A007F534E /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */; };
+		2AF9BE4A1CB07F0A007F534E /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9BE481CB07F0A007F534E /* Alarm.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +126,7 @@
 		2A82599F1C97AB3B00019104 /* ChooseActivitiesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseActivitiesTableViewCell.swift; sourceTree = "<group>"; };
 		2A8259A01C97AB3B00019104 /* HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		2A8259A11C97AB3B00019104 /* GradientSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientSlider.swift; sourceTree = "<group>"; };
+		2A9FD5201CB19C0500CD3BEB /* ArrayDataConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataConverter.swift; sourceTree = "<group>"; };
 		2AAA60D81C72960300957BEF /* OnMyFeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnMyFeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AAA60DB1C72960300957BEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AAA60DD1C72960300957BEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -149,8 +155,12 @@
 		2ADFECB31CAF756E00DB16DA /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
 		2AE39B191CA4A8D4000BAC6B /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
+		2AF69B0C1CB0CC1B00A570E7 /* RepeatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatCell.swift; sourceTree = "<group>"; };
+		2AF69B0D1CB0CC1B00A570E7 /* RepeatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepeatCell.xib; sourceTree = "<group>"; };
 		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		2AF835801C7B7E9F00287892 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2AF9BE481CB07F0A007F534E /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnMyFeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B1226655717A11AB60C84B /* Pods-OnMyFeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.release.xcconfig"; sourceTree = "<group>"; };
 		D935031F20E2855BB481DE90 /* Pods-OnMyFeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -186,6 +196,7 @@
 		2A03947D1CAE621800B2B1AE /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				2A9FD51F1CB19BDC00CD3BEB /* Helper */,
 				2ADFEC9A1CAF4DF900DB16DA /* View */,
 				2ADFEC991CAF4DED00DB16DA /* Controller */,
 			);
@@ -196,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */,
+				2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */,
+				2AF9BE481CB07F0A007F534E /* Alarm.swift */,
 				2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */,
 				2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */,
 				2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */,
@@ -219,6 +232,14 @@
 			);
 			name = CheckIn;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		2A9FD51F1CB19BDC00CD3BEB /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2A9FD5201CB19C0500CD3BEB /* ArrayDataConverter.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		2AAA60CF1C72960300957BEF = {
@@ -299,6 +320,8 @@
 			children = (
 				2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */,
 				2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */,
+				2AF69B0C1CB0CC1B00A570E7 /* RepeatCell.swift */,
+				2AF69B0D1CB0CC1B00A570E7 /* RepeatCell.xib */,
 				2ADFECA61CAF615100DB16DA /* TimePickerCell.swift */,
 				2ADFECA71CAF615100DB16DA /* TimePickerCell.xib */,
 				2ADFECB21CAF756E00DB16DA /* LabelCell.swift */,
@@ -498,6 +521,7 @@
 			files = (
 				2ADFECA91CAF615100DB16DA /* TimePickerCell.xib in Resources */,
 				2ADFECB11CAF742500DB16DA /* AlarmLabelViewController.xib in Resources */,
+				2AF69B0F1CB0CC1B00A570E7 /* RepeatCell.xib in Resources */,
 				2AAA60E91C72960300957BEF /* LaunchScreen.storyboard in Resources */,
 				2AAA60E61C72960300957BEF /* Assets.xcassets in Resources */,
 				2ADFECA21CAF556E00DB16DA /* NewAlarmController.xib in Resources */,
@@ -593,6 +617,7 @@
 				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				2A01948C1CAF7C0E00481E0F /* QuestionnaireViewController.swift in Sources */,
 				2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */,
+				2AF9BE491CB07F0A007F534E /* Alarm+CoreDataProperties.swift in Sources */,
 				2AE766301C9270D80065471B /* BackendOperation.swift in Sources */,
 				2A8259A81C97AB3B00019104 /* PersonalizeGoalsViewController.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
@@ -601,6 +626,7 @@
 				2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */,
 				2ADFECA81CAF615100DB16DA /* TimePickerCell.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
+				2AF9BE4A1CB07F0A007F534E /* Alarm.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
 				2A8259AC1C97AB3B00019104 /* ViewActivitiesTableViewCell.swift in Sources */,
 				2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */,
@@ -612,11 +638,13 @@
 				2A3562B01CA7260500C20CEF /* DateStruct.swift in Sources */,
 				2A8259AA1C97AB3B00019104 /* ViewGoalsTableViewCell.swift in Sources */,
 				2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */,
+				2AF69B0E1CB0CC1B00A570E7 /* RepeatCell.swift in Sources */,
 				2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */,
 				2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
 				2A8259B01C97AB3B00019104 /* GradientSlider.swift in Sources */,
+				2A9FD5211CB19C0500CD3BEB /* ArrayDataConverter.swift in Sources */,
 				2ADFECAC1CAF6C9300DB16DA /* RepeatViewController.swift in Sources */,
 				2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */,
 				2A8259A91C97AB3B00019104 /* ViewGoalsViewController.swift in Sources */,

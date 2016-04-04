@@ -427,8 +427,45 @@
                     <view key="view" contentMode="scaleToFill" id="ICz-aP-Hhr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mse-el-O3b">
+                                <rect key="frame" x="187" y="240" width="226" height="119"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="hLq-O5-TDI">
+                                        <rect key="frame" x="103" y="31" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending Data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAg-Zb-Dzc">
+                                        <rect key="frame" x="55" y="67" width="117" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="117" id="F5i-bz-qOU"/>
+                                            <constraint firstAttribute="width" secondItem="CAg-Zb-Dzc" secondAttribute="height" multiplier="39:7" id="aNc-kv-NOp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.78039215689999997" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="hLq-O5-TDI" firstAttribute="top" secondItem="Mse-el-O3b" secondAttribute="top" constant="31" id="FR6-EL-5wo"/>
+                                    <constraint firstItem="CAg-Zb-Dzc" firstAttribute="top" secondItem="hLq-O5-TDI" secondAttribute="bottom" constant="16" id="GUU-tm-Zem"/>
+                                    <constraint firstItem="hLq-O5-TDI" firstAttribute="centerX" secondItem="Mse-el-O3b" secondAttribute="centerX" id="UEY-Hh-Gdi"/>
+                                    <constraint firstItem="CAg-Zb-Dzc" firstAttribute="centerX" secondItem="Mse-el-O3b" secondAttribute="centerX" id="o6O-dx-4gf"/>
+                                    <constraint firstAttribute="height" constant="119" id="yJ3-Ol-y0P"/>
+                                    <constraint firstAttribute="width" constant="226" id="yj6-Lu-e9m"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mse-el-O3b" firstAttribute="centerX" secondItem="ICz-aP-Hhr" secondAttribute="centerX" id="SAo-Gv-06h"/>
+                            <constraint firstItem="Mse-el-O3b" firstAttribute="centerY" secondItem="ICz-aP-Hhr" secondAttribute="centerY" id="aQG-X6-kBv"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="indicator" destination="hLq-O5-TDI" id="sTy-4H-Sak"/>
+                        <outlet property="indicatorView" destination="Mse-el-O3b" id="8x2-ta-lD7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iu4-Bo-kdh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

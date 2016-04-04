@@ -8,21 +8,6 @@
 
 import Foundation
 
-//struct Questionnaire {
-//    var testEntry:String
-//    var numberOfValue:Int
-//    var onlyTextEnable = false
-//    var labelDic:[Int:String]?
-//    var questionSet:[String]
-//    
-//    init() {
-//        testEntry = "Something Wrong"
-//        numberOfValue = 10
-//        labelDic = [Int:String]()
-//        questionSet = [String]()
-//    }
-//}
-
 class Questionnaire: NSObject, NSCoding {
     var testEntry:String
     var numberOfValue:Int

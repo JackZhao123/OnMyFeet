@@ -19,40 +19,48 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
+        var questions: [QuestionSet]?
+
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("NoNeed") == false {
-            ClientDataManager.sharedInstance().initQuestionSetData()
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NoNeed")
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            if NSUserDefaults.standardUserDefaults().boolForKey("NoNeed") == false {
+                ClientDataManager.sharedInstance().initQuestionSetData()
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NoNeed")
+            }
+            dispatch_async(dispatch_get_main_queue()) {
+                questions = ClientDataManager.sharedInstance().fetchQuestionSet()
+                if let questions = questions {
+                    self.allQuestionnaire = questions
+                }
+                
+                self.titleTextView = UITextView(frame: CGRect(x: 8.0, y: 72.0, width: self.screenWidth - 16, height: 100.0))
+                self.titleTextView.textAlignment = .Justified
+                self.titleTextView.font = UIFont.systemFontOfSize(18.0)
+                self.titleTextView.text = "Are any of these problems affecting your ability to participate in therapy?\n\nSelect all that have been problems for you this week:"
+                
+                let fixedWidth = self.titleTextView.frame.size.width
+                let newSize = self.titleTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+                var newFrame = self.titleTextView.frame
+                newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+                self.titleTextView.textColor = UIColor.whiteColor()
+                self.titleTextView.backgroundColor = .None
+                self.titleTextView.frame = newFrame;
+                self.titleTextView.userInteractionEnabled = false
+                
+                let backgroundView = UIView(frame: CGRect(x: 0.0, y: 64.0, width: self.screenWidth, height: newFrame.origin.y + newSize.height + 8))
+                backgroundView.backgroundColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
+                
+                self.buttonTableView = UITableView(frame: CGRect(x: 0.0, y: newFrame.origin.y + newSize.height + 16 , width: self.screenWidth, height: self.screenHeight - newFrame.origin.y - 16 - newSize.height))
+                self.buttonTableView.delegate = self
+                self.buttonTableView.dataSource = self
+                
+                self.view.addSubview(backgroundView)
+                self.view.addSubview(self.buttonTableView)
+                self.view.addSubview(self.titleTextView)
+            }
         }
         
-        if let questions = ClientDataManager.sharedInstance().fetchQuestionSet() {
-            allQuestionnaire = questions
-        }
         
-        titleTextView = UITextView(frame: CGRect(x: 8.0, y: 72.0, width: screenWidth - 16, height: 100.0))
-        titleTextView.textAlignment = .Justified
-        titleTextView.font = UIFont.systemFontOfSize(18.0)
-        titleTextView.text = "Are any of these problems affecting your ability to participate in therapy?\n\nSelect all that have been problems for you this week:"
-        
-        let fixedWidth = titleTextView.frame.size.width
-        let newSize = titleTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        var newFrame = titleTextView.frame
-        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-        titleTextView.textColor = UIColor.whiteColor()
-        titleTextView.backgroundColor = .None
-        titleTextView.frame = newFrame;
-        titleTextView.userInteractionEnabled = false
-        
-        let backgroundView = UIView(frame: CGRect(x: 0.0, y: 64.0, width: screenWidth, height: newFrame.origin.y + newSize.height + 8))
-        backgroundView.backgroundColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
-        
-        buttonTableView = UITableView(frame: CGRect(x: 0.0, y: newFrame.origin.y + newSize.height + 16 , width: screenWidth, height: screenHeight - newFrame.origin.y - 16 - newSize.height))
-        buttonTableView.delegate = self
-        buttonTableView.dataSource = self
-        
-        self.view.addSubview(backgroundView)
-        self.view.addSubview(buttonTableView)
-        self.view.addSubview(titleTextView)
 
     }
 
@@ -81,8 +89,9 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
         let q = allQuestionnaire[indexPath.row]
         let ques = NSKeyedUnarchiver.unarchiveObjectWithData(q.questionnaire!) as! Questionnaire
         
-        let desController = QuestionnaireViewController()
+        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("questionView") as! QuestionnaireViewController
         desController.question = ques
+        desController.questionTitle = q.title
         
         self.navigationController?.pushViewController(desController, animated: true)
         

@@ -14,6 +14,7 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
+    var alarmList:[Alarm]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +26,28 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
         actionTableView.registerNib(UINib(nibName: "AlarmCell", bundle: nil), forCellReuseIdentifier: "AlarmCell")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        getAlarmsFromDataBase()
+        self.actionTableView.reloadData()
+    }
+    
+    func getAlarmsFromDataBase() {
+        let allAlarms = ClientDataManager.sharedInstance().fetchAllDataFor("Alarm") as? [Alarm]
+        if let allAlarms = allAlarms {
+            self.alarmList = allAlarms
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0,2:
-            return 1
+        case 1:
+            if let alarmList = alarmList {
+                return alarmList.count
+            } else {
+                return 0
+            }
         default:
-            return 3
+            return 1
         }
     }
     
@@ -44,17 +61,17 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 2{
-            return 40
+            return 88
         }
         return 0.1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0,2:
-            return 45
-        default:
+        case 1:
             return 55
+        default:
+            return 45
         }
     }
     
@@ -68,6 +85,7 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
             textView.textColor = UIColor(red: 0.651, green: 0.690, blue: 0.694, alpha: 1.00)
             textView.font = UIFont.systemFontOfSize(15.0)
             textView.sizeToFit()
+            
             footer.addSubview(textView)
             return footer
         }
@@ -82,10 +100,22 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell?.textLabel?.textColor = UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)
             case 1:
                 let alarmCell = actionTableView.dequeueReusableCellWithIdentifier("AlarmCell") as! AlarmCell
+                if let alarmList = alarmList {
+                    let alarm = alarmList[indexPath.row]
+                    let time = alarm.time!
+                    alarmCell.alarmTime.text = time.substringToIndex(time.startIndex.advancedBy(5))
+                    alarmCell.alarmSwitch.on = (alarm.on?.boolValue)!
+                    alarmCell.alarmLabel.text = alarm.label
+                    alarmCell.alarmId = alarm.id
+                }
+                
                 return alarmCell
             case 2:
                 cell?.textLabel?.text = "Set a New Alarm"
                 cell?.textLabel?.textColor = UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)
+            case 3:
+                cell?.textLabel?.text = "Sync Alarm From Fitbit"
+                cell?.textLabel?.textColor = UIColor.blackColor()
             default:
                 cell?.textLabel?.text = "Error"
         }
@@ -93,10 +123,27 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 2 {
+        switch indexPath.section {
+        case 1:
+            let desController = NewAlarmController()
+            desController.displayAlarm = alarmList![indexPath.row]
+            self.navigationController?.pushViewController(desController, animated: true)
+        case 2:
             let desController = NewAlarmController()
             let navb = UINavigationController(rootViewController: desController)
             self.presentViewController(navb, animated: true, completion: nil)
+        case 3:
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                ClientDataManager.sharedInstance().deleteAllDataFor("Alarm")
+                self.alarmList = nil
+                FitbitAPI.sharedAPI().getAllAlarm()
+                self.getAlarmsFromDataBase()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.actionTableView.reloadData()
+                }
+            }
+        default:
+            break
         }
         
         actionTableView.cellForRowAtIndexPath(indexPath)?.selected = false

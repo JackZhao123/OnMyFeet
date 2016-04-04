@@ -7,10 +7,16 @@
 //
 
 import UIKit
+protocol AlarmLabelViewControllerDelegate {
+    func labelViewDidPopUp(labelText:String?)
+}
 
 class AlarmLabelViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mTableView: UITableView!
+    
+    var initText:String!
+    var delegate:AlarmLabelViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +35,19 @@ class AlarmLabelViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        let index = NSIndexPath(forRow: 0, inSection: 0)
+        let cell = mTableView.cellForRowAtIndexPath(index) as! LabelCell
+        let text = cell.mTextField.text
+        
+        if let delegate = delegate {
+                delegate.labelViewDidPopUp(text)
+        }
+    }
+    
     //MARK: TableView delegate
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 200
+        return 180
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -44,6 +60,7 @@ class AlarmLabelViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = NSBundle.mainBundle().loadNibNamed("LabelCell", owner: self, options: nil).first! as! LabelCell
+        cell.mTextField.text = initText
         
         return cell
     }

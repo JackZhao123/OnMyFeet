@@ -9,11 +9,13 @@
 import UIKit
 import Alamofire
 
-protocol FitbitAPIDelegate {
-    func handleDailyOf(dataType: String, data: NSData)
-    func handleIntradayOf(dataType: String, data: NSData)
-    func handleDailySummary(data: NSData, dateTime: String)
-    func handleMinutesAsleep(data: NSData)
+@objc protocol FitbitAPIDelegate {
+    optional func handleDailyOf(dataType: String, data: NSData)
+    optional func handleIntradayOf(dataType: String, data: NSData)
+    optional func handleDailySummary(data: NSData, dateTime: String)
+    optional func handleMinutesAsleep(data: NSData)
+    optional func refreshCodeDidSaved()
+    optional func alarmDidSet(data: NSData)
 }
 
 class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
@@ -81,29 +83,27 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     //MARK: Request and refresh AccessToken
     func requestAccessToken() {
-            let components = NSURLComponents()
-            components.scheme = Constants.Fitbit.APIScheme
-            components.host = Constants.Fitbit.APIHost
-            components.path = Constants.Fitbit.AuthorizationPath
-            let url = components.URL
+        let components = NSURLComponents()
+        components.scheme = Constants.Fitbit.APIScheme
+        components.host = Constants.Fitbit.APIHost
+        components.path = Constants.Fitbit.AuthorizationPath
+        let url = components.URL
+        
+        let headerValues = [Constants.FitbitParameterKey.Authorization: Constants.FitbitParameterValue.Authorization,Constants.FitbitParameterKey.ContentType: Constants.FitbitParameterValue.ContentType]
+        
+        let parameters = [Constants.FitbitParameterKey.ClientID: Constants.FitbitParameterValue.ClientID,
+                          Constants.FitbitParameterKey.GrantTyoe: Constants.FitbitParameterValue.GrantType_AuthorizationCode,
+                          Constants.FitbitParameterKey.RedirectURI: Constants.FitbitParameterValue.RedirectURI,
+                          Constants.FitbitParameterKey.AuthorizationCode: Constants.FitbitParameterValue.AuthorizationCode!]
             
-            let headerValues = [Constants.FitbitParameterKey.Authorization: Constants.FitbitParameterValue.Authorization,
-                Constants.FitbitParameterKey.ContentType: Constants.FitbitParameterValue.ContentType]
-            
-            let parameters = [Constants.FitbitParameterKey.ClientID: Constants.FitbitParameterValue.ClientID,
-                Constants.FitbitParameterKey.GrantTyoe: Constants.FitbitParameterValue.GrantType_AuthorizationCode,
-                Constants.FitbitParameterKey.RedirectURI: Constants.FitbitParameterValue.RedirectURI,
-                Constants.FitbitParameterKey.AuthorizationCode: Constants.FitbitParameterValue.AuthorizationCode!
-            ]
-            
-            Alamofire.request(.POST, String(url!), headers:headerValues, parameters: parameters).response(completionHandler: {(request, urlrequest, data, error) -> Void in
-                if error != nil {
-                    print(error)
-                }
+        Alamofire.request(.POST, String(url!), headers:headerValues, parameters: parameters).response(completionHandler: {(request, urlrequest, data, error) -> Void in
+            if error != nil {
+                print(error)
+            }
                 
-                self.saveAccessOrRefeshTokenFrom(data!)
-            })
-        }
+            self.saveAccessOrRefeshTokenFrom(data!)
+        })
+    }
     
     func refreshAccessToken() {
         let lastAccessTokenTime = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.AccessTokenTime) as? NSDate
@@ -161,6 +161,9 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         if let refreshCode = json["refresh_token"].string {
             NSUserDefaults.standardUserDefaults().setObject(refreshCode, forKey: Constants.UserDefaultsKey.RefreshCode)
+            if let delegate = delegate {
+                delegate.refreshCodeDidSaved!()
+            }
         }
     }
     
@@ -232,7 +235,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                     }
                 }
                 if let delegate = self.delegate {
-                    delegate.handleDailyOf(dataType, data: data!)
+                    delegate.handleDailyOf!(dataType, data: data!)
                 }
             } else {
                 print(error)
@@ -279,7 +282,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         if let date1 = formatter.dateFromString(startDate), let date2 = formatter.dateFromString(mEndDate) {
             let interval = Int(date2.timeIntervalSinceDate(date1) / 86400.0)
-            print(interval)
             
             if let accessToken = accessToken {
                 let headers = [
@@ -296,7 +298,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                             print(error)
                             return
                         }
-                        self.delegate?.handleMinutesAsleep(data!)
+                        self.delegate?.handleMinutesAsleep!(data!)
                     })
                 }
                 
@@ -314,7 +316,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                                     return
                                 }
                                 print(urlRequest?.allHeaderFields["Fitbit-Rate-Limit-Remaining"])
-                                self.delegate?.handleDailyOf(datatype, data: data!)
+                                self.delegate?.handleDailyOf!(datatype, data: data!)
                             })
                         } else {
                             print("Can't get url")
@@ -339,7 +341,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
                                     return
                                 }
                                 print(urlRequest?.allHeaderFields["Fitbit-Rate-Limit-Remaining"])
-                                self.delegate?.handleDailySummary(data!, dateTime: dateString)
+                                self.delegate?.handleDailySummary!(data!, dateTime: dateString)
                             })
                         }
                     }
@@ -353,7 +355,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         let completionHandler = {(data:NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if let data = data {
                 if let delegate = self.delegate {
-                    delegate.handleIntradayOf(dataType, data: data)
+                    delegate.handleIntradayOf!(dataType, data: data)
                 }
             }
         }
@@ -373,7 +375,131 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         }
     }
     
+    func getAlarms(id:String?){
+        if let id = id {
+            if let accessToken = accessToken {
+                let headers = ["Authorization":"Bearer \(accessToken)"]
+                let urlString = "https://api.fitbit.com/1/user/-/devices/tracker/\(id)/alarms.json"
+                Alamofire.request(.GET, urlString, headers:headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
+                    guard error == nil else {
+                        print(error)
+                        return
+                    }
+                })
+            }
+        }
+    }
     
+    func getAllAlarm() {
+        
+        var flag = true
+        
+        if let accessToken = accessToken {
+            
+            let headerValue = [Constants.FitbitParameterKey.Authorization: "Bearer \(accessToken)"]
+            let id = NSUserDefaults.standardUserDefaults().valueForKey("CurrentDeviceID") as? String
+            if let id = id {
+                Alamofire.request(.GET, "https://api.fitbit.com/1/user/-/devices/tracker/\(id)/alarms.json", headers:headerValue).response(completionHandler: {(request,response, data, error) -> Void in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        let json = JSON(data:data!)
+                        self.handleAlarms(json)
+                        flag = false
+                    }
+                })
+            }
+        }
+        
+        while flag {}
+    }
+    
+    func handleAlarms(json:JSON) {
+        let count = json["trackerAlarms"].count
+        if count > 0 {
+            for i in 0..<count {
+                let id = json["trackerAlarms"][i]["alarmId"].stringValue
+                let time = json["trackerAlarms"][i]["time"].stringValue
+                let label = "Alarm"
+                let periodArray = json["trackerAlarms"][i]["weekDays"].arrayObject as? [String]
+                let on = json["trackerAlarms"][i]["enabled"].boolValue
+                
+                let alarm = Alarm()
+                alarm.id = id
+                alarm.time = time
+                alarm.label = label
+                alarm.on = on
+                if let periodArray = periodArray {
+                    alarm.period = ArrayDataConverter.stringArrayToNSData(periodArray)
+                }
+                ClientDataManager.sharedInstance().saveContext()
+            }
+        }
+    }
+    
+    func addAlarm(parameters:[String:AnyObject], id:String){
+        if let accessToken = accessToken {
+            let headers = ["Authorization":"Bearer \(accessToken)"]
+            let urlString = "https://api.fitbit.com/1/user/-/devices/tracker/\(id)/alarms.json"
+            
+            Alamofire.request(.POST, urlString, parameters: parameters, headers: headers).response(completionHandler: {(request, urlRequest, data, error) -> Void in
+                guard error == nil else {
+                    print(error)
+                    return
+                }
+                if let delegate = self.delegate {
+                    delegate.alarmDidSet!(data!)
+                }
+            })
+        }
+    }
+    
+    func updateAlarmFor(alarmid:String, alarm:Alarm) {
+        let deviceID = NSUserDefaults.standardUserDefaults().valueForKey("CurrentDeviceID") as? String
+        if let deviceID = deviceID {
+            if let accessToken = accessToken {
+                let headerValue = [Constants.FitbitParameterKey.Authorization: "Bearer \(accessToken)"]
+                let time = alarm.time
+                let enabled = alarm.on
+                let weekDays = ArrayDataConverter.nsDataToStringArray(alarm.period!)
+                var recurring = false
+                if weekDays.count > 0{
+                    recurring = true
+                }
+                
+                let snoozeLength = 9
+                let snoozeCount = 1
+                
+                let parameters:[String:AnyObject] = ["time":time!, "enabled":enabled!, "weekDays": weekDays, "recurring":recurring, "snoozeLength": snoozeLength, "snoozeCount":snoozeCount]
+                
+                Alamofire.request(.POST, "https://api.fitbit.com/1/user/-/devices/tracker/\(deviceID)/alarms/\(alarmid).json", headers:headerValue, parameters:parameters).response(completionHandler: {(request,response,data,error) -> Void in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        print(JSON(data:data!))
+                    }
+                })
+            }
+        }
+        
+    }
+    
+    func deleteAlarmFor(alarmid:String) {
+        let deviceID = NSUserDefaults.standardUserDefaults().valueForKey("CurrentDeviceID") as? String
+        if let deviceID = deviceID {
+            if let accessToken = accessToken {
+                let headerValue = [Constants.FitbitParameterKey.Authorization: "Bearer \(accessToken)"]
+                
+                Alamofire.request(.DELETE, "https://api.fitbit.com/1/user/-/devices/tracker/\(deviceID)/alarms/\(alarmid).json", headers:headerValue).response(completionHandler: {(request,response,data,error) -> Void in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        print(JSON(data:data!))
+                    }
+                })
+            }
+        }
+    }
     
     func runURLSessionWithURL(url:NSURL, withHTTPMethod method:String, headerValues header:[String: String]?, httpBody body:String?, completionHandler completion: ((data:NSData?, response:NSURLResponse?, error:NSError?)->Void)? ) {
         apiRequest.URL = url

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataCoordinatorDelegate {
 //    MARK: Outlet
     @IBOutlet weak var menuTableView: UITableView!
     @IBOutlet weak var indicatiorView: UIView!
@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var userInfo: String!
     var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action", "Test Module"]
     var refreshControl: UIRefreshControl!
+    var coordinator: DataCoordinator = DataCoordinator()
     
 //    MARK: view initialize
     override func viewDidLoad() {
@@ -40,6 +41,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         navigationController?.navigationBar.barTintColor = UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        
+        coordinator.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -138,10 +141,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func refresh() {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            DataCoordinator.sharedInstance.syncData()
-            BackendOperation.sendStepAndDistanceData("2016-03-27", end: "2016-04-01")
-//            DataCoordinator.sharedInstance.getIntradaySleep()
-//            DataCoordinator.sharedInstance.getIntradaySedentary()
+            self.coordinator.syncData()
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.refreshControl.endRefreshing()
@@ -165,6 +165,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         notification.alertAction = "get back to OnMyFeet"
         notification.soundName = UILocalNotificationDefaultSoundName
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
+    
+    func summariesDataDidSaved(dataType: String, startDate: String, endDate: String) {
+        switch dataType {
+        case "steps":
+            BackendOperation.sendStepData(startDate, end: endDate)
+        case "distance":
+            BackendOperation.sendDistanceData(startDate, end: endDate)
+        case "StepDistance":
+            BackendOperation.sendDistanceData(startDate, end: endDate)
+            BackendOperation.sendStepData(startDate, end: endDate)
+        default:
+            break
+        }
     }
     
 }

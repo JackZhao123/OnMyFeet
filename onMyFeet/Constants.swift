@@ -119,6 +119,7 @@ struct Constants {
         static let AccessToken = "AccessToken"
         static let RefreshCode = "RefreshCode"
         static let AccessTokenTime = "AccessTokenTime"
+        static let FitbitID = "CurrentDeviceID"
     }
     
     

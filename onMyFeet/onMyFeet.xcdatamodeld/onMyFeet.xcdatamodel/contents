@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="Activity" representedClassName=".Activity" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="goals" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Goal" syncable="YES"/>
+    </entity>
+    <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="on" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="period" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="DailySummary" representedClassName=".DailySummary" syncable="YES">
         <attribute name="dateTime" optional="YES" attributeType="String" syncable="YES"/>
@@ -53,12 +60,13 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Activity" positionX="-18" positionY="99" width="128" height="90"/>
+        <element name="Alarm" positionX="-27" positionY="90" width="128" height="120"/>
         <element name="DailySummary" positionX="0" positionY="45" width="128" height="180"/>
+        <element name="Goal" positionX="-27" positionY="90" width="128" height="120"/>
         <element name="IntradaySedentary" positionX="-18" positionY="90" width="128" height="105"/>
         <element name="IntradaySleepTime" positionX="-9" positionY="99" width="128" height="75"/>
         <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="QuestionSet" positionX="-27" positionY="99" width="128" height="90"/>
-        <element name="Goal" positionX="-27" positionY="90" width="128" height="120"/>
-        <element name="Activity" positionX="-18" positionY="99" width="128" height="90"/>
     </elements>
 </model>

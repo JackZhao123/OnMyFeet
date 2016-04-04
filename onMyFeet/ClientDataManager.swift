@@ -71,6 +71,7 @@ class ClientDataManager {
     }
     
     func fetchAllPersonData() -> [Person]? {
+        
         let fetchRequest = NSFetchRequest(entityName: "Person")
         var result: [Person]?
         do {
@@ -90,6 +91,18 @@ class ClientDataManager {
         return result
     }
     
+    func fetchAllDataFor(entity:String) -> [AnyObject]? {
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        var result: [AnyObject]?
+        do {
+            try result = self.managedObjectContext.executeFetchRequest(fetchRequest)
+        } catch {
+            print(error)
+        }
+                
+        return result
+    }
+    
     func fetchAllSummaryData() -> [DailySummary]? {
         let fetchRequest = NSFetchRequest(entityName: "DailySummary")
         var result: [DailySummary]?
@@ -98,13 +111,6 @@ class ClientDataManager {
         } catch {
             print(error)
         }
-        
-//        if let result = result {
-//            for d in result {
-//                print(d.dateTime)
-//                print(d.minutesActive)
-//            }
-//        }
         
         return result
     }
@@ -119,13 +125,6 @@ class ClientDataManager {
         } catch {
             print(error)
         }
-        
-//        if let p = result?.first {
-//            let summaries = p.mutableOrderedSetValueForKey("summary")
-//            for s in summaries {
-//                print(s)
-//            }
-//        }
         
         return result?.first
     }
@@ -189,11 +188,44 @@ class ClientDataManager {
         } catch {
             print(error)
         }
-        
         return result
     }
     
+    func deleteDataFor(entity:String, parameter:[String], argument:[String]) {
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        var formatString = "\(parameter.first!) = %@"
+        if parameter.count > 1 {
+            for index in 1...parameter.count - 1 {
+                formatString = NSString(string: formatString).stringByAppendingString("&& \(parameter[index]) = %@")
+            }
+        }
+        
+        fetchRequest.predicate = NSPredicate(format: formatString, argumentArray: argument)
+        var result: [AnyObject]?
+        do {
+            try result = self.managedObjectContext.executeFetchRequest(fetchRequest)
+        } catch {
+            print(error)
+        }
+        if let result = result {
+            for r in result {
+                self.managedObjectContext.deleteObject(r as! NSManagedObject)
+            }
+        }
+        self.saveContext()
+    }
+    
+    func deleteAllDataFor(entity:String) {
+        if let result = self.fetchAllDataFor(entity) as? [NSManagedObject] {
+            for r in result {
+                self.managedObjectContext.deleteObject(r)
+            }
+            saveContext()
+        }
+    }
+    
     func deleteAllPersonData() {
+        
         if let result = self.fetchAllPersonData() {
             for p in result {
                 self.managedObjectContext.deleteObject(p)
@@ -238,11 +270,6 @@ class ClientDataManager {
         let questionnaire1 = QuestionSet()
         questionnaire1.title = "Rehab self-efficacy scale"
         questionnaire1.symptom = "For everyone-1st check-in"
-//        var qSet1 = Questionnaire()
-//        qSet1.testEntry = "During my rehabilitation,\nI believe I can do..."
-//        qSet1.numberOfValue = 11
-//        qSet1.labelDic = [0:"I cannot do it", 10:"I can do it"]
-//        qSet1.questionSet = ["Therapy that requires me to stretch my leg", "Therapy that requires me to lift my leg ", "Therapy that requires me to bend my leg", "Therapy that requires me to stand", "Therapy that requires me to walk", "All of my therapy exercises during my rehabilitation","My therapy every day that it is scheduled", "The exercises my therapists say I should do, even if I don’t understand how it helps me","My therapy no matter how I feel emotionally","My therapy no matter how tired I may feel", "My therapy even though I may already have other complicating illnesses", "My therapy regardless of the amount of pain I am feeling"]
         
         questionnaire1.questionnaire = NSKeyedArchiver.archivedDataWithRootObject(questionnaireSample.ser)
         

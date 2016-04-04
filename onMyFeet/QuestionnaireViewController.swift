@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import Alamofire
 
 class QuestionnaireViewController: UIViewController {
+    
+    //Outlet 
+    @IBOutlet weak var indicatorView: UIView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
     
@@ -29,6 +35,7 @@ class QuestionnaireViewController: UIViewController {
     var resultLabelArray: [UILabel] = [UILabel]()
     
     var answerFlag:[Bool] = [Bool]()
+    var questionTitle: String!
     
 
     override func viewDidLoad() {
@@ -49,7 +56,13 @@ class QuestionnaireViewController: UIViewController {
         onlyTextEnable = (question?.onlyTextEnable)!
         
         self.view.addSubview(mScrollView)
+        
         initAllLabel()
+        
+        self.view.bringSubviewToFront(indicatorView)
+        indicatorView.layer.cornerRadius = 8.0
+        indicatorView.clipsToBounds = true
+        indicatorView.hidden = true
     }
     
     func initAllLabel() {
@@ -199,6 +212,7 @@ class QuestionnaireViewController: UIViewController {
             }
         }
         
+        
         if notAnswerList.count > 0 {
             let title = "Please answer all the questions before submit."
             var message = "Please answer question\nNo "
@@ -212,6 +226,45 @@ class QuestionnaireViewController: UIViewController {
             }))
             
             self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            indicatorView.hidden = false
+            indicator.startAnimating()
+            
+            var data = [String:AnyObject]()
+            var answerData = [String:AnyObject]()
+            
+            data["title"] = questionTitle
+            data["group"] = 0
+            
+            for i in 0..<questionSet.count {
+                let answerValue = Int(resultArray[i])
+                let answerPercent = (resultArray[i] / Float(numOfValue - 1) ) * 100
+                let answerLabel = labelDic[answerValue]
+                var label: String! = String(answerValue)
+                
+                if let answerLabel = answerLabel {
+                    label = answerLabel
+                }
+                
+                let answerArray: [AnyObject] = [answerValue, answerPercent, label, labelDic[0]!, labelDic[numOfValue - 1]!]
+                answerData[questionSet[i]] = answerArray
+            }
+            
+            data["feedback"] = answerData
+            data["fb_id"] = "00000000"
+            
+            Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/feedback", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
+                print("Response, \(response.result.value)")
+                if let error = response.result.error {
+                    print(error)
+                } else {
+                    self.indicatorView.hidden = true
+                    self.indicator.stopAnimating()
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            })
+            
+            
         }
     }
 }

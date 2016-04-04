@@ -49,9 +49,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="alarmLabel" destination="vDJ-Cp-KKg" id="bRQ-Kp-aRK"/>
                 <outlet property="alarmSwitch" destination="kGm-MO-Cle" id="x9f-51-ggT"/>
                 <outlet property="alarmTime" destination="zFo-yT-ZlG" id="wYX-qm-TSr"/>
-                <outlet property="repeatTime" destination="vDJ-Cp-KKg" id="q9J-bl-2Ku"/>
             </connections>
             <point key="canvasLocation" x="366.5" y="328"/>
         </tableViewCell>

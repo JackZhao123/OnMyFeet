@@ -7,8 +7,11 @@
 //
 
 import Foundation
+protocol DataCoordinatorDelegate {
+    func summariesDataDidSaved(dataType:String, startDate:String, endDate:String)
+}
 
-class DataCoordinator: FitbitAPIDelegate {
+@objc class DataCoordinator:NSObject, FitbitAPIDelegate {
     //MARK: Properties
     var stepsJson: JSON?
     var distancesJson: JSON?
@@ -36,6 +39,14 @@ class DataCoordinator: FitbitAPIDelegate {
     var gettingIntradaySleep = true
     var gettingIntradaySedentary = true
     
+    //Delegate
+    var delegate:DataCoordinatorDelegate?
+    
+    //Date
+    var startDate:String!
+    var today = DateStruct.getCurrentDate()
+    
+    
     
     static var sharedInstance: DataCoordinator = {
         struct Static {
@@ -53,7 +64,6 @@ class DataCoordinator: FitbitAPIDelegate {
     
     //MARK: Fetching Data
     func syncData() {
-        
         let userName = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as? String
         
         fitbitAPI.refreshAccessToken()
@@ -71,23 +81,27 @@ class DataCoordinator: FitbitAPIDelegate {
     }
     
     func updateData(userData: Person) {
-        let today = DateStruct.getCurrentDate()
         
         client = userData
         if (userData.summary?.count == 0) {
-            let dateTime = "2016-02-01"
+            let dateTime = "2016-04-01"
             print("Load All Data From \(dateTime)")
             NSUserDefaults.standardUserDefaults().setValue(dateTime, forKey: "JustUdated")
+            startDate = dateTime
             getDataFrom(dateTime, toEndDate: today)
+            
         } else {
             let currentUser = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as! String
             let key = "\(currentUser)_UpdateTime"
             let lastUpdated = NSUserDefaults.standardUserDefaults().objectForKey(key) as! String
             print("Update Data From \(lastUpdated)")
             NSUserDefaults.standardUserDefaults().setValue(lastUpdated, forKey: "JustUdated")
-
+            startDate = lastUpdated
             getDataFrom(lastUpdated, toEndDate: today)
         }
+        
+        getIntradaySleep(startDate, endDate: today)
+        getIntradaySedentary(startDate, endDate: today)
         
         setLastUpdateTime()
     }
@@ -101,13 +115,12 @@ class DataCoordinator: FitbitAPIDelegate {
     }
     
     func getDataFrom(startDate: String, toEndDate endDate: String) {
-        
         self.fitbitAPI.getDaily(startDate, toEndDate: endDate)
     }
     
-    func getIntradaySleep() {
-        var startTime = "2016-03-27"
-        let endTime = "2016-04-01"
+    func getIntradaySleep(startDate:String, endDate:String) {
+        var startTime = startDate
+        let endTime = endDate
         var interval = DateStruct.compare(startTime, with: endTime)
         self.fitbitAPI.delegate = self
 
@@ -141,10 +154,9 @@ class DataCoordinator: FitbitAPIDelegate {
         
     }
     
-    func getIntradaySedentary() {
-        
-        var startTime = "2016-03-27"
-        let endTime = "2016-04-01"
+    func getIntradaySedentary(startDate:String, endDate:String) {
+        var startTime = startDate
+        let endTime = endDate
         var interval = DateStruct.compare(startTime, with: endTime)
         
         var intensityData = [String:AnyObject]()
@@ -195,50 +207,6 @@ class DataCoordinator: FitbitAPIDelegate {
     
     
     //MARK: FitbitAPI delegate
-    func handleDailyOf(dataType: String, data: NSData)
-    {
-        let json = JSON(data: data)
-        
-            if let key = Constants.Fitbit.FitbitActivitiesDataValueKey[dataType] {
-                if (json[key].count > 0) {
-                    for index in 0...json[key].count - 1 {
-                        let dateTime = json[key][index]["dateTime"].stringValue
-                        let value = json[key][index]["value"].numberValue
-                        
-                        if let summary = dataManager.fetchSummaryWith(dateTime) {
-                            summary.client = client
-                            
-                            if (dataType == "minutesFairlyActive" || dataType == "minutesVeryActive") {
-                                if let dataValue = summary.valueForKey("minutesActive") as? NSNumber {
-                                    summary.setValue(NSNumber(int: dataValue.intValue + value.intValue), forKey: "minutesActive")
-                                } else {
-                                    summary.setValue(value, forKey: "minutesActive")
-                                }
-                            } else {
-                                summary.setValue(value, forKey: dataType)
-                            }
-                            
-                        } else {
-                            let summary = DailySummary()
-                            summary.dateTime = dateTime
-                            summary.client = client
-                            
-                            if (dataType == "minutesFairlyActive" || dataType == "minutesVeryActive") {
-                                if let dataValue = summary.valueForKey("minutesActive") as? NSNumber {
-                                    summary.setValue(NSNumber(int: dataValue.intValue + value.intValue), forKey: "minutesActive")
-                                } else {
-                                    summary.setValue(value, forKey: "minutesActive")
-                                }
-                            } else {
-                                summary.setValue(value, forKey: dataType)
-                            }
-                            
-                        }
-                        dataManager.saveContext()
-                    }
-                }
-            }
-    }
     
     func handleMinutesAsleep(data: NSData) {
         let json = JSON(data: data)
@@ -315,7 +283,64 @@ class DataCoordinator: FitbitAPIDelegate {
             summary.minutesSedentary = sedentaryValue
             summary.client = client
         }
+        
         dataManager.saveContext()
         setLastUpdateTime()
+
+        if let delegate = delegate {
+            delegate.summariesDataDidSaved("StepDistance", startDate: startDate, endDate: today)
+        }
+        
+    }
+    
+    func handleDailyOf(dataType: String, data: NSData)
+    {
+        let json = JSON(data: data)
+        
+        if let key = Constants.Fitbit.FitbitActivitiesDataValueKey[dataType] {
+            if (json[key].count > 0) {
+                for index in 0...json[key].count - 1 {
+                    let dateTime = json[key][index]["dateTime"].stringValue
+                    let value = json[key][index]["value"].numberValue
+                    
+                    if let summary = dataManager.fetchSummaryWith(dateTime) {
+                        summary.client = client
+                        
+                        if (dataType == "minutesFairlyActive" || dataType == "minutesVeryActive") {
+                            if let dataValue = summary.valueForKey("minutesActive") as? NSNumber {
+                                summary.setValue(NSNumber(int: dataValue.intValue + value.intValue), forKey: "minutesActive")
+                            } else {
+                                summary.setValue(value, forKey: "minutesActive")
+                            }
+                        } else {
+                            summary.setValue(value, forKey: dataType)
+                        }
+                        
+                    } else {
+                        let summary = DailySummary()
+                        summary.dateTime = dateTime
+                        summary.client = client
+                        
+                        if (dataType == "minutesFairlyActive" || dataType == "minutesVeryActive") {
+                            if let dataValue = summary.valueForKey("minutesActive") as? NSNumber {
+                                summary.setValue(NSNumber(int: dataValue.intValue + value.intValue), forKey: "minutesActive")
+                            } else {
+                                summary.setValue(value, forKey: "minutesActive")
+                            }
+                        } else {
+                            summary.setValue(value, forKey: dataType)
+                        }
+                        
+                    }
+                    dataManager.saveContext()
+                }
+                if let delegate = delegate {
+                    delegate.summariesDataDidSaved(dataType, startDate: startDate, endDate: today)
+                }
+            }
+        }
+    }
+    
+    func refreshCodeDidSaved() {
     }
 }
