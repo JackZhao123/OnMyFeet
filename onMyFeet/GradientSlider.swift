@@ -418,20 +418,13 @@ import UIKit
             return
         }
         
-        //Otherwise make a rainbow with the saturation & lightness of the min color
-        var h:CGFloat = 0.0
-        var s:CGFloat = 0.0
-        var l:CGFloat = 0.0
-        var a:CGFloat = 1.0
-        
-        minColor.getHue(&h, saturation: &s, brightness: &l, alpha: &a)
-        
+        //Otherwise make a rainbow
         let cnt = 40
         let step:CGFloat = 1.0 / 3 / CGFloat(cnt)
         let locations:[CGFloat] = (0...cnt).map({ i in return (step * CGFloat(i))})
         let theLoc:[CGFloat] = (0...cnt).map({ i in return (step * 3 * CGFloat(i))})
 
-        _trackLayer.colors = locations.map({return UIColor(hue: $0, saturation: s, brightness: l, alpha: a).CGColor})
+        _trackLayer.colors = locations.map({return UIColor(hue: $0, saturation: 0.7, brightness: 1.0, alpha: 1.0).CGColor})
         _trackLayer.locations = theLoc
     }
 }

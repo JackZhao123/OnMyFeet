@@ -12,12 +12,20 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     
     var index = 0
     var indexes = [Int]()
-    var goals = [Goal]()
+    
     var distance: CGFloat = 0.0
     var length: CGFloat = 0.0
     var theFlag = true
     var _flag = false
-    var flagExamples = [String]()
+    
+    var pictures = [UIImage]()
+    var questions = [String]()
+    var examples = [String]()
+    
+    var finalPictures = [UIImage]()
+    var finalQuestions = [String]()
+    var finalExamples = [String]()
+    var finalAnswers = [String]()
     
     @IBOutlet weak var bottomConstrain: NSLayoutConstraint!
     @IBOutlet weak var topConstrain: NSLayoutConstraint!
@@ -34,18 +42,19 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         nextBtn.setTitle("Next", forState: .Normal)
         if (index > 0) {
             if (_flag == false) {
-                GoalDataManager().updateGoalAnswer(goals[index], answer: "")
+                finalAnswers[index] = ""
             }
             if (_flag == true) {
-                GoalDataManager().updateGoalAnswer(goals[index], answer: textView.text!)
+                finalAnswers[index] = textView.text!
             }
             index -= 1
             show()
             if (_flag == false) {
-                GoalDataManager().updateGoalAnswer(goals[index], answer: "")
+                finalAnswers[index] = ""
+                
             }
             if (_flag == true) {
-                GoalDataManager().updateGoalAnswer(goals[index], answer: textView.text!)
+                finalAnswers[index] = textView.text!
             }
             if (index == 0) {
                 previousBtn.enabled = false
@@ -57,41 +66,67 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     @IBAction func nextBtn(sender: UIButton) {
         previousBtn.enabled = true
         previousBtn.alpha = 1.0
-        if (index < goals.count) {
+        if (index < indexes.count) {
             if (_flag == false) {
-                GoalDataManager().updateGoalAnswer(goals[index], answer: "")
+                finalAnswers[index] = ""
             }
             if (_flag == true) {
-                GoalDataManager().updateGoalAnswer(goals[index], answer: textView.text!)
+                finalAnswers[index] = textView.text!
             }
             
-            if (index == goals.count - 1) {
+            if (index == indexes.count - 1) {
+                saveToCoreData()
                 goNext()
             }
             
-            if (index < goals.count - 1) {
+            if (index < indexes.count - 1) {
                 index += 1
                 show()
-                if (index == goals.count - 1 ) {
+                if (index == indexes.count - 1 ) {
                     nextBtn.setTitle("Finished", forState: .Normal)
                 }
             }
         }
     }
+    
+    func saveToCoreData() {
+        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
+            let managedObjectContext = appDel.managedObjectContext
+            
+            for index in 0..<indexes.count {
+                let thePicture = finalPictures[index]
+                let theQuestion = finalQuestions[index]
+                let theExample = finalExamples[index]
+                let theAnswer = finalAnswers[index]
+                
+                GoalDataManager().insertGoalData(managedObjectContext, picture: thePicture, question: theQuestion, example: theExample, answer: theAnswer)
+            }
+            GoalDataManager().save(managedObjectContext)
+        }
+    }
 
+    func initialization() {
+        for index in 0...15 {
+            pictures.append(UIImage (named: "\(index)")!)
+        }
+        questions = ["Who do you spend time with? What do you typically do together?", "What do you do that you enjoy or is important to you?", "How does this fit in your life?", "What kinds of outdoor activities do you enjoy?", "What kinds of exercise do you enjoy?", "How does this fit in your life?", "How does this fit in your life?", "Where do you like to go?", "How does this fit in your life", "Where do you like to go?", "Where do you like to go?", "How does this fit in your life?", "How does this fit in your life?", "Do you enjoy movies or plays? How does this fit in your life?", "How does this fit in your life?", "Where do you shop? What is important about shopping?"]
+        examples = ["For example, \"Going to the coffee shop with my friend Bill.\"", "For example, \"Pruning the bushes in front of my house.\"", "For example, \"Helping in the reading program at the library.\"", "For example, \"Going on walks in the park.\"", "For example, \"Going to the pool to swim laps.\"", "For example, \"Attending weekly service at my church.", "For example, \"Walking my dog.", "For example, \"Visiting my daughter in Vancouver.", "For example, \"Cooking for my daughter.\"", "For example, \"Going to a baseball game.\"", "For example, \"Going to the symphony.\"", "For example, \"Taking the bus to the casino.\"", "For example, \"Getting my hair done at the salon.\"", "For example, \"Going to the movie theatre with my husband.\"", "For example, \"Having brunch at my local diner.\"", "For example, \"Picking out fresh produce at the grocery store.\""]
+        
+        for index in 0..<indexes.count {
+            finalPictures.append(pictures[indexes[index]])
+            finalQuestions.append(questions[indexes[index]])
+            finalExamples.append(examples[indexes[index]])
+            finalAnswers.append("")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for index in 0..<flagExamples.count {
-            let theExample = flagExamples[index]
-            let theGoal = GoalDataManager().predicateFetchGoal(theExample)
-            goals.append(theGoal)
-        }
+        initialization()
         
         if (index == 0) {
             show()
-            if (goals.count == 1) {
+            if (indexes.count == 1) {
                 nextBtn.setTitle("Finished", forState: .Normal)
             }
         }
@@ -115,9 +150,9 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         
         self.title = "Personalizing Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PersonalizeGoalsViewController.goBack))
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
+//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PersonalizeGoalsViewController.goBack))
+//        backBtn.tintColor = UIColor.whiteColor()
+//        navigationItem.leftBarButtonItem = backBtn
         
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PersonalizeGoalsViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
@@ -138,10 +173,10 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     }
     
     func show() {
-        imageView.image = UIImage (data: goals[index].picture)
-        question.text = goals[index].question
-        example.text = goals[index].example
-        textView.text = goals[index].answer
+        imageView.image = finalPictures[index]
+        question.text = finalQuestions[index]
+        example.text = finalExamples[index]
+        textView.text = finalAnswers[index]
         
         if textView.text.isEmpty {
             textView.text = "Please enter your personalized goal here"
@@ -184,7 +219,6 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     
     func keyboardWillHide(notification: NSNotification) {
         self.scrollView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
-        
         scrollView.scrollEnabled = false
     }
     
@@ -214,16 +248,10 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     }
     
     func goBack(){
-        let storyboardIdentifier = "ChooseGoalsViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! ChooseGoalsViewController
-        desController.indexes = self.indexes
-        self.navigationController!.pushViewController(desController, animated: true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func goHome(){
-//        let storyboardIdentifier = "Menu"
-//        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
-//        self.navigationController!.pushViewController(desController, animated: true)
         self.navigationController?.popToRootViewControllerAnimated(true)
 
     }

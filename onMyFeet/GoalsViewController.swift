@@ -70,15 +70,13 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
     }
     
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Setting Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goBack))
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
+//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goBack))
+//        backBtn.tintColor = UIColor.whiteColor()
+//        navigationItem.leftBarButtonItem = backBtn
         
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
@@ -99,11 +97,20 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         prioritizeThem.layer.cornerRadius = 5.0;
         prioritizeThem.layer.borderColor = UIColor.grayColor().CGColor
         prioritizeThem.layer.borderWidth = 1.5
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         BoxView.alpha = 0.0
         prioritizeThem.alpha = 0.0
-        prioritizeThem.enabled = false
+        deselectAll.alpha = 1.0
+        finishSelecting.alpha = 1.0
+        
+        
+        selectedIndexes.removeAll()
+        selectedImages.removeAll()
+        collectionView.setContentOffset(CGPointZero, animated: true)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -213,17 +220,11 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     //MARK: Actions
     func goBack(){
-        let storyboardIdentifier = "ViewGoalsViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
-        self.navigationController!.pushViewController(desController, animated: true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func goHome(){
-//        let storyboardIdentifier = "Menu"
-//        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
-//        self.navigationController!.pushViewController(desController, animated: true)
         self.navigationController?.popToRootViewControllerAnimated(true)
-
     }
 
     

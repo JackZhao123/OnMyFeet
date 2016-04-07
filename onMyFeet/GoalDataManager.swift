@@ -12,9 +12,12 @@ import CoreData
 class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
     var goal: Goal?
     var activity: Activity?
+    var progress: ActivityProgress?
     var goals = [Goal]()
     var activities = [Activity]()
-    var theRelate: NSMutableSet?
+    var progresses = [ActivityProgress]()
+    var actGoalRelate: NSMutableSet?
+    var progressActRelate: NSMutableSet?
     var fetchResultController: NSFetchedResultsController!
     
     func save(context: NSManagedObjectContext) {
@@ -40,9 +43,21 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
         return activity!
     }
     
-    func insertRelation(theGoal: Goal, theAct: Activity) {
-        theRelate = theGoal.mutableSetValueForKey("activities")
-        theRelate?.addObject(theAct)
+    func insertProgressData (context: NSManagedObjectContext, date: String, status: Float) -> ActivityProgress {
+        progress = NSEntityDescription.insertNewObjectForEntityForName("ActivityProgress", inManagedObjectContext: context) as? ActivityProgress
+        progress!.date = date
+        progress!.status = status
+        return progress!
+    }
+    
+    func insertActGoalRelation (theGoal: Goal, theAct: Activity) {
+        actGoalRelate = theGoal.mutableSetValueForKey("activities")
+        actGoalRelate?.addObject(theAct)
+    }
+    
+    func insertProgressActRelation (theAct: Activity, theProgress: ActivityProgress) {
+        progressActRelate = theAct.mutableSetValueForKey("activityProgresses")
+        progressActRelate?.addObject(theProgress)
     }
     
     func fetchGoals() -> [Goal]? {
@@ -81,25 +96,6 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
         return activities
     }
     
-    func predicateFetchActivity(context: NSManagedObjectContext, theName: String) -> Activity {
-        let fetchRequest = NSFetchRequest(entityName: "Activity")
-        fetchRequest.predicate = NSPredicate(format: "name == %@", theName)
-        
-        do {
-            let result = try context.executeFetchRequest(fetchRequest) as! [Activity]
-            if (result.count == 0) {
-                activity = GoalDataManager().insertActivityData(context, name: theName, status: 0)
-            }
-            else {
-                activity = result[0]
-            }
-        }
-        catch {
-            print(error)
-        }
-        return activity!
-    }
-    
     func predicateFetchGoal(theExample: String) -> Goal {
         if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
             let managedObjectContext = appDel.managedObjectContext
@@ -117,6 +113,46 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
         return goal!
     }
     
+    func predicateFetchActivity(context: NSManagedObjectContext, theName: String) -> Activity {
+        let fetchRequest = NSFetchRequest(entityName: "Activity")
+        fetchRequest.predicate = NSPredicate(format: "name == %@", theName)
+        
+        do {
+            let result = try context.executeFetchRequest(fetchRequest) as! [Activity]
+            if (result.count == 0) {
+                activity = insertActivityData(context, name: theName, status: 0)
+            }
+            else {
+                activity = result[0]
+            }
+        }
+        catch {
+            print(error)
+        }
+        return activity!
+    }
+    
+    func executeProgressUpdate(context: NSManagedObjectContext, theAct: Activity, theDate: String, theStatus: Float) {
+        let fetchRequest = NSFetchRequest(entityName: "ActivityProgress")
+        fetchRequest.predicate = NSPredicate(format: "activity.name == %@ AND date == %@", theAct.name, theDate)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        
+        do {
+            let result = try context.executeFetchRequest(fetchRequest) as! [ActivityProgress]
+            if (result.count == 0) {
+                let progress = insertProgressData(context, date: theDate, status: theStatus)
+                insertProgressActRelation(theAct, theProgress: progress)
+                save(context)
+            }
+            else {
+                updateProgressStatus(result[0], status: theStatus)
+            }
+        }
+        catch {
+            print(error)
+        }
+    }
+    
     func updateGoalAnswer(theGoal: Goal, answer: String) {
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
             theGoal.answer = answer
@@ -132,38 +168,41 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
         }
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController, tableView: UITableView) {
-        tableView.beginUpdates()
-    }
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?, tableView: UITableView) {
-        switch type {
-            
-        case .Delete:
-            if let _indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([_indexPath], withRowAnimation: .Fade)
-            }
-        default:
-            tableView.reloadData()
+    func updateProgressStatus(theProgress: ActivityProgress, status: Float) {
+        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+            theProgress.status = status
+            save(managedObjectContext)
         }
     }
-    func controllerDidChangeContent(controller: NSFetchedResultsController, tableView: UITableView) {
-        tableView.endUpdates()
-    }
     
-    
+//    func deleteAll() {
+//        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
+//            let managedObjectContext = appDel.managedObjectContext
+//            let coord = appDel.persistentStoreCoordinator
+//            let fetchRequest = NSFetchRequest(entityName: "Goal")
+//            let deleteRequest = NSBatchDeleteRequest (fetchRequest: fetchRequest)
+//            
+//            do {
+//                try coord.executeRequest (deleteRequest, withContext: managedObjectContext)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
 
-    func deleteAll() {
+    func deleteGoal(theGoal: Goal) {
         if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
             let managedObjectContext = appDel.managedObjectContext
-            let coord = appDel.persistentStoreCoordinator
-            let fetchRequest = NSFetchRequest(entityName: "Goal")
-            let deleteRequest = NSBatchDeleteRequest (fetchRequest: fetchRequest)
-            
-            do {
-                try coord.executeRequest (deleteRequest, withContext: managedObjectContext)
-            } catch {
-                print(error)
-            }
+            managedObjectContext.deleteObject(theGoal)
+            save(managedObjectContext)
+        }
+    }
+    
+    func deleteActivity(theActivity: Activity) {
+        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
+            let managedObjectContext = appDel.managedObjectContext
+            managedObjectContext.deleteObject(theActivity)
+            save(managedObjectContext)
         }
     }
     
@@ -186,23 +225,23 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
         return true
     }
     
-    func activityEntityIsEmpty() -> Bool {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-            let fetchRequest = NSFetchRequest (entityName: "Activity")
-            do{
-                try managedObjectContext.executeFetchRequest(fetchRequest)
-            } catch {
-                print(error)
-            }
-            let count = managedObjectContext.countForFetchRequest(fetchRequest, error: nil)
-            if count == 0 {
-                return true
-            }
-            else {
-                return false
-            }
-        }
-        return true
-    }
+//    func activityEntityIsEmpty() -> Bool {
+//        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+//            let fetchRequest = NSFetchRequest (entityName: "Activity")
+//            do{
+//                try managedObjectContext.executeFetchRequest(fetchRequest)
+//            } catch {
+//                print(error)
+//            }
+//            let count = managedObjectContext.countForFetchRequest(fetchRequest, error: nil)
+//            if count == 0 {
+//                return true
+//            }
+//            else {
+//                return false
+//            }
+//        }
+//        return true
+//    }
     
 }

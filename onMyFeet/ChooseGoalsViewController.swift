@@ -18,37 +18,28 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     let cellIdentifier = "ChooseGoalsCollectionViewCell"
     
     var indexes = [Int]()
+    var finalIndexes = [Int]()
     var selectedIndexes = [NSIndexPath]() {
         didSet {
             collectionView.reloadData()
         }
     }
     
-    var goal: Goal!
     var pictures = [UIImage]()
-    var questions = [String]()
-    var examples = [String]()
-    var answers = [String]()
-    
-    var flagExamples = [String]()
     
     func initialization() {
         for index in 0...15 {
             pictures.append(UIImage (named: "\(index)")!)
         }
-        questions = ["Who do you spend time with? What do you typically do together?", "What do you do that you enjoy or is important to you?", "How does this fit in your life?", "What kinds of outdoor activities do you enjoy?", "What kinds of exercise do you enjoy?", "How does this fit in your life?", "How does this fit in your life?", "Where do you like to go?", "How does this fit in your life", "Where do you like to go?", "Where do you like to go?", "How does this fit in your life?", "How does this fit in your life?", "Do you enjoy movies or plays? How does this fit in your life?", "How does this fit in your life?", "Where do you shop? What is important about shopping?"]
-        examples = ["For example, \"Going to the coffee shop with my friend Bill.\"", "For example, \"Pruning the bushes in front of my house.\"", "For example, \"Helping in the reading program at the library.\"", "For example, \"Going on walks in the park.\"", "For example, \"Going to the pool to swim laps.\"", "For example, \"Attending weekly service at my church.", "For example, \"Walking my dog.", "For example, \"Visiting my daughter in Vancouver.", "For example, \"Cooking for my daughter.\"", "For example, \"Going to a baseball game.\"", "For example, \"Going to the symphony.\"", "For example, \"Taking the bus to the casino.\"", "For example, \"Getting my hair done at the salon.\"", "For example, \"Going to the movie theatre with my husband.\"", "For example, \"Having brunch at my local diner.\"", "For example, \"Picking out fresh produce at the grocery store.\""]
-        
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Prioritizing Goals"
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goBack))
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
+//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goBack))
+//        backBtn.tintColor = UIColor.whiteColor()
+//        navigationItem.leftBarButtonItem = backBtn
         
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
@@ -63,10 +54,15 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
         
         initialization()
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        selectedIndexes.removeAll()
+        finalIndexes.removeAll()
+        collectionView.setContentOffset(CGPointZero, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -122,48 +118,27 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
         }
 
         else {
-            if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-                let managedObjectContext = appDel.managedObjectContext
-                
-                for index in 0..<selectedIndexes.count {
-                    let theIndex = indexes[selectedIndexes[index].row]
-                    let thePicture = pictures[theIndex]
-                    let theQuestion = questions[theIndex]
-                    let theExample = examples[theIndex]
-                    
-                    self.flagExamples.append(theExample)
-  
-                    GoalDataManager().insertGoalData(managedObjectContext, picture: thePicture, question: theQuestion, example: theExample, answer: "")
-                }
-                
-                GoalDataManager().save(managedObjectContext)
+            
+            for index in 0..<selectedIndexes.count {
+                finalIndexes.append(indexes[selectedIndexes[index].row])
             }
+            
             goNext()
         }
     }
     
     func goBack(){
-        let storyboardIdentifier = "GoalsViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
-        self.navigationController!.pushViewController(desController, animated: true)
+       self.navigationController?.popViewControllerAnimated(true)
     }
 
     func goHome(){
-//        let storyboardIdentifier = "Menu"
-//        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
-//        self.navigationController!.pushViewController(desController, animated: true)
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func goNext(){
         let storyboardIdentifier = "PersonalizeGoalsViewController"
         let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! PersonalizeGoalsViewController
-        desController.indexes = self.indexes
-        desController.flagExamples = self.flagExamples
-        print(desController.flagExamples)
+        desController.indexes = self.finalIndexes
         self.navigationController!.pushViewController(desController, animated: true)
     }
-    
-    
-
 }

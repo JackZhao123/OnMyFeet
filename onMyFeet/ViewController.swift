@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
 //    MARK: Properties
     var userInfo: String!
-    var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action", "Test Module"]
+    var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
     var refreshControl: UIRefreshControl!
     var coordinator: DataCoordinator = DataCoordinator()
     
@@ -41,6 +41,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         navigationController?.navigationBar.barTintColor = UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        
         
         coordinator.delegate = self
     }
@@ -69,6 +70,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("menuCell", forIndexPath: indexPath) as! MenuCell
         cell.categoryName.text = categories[indexPath.row]
+        if indexPath.row == 4 {
+            
+            cell.categoryName.textColor = UIColor.redColor()
+        }
         
         return cell
     }
@@ -168,16 +173,38 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func summariesDataDidSaved(dataType: String, startDate: String, endDate: String) {
-        switch dataType {
-        case "steps":
-            BackendOperation.sendStepData(startDate, end: endDate)
-        case "distance":
-            BackendOperation.sendDistanceData(startDate, end: endDate)
-        case "StepDistance":
-            BackendOperation.sendDistanceData(startDate, end: endDate)
-            BackendOperation.sendStepData(startDate, end: endDate)
-        default:
-            break
+        if Constants.develop.ifGetStepDistance {
+            switch dataType {
+            case "steps":
+                BackendOperation.sendStepData(startDate, end: endDate)
+            case "distance":
+                BackendOperation.sendDistanceData(startDate, end: endDate)
+            case "StepDistance":
+                BackendOperation.sendDistanceData(startDate, end: endDate)
+                BackendOperation.sendStepData(startDate, end: endDate)
+            default:
+                break
+            }
+        }
+
+    }
+    
+    //MARK: Motion
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake {
+            print("1234")
+            
+            switch categories.count {
+                case 4:
+                    categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action", "Developer"]
+                    print("4")
+                case 5:
+                    categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
+                    print("5")
+                default:
+                    break
+            }
+            self.menuTableView.reloadData()
         }
     }
     

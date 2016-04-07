@@ -3,7 +3,13 @@
     <entity name="Activity" representedClassName=".Activity" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="goals" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Goal" syncable="YES"/>
+        <relationship name="activityProgresses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ActivityProgress" inverseName="activity" inverseEntity="ActivityProgress" syncable="YES"/>
+        <relationship name="goals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="activities" inverseEntity="Goal" syncable="YES"/>
+    </entity>
+    <entity name="ActivityProgress" representedClassName=".ActivityProgress" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="activityProgresses" inverseEntity="Activity" syncable="YES"/>
     </entity>
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -28,7 +34,7 @@
         <attribute name="example" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="activities" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Activity" syncable="YES"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="goals" inverseEntity="Activity" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="example"/>
@@ -60,7 +66,6 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-18" positionY="99" width="128" height="90"/>
         <element name="Alarm" positionX="-27" positionY="90" width="128" height="120"/>
         <element name="DailySummary" positionX="0" positionY="45" width="128" height="180"/>
         <element name="Goal" positionX="-27" positionY="90" width="128" height="120"/>
@@ -68,5 +73,7 @@
         <element name="IntradaySleepTime" positionX="-9" positionY="99" width="128" height="75"/>
         <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="QuestionSet" positionX="-27" positionY="99" width="128" height="90"/>
+        <element name="ActivityProgress" positionX="-27" positionY="90" width="128" height="90"/>
+        <element name="Activity" positionX="-18" positionY="99" width="128" height="105"/>
     </elements>
 </model>

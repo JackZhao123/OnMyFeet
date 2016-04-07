@@ -11,12 +11,20 @@ import Foundation
 struct Constants {
     static let dataType = ["steps", "distance", "minutesLightlyActive", "minutesFairlyActive", "minutesVeryActive", "minutesSedentary"]
     
+    struct develop {
+        static var startTime = "2016-03-01"
+        static var endTime = "today"
+        static var ifGetIntraday = false
+        static var ifGetStepDistance = false
+    }
+    
     struct Fitbit {
         static let APIScheme = "https"
         static let APIHost = "api.fitbit.com"
         static let APIPath = "/1/user/-"
         static let AuthorizationPath = "/oauth2/token"
         static let DevicesInfoPath = "/1/user/-/devices.json"
+        static var id = "11111111"
         
         static let AuthenticationURL = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=227GMP&redirect_uri=onmyfeet://&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight"
         

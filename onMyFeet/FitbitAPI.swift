@@ -65,7 +65,7 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
         
         let url: NSURL!
         if flag {
-            url = NSURL(string: Constants.Fitbit.AuthenticationURL )//+ "&prompt=login")
+            url = NSURL(string: Constants.Fitbit.AuthenticationURL)
         } else {
             url = NSURL(string: Constants.Fitbit.AuthenticationURL)
         }
@@ -108,7 +108,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     func refreshAccessToken() {
         let lastAccessTokenTime = NSUserDefaults.standardUserDefaults().objectForKey(Constants.UserDefaultsKey.AccessTokenTime) as? NSDate
         var syncFlag = false
-//        print(accessToken)
         
         if let lastAccessTokenTime = lastAccessTokenTime {
             print(lastAccessTokenTime)

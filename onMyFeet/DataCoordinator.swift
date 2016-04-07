@@ -84,7 +84,7 @@ protocol DataCoordinatorDelegate {
         
         client = userData
         if (userData.summary?.count == 0) {
-            let dateTime = "2016-04-01"
+            let dateTime = Constants.develop.startTime
             print("Load All Data From \(dateTime)")
             NSUserDefaults.standardUserDefaults().setValue(dateTime, forKey: "JustUdated")
             startDate = dateTime
@@ -100,9 +100,11 @@ protocol DataCoordinatorDelegate {
             getDataFrom(lastUpdated, toEndDate: today)
         }
         
-        getIntradaySleep(startDate, endDate: today)
-        getIntradaySedentary(startDate, endDate: today)
-        
+        if Constants.develop.ifGetIntraday {
+            getIntradaySleep("2016-03-25", endDate: "2016-03-31")
+            getIntradaySedentary("2016-03-25", endDate: "2016-03-31")
+        }
+
         setLastUpdateTime()
     }
     

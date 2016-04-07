@@ -32,12 +32,13 @@ class LogInViewController: UIViewController {
     }
     
     func didBecomeActive() {
-        if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
-            fitbitAPI.refreshAccessToken()
-            fitbitAPI.getUserName()
-            fitbitAPI.getFitbitID()
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
+            if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
+                print("Loged in")
+                fitbitAPI.refreshAccessToken()
+                fitbitAPI.getUserName()
+                fitbitAPI.getFitbitID()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
     }
     
     @IBAction func logIn(sender: AnyObject) {

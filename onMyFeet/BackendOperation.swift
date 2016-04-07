@@ -15,7 +15,7 @@ class BackendOperation {
     
     static func post(parameters:[String:AnyObject], dataType:String) {
         var data:[String:AnyObject] = [dataType:parameters]
-        data["fb_id"] = "00000000"
+        data["fb_id"] = "\(Constants.Fitbit.id)"
         
         Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/fitbit", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
                         print("Response, \(response.result.value)")

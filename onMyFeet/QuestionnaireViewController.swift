@@ -251,7 +251,7 @@ class QuestionnaireViewController: UIViewController {
             }
             
             data["feedback"] = answerData
-            data["fb_id"] = "00000000"
+            data["fb_id"] = "\(Constants.Fitbit.id)"
             
             Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/feedback", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
                 print("Response, \(response.result.value)")

@@ -35,9 +35,9 @@ class ChooseActivitiesTableViewController: UITableViewController {
         goals = GoalDataManager().fetchGoals()!
         theGoal = goals[index]
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
+//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
+//        backBtn.tintColor = UIColor.whiteColor()
+//        navigationItem.leftBarButtonItem = backBtn
         
         let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
         nextBtn.tintColor = UIColor.whiteColor()
@@ -161,17 +161,15 @@ class ChooseActivitiesTableViewController: UITableViewController {
                 let theName = names[theIndex]
                 
                 theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: theName)
-                GoalDataManager().insertRelation(theGoal!, theAct: theActivity!)
+                GoalDataManager().insertActGoalRelation(theGoal!, theAct: theActivity!)
                 GoalDataManager().save(managedObjectContext)
             }
         }
         goBack()
+        GoalBackendData().postActivityLatestData()
     }
     
     func goBack(){
-        let storyboardIdentifier = "ViewActivitiesViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! ViewActivitiesViewController
-        desController.index = index
-        self.navigationController!.pushViewController(desController, animated: true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

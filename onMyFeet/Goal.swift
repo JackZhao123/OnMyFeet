@@ -20,3 +20,8 @@ class Activity: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var status: Float
 }
+
+class ActivityProgress: NSManagedObject {
+    @NSManaged var date: String
+    @NSManaged var status: Float
+}

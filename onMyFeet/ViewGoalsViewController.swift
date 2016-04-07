@@ -67,6 +67,10 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         setGoalsBtn.layer.borderWidth = 1.5
     }
 
+    override func viewWillAppear(animated: Bool) {
+        goalTable.setContentOffset(CGPointZero, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -159,9 +163,7 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func goBack(){
-        let storyboardIdentifier = "Menu"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
-        self.navigationController!.pushViewController(desController, animated: true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func goNext(){
@@ -181,6 +183,4 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
     }
-
-
 }

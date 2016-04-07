@@ -15,21 +15,36 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var activityTable: UITableView!
-    @IBOutlet weak var RainbowBar: UIView!
+    @IBOutlet weak var RainbowView: UIView!
+    @IBOutlet weak var ContainerView: UIView!
+    @IBOutlet weak var DailyView: UIView!
+    @IBOutlet weak var WeeklyView: UIView!
+    @IBOutlet weak var theLine: LineChart!
     @IBOutlet weak var theSlider: GradientSlider!
+    @IBOutlet weak var redView: UIView!
+    @IBOutlet weak var greenView: UIView!
     @IBOutlet weak var actLabel: UILabel!
     @IBOutlet weak var doneBtn: UIButton!
     
+    @IBOutlet weak var label1: UILabel!
+    @IBOutlet weak var label2: UILabel!
+    @IBOutlet weak var label3: UILabel!
+    @IBOutlet weak var label4: UILabel!
+    @IBOutlet weak var label5: UILabel!
+    @IBOutlet weak var label6: UILabel!
+    @IBOutlet weak var label7: UILabel!
     
     var index: Int = 0
     var goals = [Goal]()
     var theGoal: Goal?
     var theActivity: Activity?
     var relations: NSMutableSet = []
+    var progressRelations: NSMutableSet = []
     var flag = false
     var theStatus: Float = 0.0
     var theName: String = ""
     var footerView: UIView?
+    var isWeeklyGraphShowing = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,23 +60,30 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         self.title = "My Activities"
     
         show()
-        RainbowBar.hidden = true
+        RainbowView.hidden = true
         stackView.hidden = false
         textView.hidden = false
         
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goBack))
-        backBtn.tintColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem = backBtn
+//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goBack))
+//        backBtn.tintColor = UIColor.whiteColor()
+//        navigationItem.leftBarButtonItem = backBtn
         
-        let nextBtn = UIBarButtonItem(title: "Delete All", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.deleteAll))
-        nextBtn.tintColor = UIColor.whiteColor()
-        navigationItem.rightBarButtonItem = nextBtn
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
+        homeBtn.tintColor = UIColor.whiteColor()
+        navigationItem.rightBarButtonItem = homeBtn
         
         self.edgesForExtendedLayout = UIRectEdge.None
         
         doneBtn.layer.cornerRadius = 5.0;
         doneBtn.layer.borderColor = UIColor.grayColor().CGColor
         doneBtn.layer.borderWidth = 1.5
+        DailyView.layer.cornerRadius = 10.0
+        greenView.layer.cornerRadius = 10.0
+        redView.layer.cornerRadius = 10.0
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        activityTable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -137,7 +159,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        RainbowBar.hidden = false
+        RainbowView.hidden = false
         stackView.hidden = true
         
         let theRelate = relations.allObjects[indexPath.row]
@@ -150,11 +172,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         chooseSlider(theSlider, status: CGFloat(theStatus))
         saveStatus(theSlider, indexPath: indexPath)
-        
+        setLableText(theName)
     }
     
     @IBAction func doneBtn(sender: UIButton) {
-        RainbowBar.hidden = true
+        RainbowView.hidden = true
         stackView.hidden = false
         activityTable.reloadData()
     }
@@ -164,7 +186,25 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             let managedObjectContext = appDel.managedObjectContext
             let theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: name)
             GoalDataManager().updateActivityStatus(theActivity, status: status)
+            
+            let date = getDate()
+            GoalDataManager().executeProgressUpdate(managedObjectContext, theAct: theActivity, theDate: date, theStatus: status)
+            setLableText(name)
+            GoalBackendData().postActivityLatestData()
         }
+    }
+    
+    func getDate() -> String {
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components ([.Day, .Month, .Year], fromDate: date)
+        
+        let year = String(components.year)
+        let month = String(format: "%02d", components.month)
+        let day = String(format: "%02d", components.day)
+        
+        let theDate = year + month + day
+        return theDate
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -178,6 +218,13 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
                 
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade )
                 tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
+                
+                
+                if (theActivity.mutableSetValueForKey("goals").count == 0) {
+                    GoalDataManager().deleteActivity(theActivity)
+                    GoalBackendData().postActivityLatestData()
+                }
+                
             }
         }
     }
@@ -202,21 +249,77 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         return footerView
     }
     
-    func deleteAll() {
-        let theGoal = goals[index]
-        theGoal.setValue(nil, forKey: "activities")
-        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-            let managedObjectContext = appDel.managedObjectContext
-            GoalDataManager().save(managedObjectContext)
+    @IBAction func dailyViewTap(gesture: UITapGestureRecognizer?) {
+        
+        if(isWeeklyGraphShowing) {
+        UIView.transitionFromView(WeeklyView, toView: DailyView, duration: 1.0, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: nil)
         }
-        relations = []
-        activityTable.reloadData()
+        else {
+            UIView.transitionFromView(DailyView, toView: WeeklyView, duration: 1.0, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: nil)
+        }
+        isWeeklyGraphShowing = !isWeeklyGraphShowing    
+    }
+    
+    
+    func setLableText(name: String) {
+        
+        var dates: [String] = ["", "", "", "", "", "", ""]
+        var theDates: [String] = ["", "", "", "", "", "", ""]
+        var graphPoints = [Int]()
+        
+        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
+            
+            let managedObjectContext = appDel.managedObjectContext
+            let theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: name)
+            progressRelations = theActivity.mutableSetValueForKey("activityProgresses")
+            let theArray: NSArray = progressRelations.sortedArrayUsingDescriptors([NSSortDescriptor(key: "date", ascending: true)])
+            
+            if progressRelations.count > 7 {
+                for index in 0..<7 {
+                    let theRelate = theArray.objectAtIndex(progressRelations.count-(7-index))
+                    
+                    dates[index] = String(theRelate.valueForKey("date")!)
+                    theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
+                    
+                    graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
+                }
+                print(graphPoints)
+                print(dates)
+            }
+
+            else {
+                for index in 0..<progressRelations.count {
+                    let theRelate = theArray.objectAtIndex(index)
+                    dates[index] = String(theRelate.valueForKey("date")!)
+                    
+                    if (dates[index].characters.count != 0) {
+                        theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
+                    }
+                    else {
+                        theDates[index] = dates[index]
+                    }
+                    graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
+                }
+            }
+            
+            label1.text = theDates[0]
+            label2.text = theDates[1]
+            label3.text = theDates[2]
+            label4.text = theDates[3]
+            label5.text = theDates[4]
+            label6.text = theDates[5]
+            label7.text = theDates[6]
+            theLine.thePoints = graphPoints
+            theLine.setNeedsDisplay()
+        }
     }
     
     func goBack(){
-        let storyboardIdentifier = "ViewGoalsViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! ViewGoalsViewController
-        self.navigationController!.pushViewController(desController, animated: true)
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func goHome(){
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func goNext(){
