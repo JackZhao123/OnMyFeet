@@ -1,0 +1,52 @@
+<div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar" ng-repeat="(id, display) in patientsInProgressDisplay">
+        <li class="active" ng-click="toggleActive(id)"><a href="#">{{id}}<span class="sr-only">(current)</span></a></li>
+        <li ng-show="display" ng-click="switchType('sleep',id)"><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Sleep Data</a></li>
+        <li ng-show="display" ng-click="switchType('step',id)"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Step Data</a></li>
+        <li ng-show="display" ng-click="switchType('distance',id)"><a href="#"><span class="glyphicon glyphicon-road"></span> Distance Data</a></li>
+        <li ng-show="display" ng-click="switchType('activity',id)"><a href="#"><span class="glyphicon glyphicon-move"></span> Activity Data</a></li>
+        <li ng-show="display" ng-click="switchType('feedback',id); globalVariable.getFeedback(id)"><a href="#"><span class="glyphicon glyphicon-comment"></span> Feed Back</a></li>
+        <li ng-show="display" ng-click="switchType('goals',id)"><a href="#"><span class="glyphicon glyphicon-screenshot"></span> Goals</a></li>
+        <!--<li ng-show="display" style="background-color:lightblue" ng-click="endTreatment(id)"><a href="#">End Treatment</a></li>-->
+        <!--<li ng-show="display" ng-click="globalVariable.selectedPatientId=id" style="background-color: lightblue">-->
+            <!--<a href="#" data-toggle="modal" data-target="#modifyCapability" class="eliminate-boarder">Modify Capability</a>-->
+        <!--</li>-->
+    </ul>
+    <hr>
+    <ul class="nav nav-sidebar" ng-repeat="(id, display) in patientsDischargedDisplay">
+        <li ng-click="toggleActive(id)" class="active dischargedItem"><a href="#">{{id}}</a></li>
+        <!--<li ng-show="display" ng-click="switchType('sleep',id)"><a href="#">Sleep Data</a></li>-->
+        <!--<li ng-show="display" ng-click="switchType('step',id)"><a href="#">Step Data</a></li>-->
+        <!--<li ng-show="display" ng-click="switchType('distance',id)"><a href="#">Distance Data</a></li>-->
+        <!--<li ng-show="display" ng-click="switchType('activity',id)"><a href="#">Activity Data</a></li>-->
+        <!--<li ng-show="display" ng-click="switchType('feedback',id)"><a href="#">Feed Back</a></li>-->
+        <li ng-show="display"><a href="#">Print Report</a></li>
+        <li ng-show="display" ng-click="deleteDischarged(id)"><a href="#">Delete</a></li>
+    </ul>
+</div>
+
+
+<div class="modal fade" id="modifyCapability" tabindex="-1" role="dialog" aria-labelledby="modifyCapability">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modifyCapability">New Patient</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="capability">Label</label>
+                    <select ng-model="capability" class="form-control" id="capability">
+                        <option value="B">B: Fully Independent</option>
+                        <option value="Y">Y: Need Supervision</option>
+                        <option value="R">R: Fully Dependent</option>
+                    </select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="modifyCapability(globalVariable.selectedPatientId, capability)" type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

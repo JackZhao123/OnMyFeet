@@ -1,0 +1,142 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="coreDataAreaCtrl as coreDataAreaCtrl" ng-show="globalVariable.selectedPatientId">
+
+
+    <div class="alert" ng-class="globalVariable.getClassByCapability()" role="alert">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-4">
+                    <h2><span class="glyphicon glyphicon-user"></span> {{globalVariable.selectedPatientId}}</h2>
+                    <button class="btn btn-primary" ng-click="endTreatment(globalVariable.selectedPatientId)"><span class="glyphicon glyphicon-minus-sign"></span> End Therapy</button>
+                    <a href="#" data-toggle="modal" data-target="#modifyCapability" class="eliminate-boarder"><button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Modify Capability</button></a>
+                </div>
+                <div class="col-xs-4" style="font-size: 18px;">
+                    <div class="row"><div class="col-xs-12">Age: {{globalVariable.selectedPatientAge}}</div></div>
+                    <div class="row"><div class="col-xs-12">Therapy Start Date: {{globalVariable.selectedPatientStartTime}}</div></div>
+                    <div class="row"><div class="col-xs-12">FitBit ID: {{globalVariable.selectedPatientFitBitId}}</div></div>
+                </div>
+                <div class="col-xs-4" style="font-size: 18px;">
+                    <div class="row"><div class="col-xs-12">Gender: {{globalVariable.selectedPatientGender}}</div></div>
+                    <div class="row"><div class="col-xs-12">Therapy Status: {{globalVariable.selectedPatientCapability}}</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 style="text-align: center; color: lightgreen"><span class="glyphicon glyphicon-arrow-down"></span> {{globalVariable.showType}}</h4>
+
+
+    <div id="stepChart" ng-show="coreDataAreaCtrl.globalVariable.showType=='step'"></div>
+    <div id="distanceChart" ng-show="coreDataAreaCtrl.globalVariable.showType=='distance'"></div>
+    <div id="sleepChart" ng-show="coreDataAreaCtrl.globalVariable.showType=='sleep'"></div>
+    <div id="activityChart" ng-show="coreDataAreaCtrl.globalVariable.showType=='activity'"></div>
+    <div id="feedback" ng-show="coreDataAreaCtrl.globalVariable.showType=='feedback'">
+        <label>Category and Time</label>
+        <select class="form-control" ng-model="selectedIndex">
+            <option ng-repeat="doc in feedbackContents" value={{$index|number}}>{{doc.title}} ({{doc.createdAt}})</option>
+        </select>
+        <hr>
+        <div ng-repeat="(key, value) in feedbackContents[parseInt(selectedIndex)].feedback">
+            <h4>{{key}}</h4>
+            <div>
+                <span style="float: left; color: gray">
+                    {{value[3]}}
+                </span>
+                <span style="float: right; color: gray">
+                    {{value[4]}}
+                </span>
+            </div>
+            <br>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{value[1]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{value[1]}}%;">
+                    ({{value[0]}}) {{value[2]}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="goals" ng-show="coreDataAreaCtrl.globalVariable.showType=='goals'">
+        <table class="table">
+            <tr>
+                <th>Goals</th>
+                <th>Achievement</th>
+            </tr>
+            <tr ng-repeat="(goal, value) in goals">
+                <td>
+                    {{goal}}
+                </td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{value}}" aria-valuemin="0" aria-valuemax="1000" style="width: {{value/10}}%;">
+                            {{value/10}}%
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container" ng-show="coreDataAreaCtrl.globalVariable.showType=='step' || coreDataAreaCtrl.globalVariable.showType=='sleep' || coreDataAreaCtrl.globalVariable.showType=='distance' || coreDataAreaCtrl.globalVariable.showType=='activity'">
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-4">
+                <button ng-click="changeDataScope('start')" ng-disabled="globalVariable.startIndex == 0" class="btn btn-primary eliminate-boarder"><span class="glyphicon glyphicon-fast-backward"></span></button>
+                <button ng-click="changeDataScope('previous')" ng-disabled="globalVariable.startIndex == 0" class="btn btn-success eliminate-boarder"><span class="glyphicon glyphicon-arrow-left"></span></button>
+                <button ng-click="changeDataScope('next')" ng-disabled="globalVariable.endIndex == globalVariable.dataNumber-1" class="btn btn-success eliminate-boarder"><span class="glyphicon glyphicon-arrow-right"></span></button>
+                <button ng-click="changeDataScope('end')" ng-disabled="globalVariable.endIndex == globalVariable.dataNumber-1" class="btn btn-primary eliminate-boarder"><span class="glyphicon glyphicon-fast-forward"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sleepChartPie" ng-show="coreDataAreaCtrl.globalVariable.showType=='sleep'"></div>
+
+    <!--<h2 class="sub-header" ng-hide="globalVariable.showType=='feedback'">Detail</h2>-->
+    <!--<div class="table-responsive" ng-show="coreDataAreaCtrl.globalVariable.showType=='step'">-->
+        <!--<table class="table table-striped">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Date</th>-->
+                <!--<th>Steps</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="(date, steps) in coreDataAreaCtrl.globalVariable.stepData">-->
+                <!--<td>{{date}}</td>-->
+                <!--<td>{{steps}}</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+
+    <!--<div class="table-responsive" ng-show="coreDataAreaCtrl.globalVariable.showType=='distance'">-->
+        <!--<table class="table table-striped">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Date</th>-->
+                <!--<th>Distance</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="(date, distance) in coreDataAreaCtrl.globalVariable.distanceData">-->
+                <!--<td>{{date}}</td>-->
+                <!--<td>{{distance}}</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+    <!--<div class="table-responsive">-->
+        <!--<table class="table table-striped">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>Date</th>-->
+                <!--<th>Distance</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="(date, distance) in coreDataAreaCtrl.distanceData">-->
+                <!--<td>{{date}}</td>-->
+                <!--<td>{{distance}}</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+
+</div>

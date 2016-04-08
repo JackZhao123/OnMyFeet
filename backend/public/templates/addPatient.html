@@ -1,0 +1,62 @@
+<div class="modal fade" id="addPatient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Patient</h4>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="alert('submit')">
+                    <div class="form-group">
+                        <label for="patientId">Patient ID</label>
+                        <input ng-model="patientId" type="text" class="form-control" id="patientId" placeholder="Patient ID">
+                    </div>
+                    <label for="fitbitId">FitBit ID</label>
+                    <select ng-model="fitbitId" class="form-control" id="fitbitId">
+                        <option name="00000000">00000000</option>
+                        <option name="11111111">11111111</option>
+                        <option name="22222222">22222222</option>
+                    </select>
+                    <!--<div class="form-group">-->
+                        <!--<label for="firstName">First Name</label>-->
+                        <!--<input ng-model="firstName" type="text" class="form-control" id="firstName" placeholder="First Name">-->
+                        <!--<label for="lastName">Last Name</label>-->
+                        <!--<input ng-model="lastName" type="text" class="form-control" id="lastName" placeholder="Last Name">-->
+                        <!--<label for="middleName">Middle Name</label>-->
+                        <!--<input ng-model="middleName" type="text" class="form-control" id="middleName" placeholder="Middle Name">-->
+                    <!--</div>-->
+                    <label for="gender">Gender</label>
+                    <select ng-model="gender" class="form-control" id="gender">
+                        <option name="male">Male</option>
+                        <option name="female">Female</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input ng-model="age" type="text" class="form-control" id="age" placeholder="Age">
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label for="phone">Phone Number</label>-->
+                        <!--<input ng-model="phone" type="text" class="form-control" id="phone" placeholder="Phone Number">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="email">Email</label>-->
+                        <!--<input ng-model="email" type="email" class="form-control" id="email" placeholder="Email">-->
+                    <!--</div>-->
+                    <label for="capability">Label</label>
+                    <select ng-model="capability" class="form-control" id="capability">
+                        <option value="B">B: Fully Independent</option>
+                        <option value="Y">Y: Need Supervision</option>
+                        <option value="R">R: Fully Dependent</option>
+                    </select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="submit()" type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,8 +1,13 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/*.btn:focus,.btn:active {*/
+  /*outline: none !important;*/
+/*}*/
+.eliminate-boarder {
+  outline: none !important;
 }
 
-a {
-  color: #00B7FF;
+/*.modal {*/
+  /*max-width: 100%;*/
+/*}*/
+.dischargedItem{
+  color: #8c8c8c;
 }
