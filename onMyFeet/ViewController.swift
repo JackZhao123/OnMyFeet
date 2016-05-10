@@ -118,7 +118,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         indicatiorView.hidden = true
         mIndicator.stopAnimating()
     }
-
     //MARK: Actions
     @IBAction func logOut(sender: AnyObject) {
         let alertView = UIAlertController(title: "Logging Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
