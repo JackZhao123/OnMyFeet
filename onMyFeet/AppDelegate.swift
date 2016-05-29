@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MagicalRecord
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] {
             initFitbitAPI(url as! NSURL)
         }
-
+        MagicalRecord.setupCoreDataStackWithStoreNamed("NewOnMyFeet.sqlite")
         return true
     }
     
@@ -35,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func initFitbitAPI(url:NSURL) {
         FitbitAPI.sharedAPI().getAuthorizationCodeFromURL(url)
         FitbitAPI.sharedAPI().requestAccessToken()
-        print("Init")
     }
     
     // MARK: Hanlde status changed

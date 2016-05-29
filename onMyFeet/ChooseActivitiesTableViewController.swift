@@ -24,7 +24,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     }
     var theIndexes = [Int]()
     
-    var index: Int = 0
+//    var index: Int = 0
     var goals = [Goal]()
     var activities = [Activity]()
     var theGoal: Goal?
@@ -32,8 +32,8 @@ class ChooseActivitiesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        goals = GoalDataManager().fetchGoals()!
-        theGoal = goals[index]
+//        goals = Goal.MR_findAll() as! [Goal]
+//        theGoal = goals[index]
         
 //        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
 //        backBtn.tintColor = UIColor.whiteColor()
@@ -153,20 +153,15 @@ class ChooseActivitiesTableViewController: UITableViewController {
     }
     
     func done() {
-        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-            let managedObjectContext = appDel.managedObjectContext
-            
             for index in 0..<theIndexes.count {
                 let theIndex = theIndexes[index]
                 let theName = names[theIndex]
                 
-                theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: theName)
+                theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
                 GoalDataManager().insertActGoalRelation(theGoal!, theAct: theActivity!)
-                GoalDataManager().save(managedObjectContext)
+                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             }
-        }
         goBack()
-        GoalBackendData().postActivityLatestData()
     }
     
     func goBack(){

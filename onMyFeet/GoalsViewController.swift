@@ -12,8 +12,6 @@ import CoreData
 class GoalsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     //MARK: Properties
-    
-
     @IBOutlet var goalView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var BoxView: UIImageView!

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -34,7 +35,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var label6: UILabel!
     @IBOutlet weak var label7: UILabel!
     
-    var index: Int = 0
+//    var index: Int = 0
     var goals = [Goal]()
     var theGoal: Goal?
     var theActivity: Activity?
@@ -52,21 +53,15 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         activityTable.delegate = self
         activityTable.dataSource = self
         
-        goals = GoalDataManager().fetchGoals()!
-        
-        theGoal = goals[index]
-        relations = (theGoal?.mutableSetValueForKey("activities"))!
+        relations = (theGoal!.mutableSetValueForKey("activities"))
         
         self.title = "My Activities"
     
         show()
+        
         RainbowView.hidden = true
         stackView.hidden = false
         textView.hidden = false
-        
-//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goBack))
-//        backBtn.tintColor = UIColor.whiteColor()
-//        navigationItem.leftBarButtonItem = backBtn
         
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
@@ -83,17 +78,13 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     override func viewWillAppear(animated: Bool) {
+        relations = (theGoal!.mutableSetValueForKey("activities"))
         activityTable.reloadData()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func show() {
-        imageView.image = UIImage (data: goals[index].picture)
-        textView.text = goals[index].answer
+        imageView.image = UIImage(data: theGoal!.picture!)
+        textView.text = theGoal!.answer
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -182,16 +173,13 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func changeStatus(name: String, status: Float) {
-        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-            let managedObjectContext = appDel.managedObjectContext
-            let theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: name)
-            GoalDataManager().updateActivityStatus(theActivity, status: status)
-            
-            let date = getDate()
-            GoalDataManager().executeProgressUpdate(managedObjectContext, theAct: theActivity, theDate: date, theStatus: status)
-            setLableText(name)
-            GoalBackendData().postActivityLatestData()
-        }
+        let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: name)
+        GoalDataManager().updateActivityStatus(theActivity, status: status)
+        
+        let date = getDate()
+        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: theActivity, theDate: date, theStatus: status)
+        setLableText(name)
+//            GoalBackendData().postActivityLatestData()
     }
     
     func getDate() -> String {
@@ -209,22 +197,18 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-                let managedObjectContext = appDel.managedObjectContext
-                let theName = String(relations.allObjects[indexPath.row].valueForKey("name")!)
-                let theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: theName)
-                relations.removeObject(theActivity)
-                GoalDataManager().save(managedObjectContext)
-                
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade )
-                tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
-                
-                
-                if (theActivity.mutableSetValueForKey("goals").count == 0) {
-                    GoalDataManager().deleteActivity(theActivity)
-                    GoalBackendData().postActivityLatestData()
-                }
-                
+            let theName = String(relations.allObjects[indexPath.row].valueForKey("name")!)
+            let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
+            relations.removeObject(theActivity)
+            GoalDataManager().save(NSManagedObjectContext.MR_defaultContext())
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade )
+            tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
+            
+            
+            if (theActivity.mutableSetValueForKey("goals").count == 0) {
+                GoalDataManager().deleteActivity(theActivity)
+                GoalBackendData().postActivityLatestData()
             }
         }
     }
@@ -267,51 +251,47 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         var theDates: [String] = ["", "", "", "", "", "", ""]
         var graphPoints = [Int]()
         
-        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-            
-            let managedObjectContext = appDel.managedObjectContext
-            let theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: name)
-            progressRelations = theActivity.mutableSetValueForKey("activityProgresses")
-            let theArray: NSArray = progressRelations.sortedArrayUsingDescriptors([NSSortDescriptor(key: "date", ascending: true)])
-            
-            if progressRelations.count > 7 {
-                for index in 0..<7 {
-                    let theRelate = theArray.objectAtIndex(progressRelations.count-(7-index))
-                    
-                    dates[index] = String(theRelate.valueForKey("date")!)
-                    theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
-                    
-                    graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
-                }
-                print(graphPoints)
-                print(dates)
+        let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: name)
+        progressRelations = theActivity.mutableSetValueForKey("activityProgresses")
+        let theArray: NSArray = progressRelations.sortedArrayUsingDescriptors([NSSortDescriptor(key: "date", ascending: true)])
+        
+        if progressRelations.count > 7 {
+            for index in 0..<7 {
+                let theRelate = theArray.objectAtIndex(progressRelations.count-(7-index))
+                
+                dates[index] = String(theRelate.valueForKey("date")!)
+                theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
+                
+                graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
             }
-
-            else {
-                for index in 0..<progressRelations.count {
-                    let theRelate = theArray.objectAtIndex(index)
-                    dates[index] = String(theRelate.valueForKey("date")!)
-                    
-                    if (dates[index].characters.count != 0) {
-                        theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
-                    }
-                    else {
-                        theDates[index] = dates[index]
-                    }
-                    graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
-                }
-            }
-            
-            label1.text = theDates[0]
-            label2.text = theDates[1]
-            label3.text = theDates[2]
-            label4.text = theDates[3]
-            label5.text = theDates[4]
-            label6.text = theDates[5]
-            label7.text = theDates[6]
-            theLine.thePoints = graphPoints
-            theLine.setNeedsDisplay()
+            print(graphPoints)
+            print(dates)
         }
+
+        else {
+            for index in 0..<progressRelations.count {
+                let theRelate = theArray.objectAtIndex(index)
+                dates[index] = String(theRelate.valueForKey("date")!)
+                
+                if (dates[index].characters.count != 0) {
+                    theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
+                }
+                else {
+                    theDates[index] = dates[index]
+                }
+                graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
+            }
+        }
+        
+        label1.text = theDates[0]
+        label2.text = theDates[1]
+        label3.text = theDates[2]
+        label4.text = theDates[3]
+        label5.text = theDates[4]
+        label6.text = theDates[5]
+        label7.text = theDates[6]
+        theLine.thePoints = graphPoints
+        theLine.setNeedsDisplay()
     }
     
     func goBack(){
@@ -325,7 +305,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     func goNext(){
         let storyboardIdentifier = "ChooseActivitiesTableViewController"
         let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! ChooseActivitiesTableViewController
-        desController.index = index
+//        desController.index = index
+        desController.theGoal = theGoal
         self.navigationController!.pushViewController(desController, animated: true)
     }
 
