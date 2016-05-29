@@ -157,8 +157,16 @@ class ChooseActivitiesTableViewController: UITableViewController {
                 let theIndex = theIndexes[index]
                 let theName = names[theIndex]
                 
-                theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
-                GoalDataManager().insertActGoalRelation(theGoal!, theAct: theActivity!)
+                let predicate = NSPredicate(format: "name == %@", theName)
+                theActivity = Activity.MR_findFirstWithPredicate(predicate)
+                if theActivity == nil {
+                    theActivity = Activity.MR_createEntity()
+                    theActivity?.name = theName
+                    theActivity?.status = 0
+                }
+                
+                let actGoalRelation = theGoal!.mutableSetValueForKey("activities")
+                actGoalRelation.addObject(theActivity!)
                 NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             }
         goBack()

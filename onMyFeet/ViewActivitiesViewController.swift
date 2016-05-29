@@ -173,13 +173,19 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func changeStatus(name: String, status: Float) {
-        let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: name)
-        GoalDataManager().updateActivityStatus(theActivity, status: status)
+        let predicate = NSPredicate(format: "name == %@", name)
+        var theActivity = Activity.MR_findFirstWithPredicate(predicate)
+        if theActivity == nil {
+            theActivity = Activity.MR_createEntity()
+        }
+        
+        theActivity!.name = name
+        theActivity!.status = status
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         
         let date = getDate()
-        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: theActivity, theDate: date, theStatus: status)
+        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: theActivity!, theDate: date, theStatus: status)
         setLableText(name)
-//            GoalBackendData().postActivityLatestData()
     }
     
     func getDate() -> String {
@@ -200,16 +206,17 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             let theName = String(relations.allObjects[indexPath.row].valueForKey("name")!)
             let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
             relations.removeObject(theActivity)
-            GoalDataManager().save(NSManagedObjectContext.MR_defaultContext())
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade )
             tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
             
             
             if (theActivity.mutableSetValueForKey("goals").count == 0) {
-                GoalDataManager().deleteActivity(theActivity)
-                GoalBackendData().postActivityLatestData()
+                theActivity.MR_deleteEntity()
+//                GoalBackendData().postActivityLatestData()
             }
+            
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         }
     }
     

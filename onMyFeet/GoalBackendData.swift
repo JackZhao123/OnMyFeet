@@ -13,12 +13,12 @@ class GoalBackendData {
     
     func postActivityLatestData() {
         
-        if let activities = GoalDataManager().fetchActivities() {
+        if let activities = Activity.MR_findAll() {
             
             var parameters = [String:AnyObject]()
             var activityData = [String:Int]()
             
-            for act in activities {
+            for act in activities as! [Activity] {
                 let theName = act.name
                 let theStatus = Int(act.status * 1000)
                 
