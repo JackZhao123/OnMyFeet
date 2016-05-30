@@ -4,8 +4,9 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'OnMyFeet' do
-pod 'Charts'
+pod 'Charts', '2.2.3'
 pod 'Alamofire', '~> 3.0'
+pod 'MagicalRecord'
 end
 
 target 'OnMyFeetTests' do

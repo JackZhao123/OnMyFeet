@@ -14,10 +14,6 @@ class ViewActivitiesTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var theSlider: GradientSlider!
     
-    
-    
-    
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

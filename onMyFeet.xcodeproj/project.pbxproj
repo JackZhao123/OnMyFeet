@@ -79,6 +79,7 @@
 		2AF835811C7B7E9F00287892 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF835801C7B7E9F00287892 /* MenuCell.swift */; };
 		2AF9BE491CB07F0A007F534E /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */; };
 		2AF9BE4A1CB07F0A007F534E /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9BE481CB07F0A007F534E /* Alarm.swift */; };
+		2AFBE8141CFB7EB00029B08F /* Goal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFBE8131CFB7EB00029B08F /* Goal+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		2AF835801C7B7E9F00287892 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alarm+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2AF9BE481CB07F0A007F534E /* Alarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		2AFBE8131CFB7EB00029B08F /* Goal+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Goal+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnMyFeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B1226655717A11AB60C84B /* Pods-OnMyFeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.release.xcconfig"; sourceTree = "<group>"; };
 		D935031F20E2855BB481DE90 /* Pods-OnMyFeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,19 +214,19 @@
 		2A2E41E51C80AEA600E78A37 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
-				2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */,
-				2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */,
 				2AF9BE481CB07F0A007F534E /* Alarm.swift */,
-				2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */,
-				2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */,
-				2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */,
-				2A2E41DD1C80AE8700E78A37 /* Person.swift */,
-				2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */,
+				2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */,
+				2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */,
 				2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */,
+				2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */,
 				2A0194871CAF7BD000481E0F /* IntradaySedentary.swift */,
 				2A01948F1CAF7C9400481E0F /* IntradaySedentary+CoreDataProperties.swift */,
-				2A0194911CAF7CA100481E0F /* IntradaySleepTime+CoreDataProperties.swift */,
 				2A0194931CAF7CAE00481E0F /* IntradaySleepTime.swift */,
+				2A0194911CAF7CA100481E0F /* IntradaySleepTime+CoreDataProperties.swift */,
+				2A2E41DD1C80AE8700E78A37 /* Person.swift */,
+				2A2E41DC1C80AE8700E78A37 /* Person+CoreDataProperties.swift */,
+				2A1F7C6F1C9296A700C942CF /* QuestionSet.swift */,
+				2A1F7C6E1C9296A700C942CF /* QuestionSet+CoreDataProperties.swift */,
 			);
 			name = DataBase;
 			sourceTree = "<group>";
@@ -392,6 +394,7 @@
 		2AF835871C7B8C3D00287892 /* GoalsTracking */ = {
 			isa = PBXGroup;
 			children = (
+				2AFBE8131CFB7EB00029B08F /* Goal+CoreDataProperties.swift */,
 				187572EA1CB216650095F112 /* Goal.swift */,
 				187572EC1CB216690095F112 /* GoalDataManager.swift */,
 				18C896201CB212260075D3B6 /* GoalBackendData.swift */,
@@ -504,7 +507,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */;
+			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -623,6 +626,7 @@
 				187572F91CB216B30095F112 /* ViewGoalsViewController.swift in Sources */,
 				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
 				2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */,
+				2AFBE8141CFB7EB00029B08F /* Goal+CoreDataProperties.swift in Sources */,
 				2A01948B1CAF7C0E00481E0F /* Questionnaire.swift in Sources */,
 				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				187572F11CB2167D0095F112 /* GoalsCollectionViewCell.swift in Sources */,
@@ -838,7 +842,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */ = {
+		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F61C72960300957BEF /* Debug */,

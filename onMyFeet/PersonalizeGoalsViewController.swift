@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MagicalRecord
 
 class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     
@@ -90,18 +91,21 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     }
     
     func saveToCoreData() {
-        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-            let managedObjectContext = appDel.managedObjectContext
+        
+        for index in 0..<indexes.count {
+            let thePicture = finalPictures[index]
+            let theQuestion = finalQuestions[index]
+            let theExample = finalExamples[index]
+            let theAnswer = finalAnswers[index]
             
-            for index in 0..<indexes.count {
-                let thePicture = finalPictures[index]
-                let theQuestion = finalQuestions[index]
-                let theExample = finalExamples[index]
-                let theAnswer = finalAnswers[index]
-                
-                GoalDataManager().insertGoalData(managedObjectContext, picture: thePicture, question: theQuestion, example: theExample, answer: theAnswer)
+            let goal = Goal.MR_createEntity()
+            if let goal = goal {
+                goal.picture = UIImageJPEGRepresentation(thePicture, 1.0)
+                goal.question = theQuestion
+                goal.example = theExample
+                goal.answer = theAnswer
+                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             }
-            GoalDataManager().save(managedObjectContext)
         }
     }
     

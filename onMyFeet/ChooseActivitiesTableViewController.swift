@@ -23,7 +23,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     }
     var theIndexes = [Int]()
     
-    var index: Int = 0
+//    var index: Int = 0
     var goals = [Goal]()
     var activities = [Activity]()
     var theGoal: Goal?
@@ -31,8 +31,8 @@ class ChooseActivitiesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        goals = GoalDataManager().fetchGoals()!
-        theGoal = goals[index]
+//        goals = Goal.MR_findAll() as! [Goal]
+//        theGoal = goals[index]
         
         //        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
         //        backBtn.tintColor = UIColor.whiteColor()
@@ -136,20 +136,23 @@ class ChooseActivitiesTableViewController: UITableViewController {
     }
     
     func done() {
-        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-            let managedObjectContext = appDel.managedObjectContext
-            
             for index in 0..<theIndexes.count {
                 let theIndex = theIndexes[index]
                 let theName = names[theIndex]
                 
-                theActivity = GoalDataManager().predicateFetchActivity(managedObjectContext, theName: theName)
-                GoalDataManager().insertActGoalRelation(theGoal!, theAct: theActivity!)
-                GoalDataManager().save(managedObjectContext)
+                let predicate = NSPredicate(format: "name == %@", theName)
+                theActivity = Activity.MR_findFirstWithPredicate(predicate)
+                if theActivity == nil {
+                    theActivity = Activity.MR_createEntity()
+                    theActivity?.name = theName
+                    theActivity?.status = 0
+                }
+                
+                let actGoalRelation = theGoal!.mutableSetValueForKey("activities")
+                actGoalRelation.addObject(theActivity!)
+                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             }
-        }
         goBack()
-        GoalBackendData().postActivityLatestData()
     }
     
     func goBack(){

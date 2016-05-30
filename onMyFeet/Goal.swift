@@ -9,18 +9,18 @@
 import Foundation
 import CoreData
 
+@objc(Goal)
 class Goal: NSManagedObject {
-    @NSManaged var picture: NSData
-    @NSManaged var question: String
-    @NSManaged var example: String
-    @NSManaged var answer: String
+    
 }
 
+@objc(Activity)
 class Activity: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var status: Float
 }
 
+@objc(ActivityProgress)
 class ActivityProgress: NSManagedObject {
     @NSManaged var date: String
     @NSManaged var status: Float

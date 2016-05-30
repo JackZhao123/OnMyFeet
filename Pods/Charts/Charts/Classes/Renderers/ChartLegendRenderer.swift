@@ -44,7 +44,6 @@ public class ChartLegendRenderer: ChartRendererBase
             // loop for building up the colors and labels used in the legend
             for i in 0..<data.dataSetCount
             {
-                
                 let dataSet = data.getDataSetByIndex(i)!
                 
                 var clrs: [NSUIColor] = dataSet.colors

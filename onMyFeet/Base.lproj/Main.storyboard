@@ -157,7 +157,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Reset" id="Yj9-Kd-mMc">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="Reset:" destination="BYZ-38-t0r" id="yDG-7X-M18"/>
+                                <action selector="logOut:" destination="BYZ-38-t0r" id="Sf5-2d-1GM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

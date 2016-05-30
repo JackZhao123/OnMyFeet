@@ -47,14 +47,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-        if let info = NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") as? String {
-            self.userInfo = info
-        } else {
-            let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
-            self.presentViewController(logInController, animated: false, completion: nil)
-        }
-        
+//        if let info = NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") as? String {
+//            self.userInfo = info
+//        } else {
+//            let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
+//            self.presentViewController(logInController, animated: false, completion: nil)
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,25 +117,47 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         mIndicator.stopAnimating()
     }
     //MARK: Actions
-    @IBAction func Reset(sender: AnyObject) {
-        //        let alertView = UIAlertController(title: "Logging Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
-        //        alertView.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {(action) in
-        //
-        //            NSUserDefaults.standardUserDefaults().removeObjectForKey("RefreshCode")
-        //            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "LogOutManually")
-        //
-        //            let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
-        //            self.presentViewController(logInController, animated: true, completion: nil)
-        //
-        //        }))
-        //
-        //        alertView.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {(action) in
-        //            alertView.dismissViewControllerAnimated(true, completion: nil)
-        //        }))
-        //
-        //        self.presentViewController(alertView, animated: true, completion: nil)
-        GoalDataManager().deleteAll()
+
+    @IBAction func logOut(sender: AnyObject) {
         
+        let finishAlertController = UIAlertController(title: "Successfully Deleted All Goals and Activities", message: nil, preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: {
+            (okAction) in
+            finishAlertController.dismissViewControllerAnimated(true, completion: nil)
+        })
+        finishAlertController.addAction(okAction)
+        
+        let resetAlertController = UIAlertController(title: "Reset All Data", message: "This operation could not be undo", preferredStyle: .ActionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {(cancelAction) in
+            resetAlertController.dismissViewControllerAnimated(true, completion: nil)
+        })
+        let resetDataAction = UIAlertAction(title: "Reset All Goals and Activities", style: .Destructive, handler: {
+            (resetDataAction) in
+            Goal.MR_truncateAll()
+            Activity.MR_truncateAll()
+            ActivityProgress.MR_truncateAll()
+            self.presentViewController(finishAlertController, animated: true, completion: nil)
+        })
+        
+        resetAlertController.addAction(cancelAction)
+        resetAlertController.addAction(resetDataAction)
+        self.presentViewController(resetAlertController, animated: true, completion: nil)
+//        let alertView = UIAlertController(title: "Logging Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
+//        alertView.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {(action) in
+//            
+//            NSUserDefaults.standardUserDefaults().removeObjectForKey("RefreshCode")
+//            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "LogOutManually")
+//            
+//            let logInController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogIn") as! LogInViewController
+//            self.presentViewController(logInController, animated: true, completion: nil)
+//            
+//        }))
+//        
+//        alertView.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {(action) in
+//            alertView.dismissViewControllerAnimated(true, completion: nil)
+//        }))
+//        
+//        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
     @IBAction func syncData(sender: AnyObject) {
@@ -193,7 +213,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //MARK: Motion
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
         if motion == .MotionShake {
-            print("1234")
             
             switch categories.count {
                 case 4:
