@@ -26,14 +26,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
         
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.backgroundColor = UIColor(red: 0.831, green: 0.859, blue: 0.710, alpha: 1.00)
-        self.refreshControl.tintColor = UIColor.grayColor()
-        
-        self.refreshControl.attributedTitle = NSAttributedString(string:"Push to refresh", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        self.refreshControl.addTarget(self, action: #selector(ViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
-        
-        self.menuTableView.addSubview(refreshControl)
+//        self.refreshControl = UIRefreshControl()
+//        self.refreshControl.backgroundColor = UIColor(red: 0.831, green: 0.859, blue: 0.710, alpha: 1.00)
+//        self.refreshControl.tintColor = UIColor.grayColor()
+//        
+//        self.refreshControl.attributedTitle = NSAttributedString(string:"Push to refresh", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+//        self.refreshControl.addTarget(self, action: #selector(ViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+//        
+//        self.menuTableView.addSubview(refreshControl)
         
         indicatiorView.layer.cornerRadius = 8.0
         indicatiorView.clipsToBounds = true
