@@ -175,20 +175,39 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
         }
     }
     
-//    func deleteAll() {
-//        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
-//            let managedObjectContext = appDel.managedObjectContext
-//            let coord = appDel.persistentStoreCoordinator
-//            let fetchRequest = NSFetchRequest(entityName: "Goal")
-//            let deleteRequest = NSBatchDeleteRequest (fetchRequest: fetchRequest)
-//            
-//            do {
-//                try coord.executeRequest (deleteRequest, withContext: managedObjectContext)
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
+    func deleteAll() {
+        if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {
+            let managedObjectContext = appDel.managedObjectContext
+            let coord = appDel.persistentStoreCoordinator
+            
+            let fetchGoalRequest = NSFetchRequest(entityName: "Goal")
+            let deleteGoalRequest = NSBatchDeleteRequest (fetchRequest: fetchGoalRequest)
+            
+            let fetchActivityRequest = NSFetchRequest(entityName: "Activity")
+            let deleteActivityRequest = NSBatchDeleteRequest (fetchRequest: fetchActivityRequest)
+            
+            let fetchProgressRequest = NSFetchRequest(entityName: "ActivityProgress")
+            let deleteProgressRequest = NSBatchDeleteRequest (fetchRequest: fetchProgressRequest)
+            
+            do {
+                try coord.executeRequest (deleteGoalRequest, withContext: managedObjectContext)
+            } catch {
+                print(error)
+            }
+            
+            do {
+                try coord.executeRequest (deleteActivityRequest, withContext: managedObjectContext)
+            } catch {
+                print(error)
+            }
+            
+            do {
+                try coord.executeRequest (deleteProgressRequest, withContext: managedObjectContext)
+            } catch {
+                print(error)
+            }
+        }
+    }
 
     func deleteGoal(theGoal: Goal) {
         if let appDel = UIApplication.sharedApplication().delegate as? AppDelegate {

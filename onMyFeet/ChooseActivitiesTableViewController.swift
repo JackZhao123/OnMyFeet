@@ -11,11 +11,10 @@ import CoreData
 
 class ChooseActivitiesTableViewController: UITableViewController {
     
-    var occpationalActs = ["Bathroom", "Bath/Shower", "Dressing", "Grooming", "Eating", "Meal Prep", "Carrying Groceries"]
-    var physicalActs = ["Transfers", "Bed Mobility", "Walking", "Balance", "Stairs"]
-    var commonActs = ["Gathering Items", "Strengthening", "Endurance"]
+    var occpationalActs = ["Toilet", "Bath/Shower", "Dressing", "Grooming", "Eating", "Meal Preparation", "Gathering Items", "Carrying Groceries"]
+    var physicalActs = ["Transfers", "Bed Mobility", "Walking", "Balance", "Stairs", "Coordination", "Strenthening", "Endurance"]
     
-    var names = ["Bathroom", "Bath/Shower", "Dressing", "Grooming", "Eating", "Meal Prep", "Carrying Groceries", "Transfers", "Bed Mobility", "Walking", "Balance", "Stairs", "Gathering Items", "Strengthening", "Endurance"]
+    var names = ["Toilet", "Bath/Shower", "Dressing", "Grooming", "Eating", "Meal Preparation", "Gathering Items", "Carrying Groceries", "Transfers", "Bed Mobility", "Walking", "Balance", "Stairs", "Coordination", "Strenthening", "Endurance"]
     
     var selectedIndexes = [NSIndexPath]() {
         didSet {
@@ -29,40 +28,38 @@ class ChooseActivitiesTableViewController: UITableViewController {
     var activities = [Activity]()
     var theGoal: Goal?
     var theActivity: Activity?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         goals = GoalDataManager().fetchGoals()!
         theGoal = goals[index]
         
-//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
-//        backBtn.tintColor = UIColor.whiteColor()
-//        navigationItem.leftBarButtonItem = backBtn
+        //        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.goBack))
+        //        backBtn.tintColor = UIColor.whiteColor()
+        //        navigationItem.leftBarButtonItem = backBtn
         
         let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
         nextBtn.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = nextBtn
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
         case 0:
             return occpationalActs.count
         case 1:
             return physicalActs.count
-        case 2:
-            return commonActs.count
         default:
             return 0
         }
@@ -76,8 +73,6 @@ class ChooseActivitiesTableViewController: UITableViewController {
             cell.label.text = occpationalActs[indexPath.row]
         case 1:
             cell.label.text = physicalActs[indexPath.row]
-        case 2:
-            cell.label.text = commonActs[indexPath.row]
         default:
             cell.label.text = "Other"
         }
@@ -106,20 +101,11 @@ class ChooseActivitiesTableViewController: UITableViewController {
         case 1:
             if let indexSelected = selectedIndexes.indexOf(indexPath) {
                 selectedIndexes.removeAtIndex(indexSelected)
-                theIndexes.removeAtIndex(indexSelected + occpationalActs.count)
+                theIndexes.removeAtIndex(indexSelected)
             }
             else {
                 selectedIndexes.append(indexPath)
                 theIndexes.append(indexPath.row + occpationalActs.count)
-            }
-        case 2:
-            if let indexSelected = selectedIndexes.indexOf(indexPath) {
-                selectedIndexes.removeAtIndex(indexSelected)
-                theIndexes.removeAtIndex(indexSelected + occpationalActs.count + physicalActs.count)
-            }
-            else {
-                selectedIndexes.append(indexPath)
-                theIndexes.append(indexPath.row + occpationalActs.count + physicalActs.count)
             }
         default:
             if let indexSelected = selectedIndexes.indexOf(indexPath) {
@@ -128,10 +114,10 @@ class ChooseActivitiesTableViewController: UITableViewController {
             else {
                 selectedIndexes.append(indexPath)
             }
-        
+            
         }
     }
-
+    
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! HeaderCell
         
@@ -142,9 +128,6 @@ class ChooseActivitiesTableViewController: UITableViewController {
         case 1:
             headerCell.label.text = "Physical Therapy Activities"
             headerCell.backgroundColor = UIColor (red: 234/255, green: 253/255, blue: 251/255, alpha: 0.95)
-        case 2:
-            headerCell.label.text = "Other Common Activities"
-            headerCell.backgroundColor = UIColor (red: 218/255, green: 241/255, blue: 209/255, alpha: 0.95)
         default:
             headerCell.label.text = "Others"
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     
     
     @IBOutlet weak var stackView: UIStackView!
@@ -45,7 +45,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     var theName: String = ""
     var footerView: UIView?
     var isWeeklyGraphShowing = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,15 +58,16 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         relations = (theGoal?.mutableSetValueForKey("activities"))!
         
         self.title = "My Activities"
-    
+        
         show()
         RainbowView.hidden = true
         stackView.hidden = false
         textView.hidden = false
+        textView.delegate = self
         
-//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goBack))
-//        backBtn.tintColor = UIColor.whiteColor()
-//        navigationItem.leftBarButtonItem = backBtn
+        //        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goBack))
+        //        backBtn.tintColor = UIColor.whiteColor()
+        //        navigationItem.leftBarButtonItem = backBtn
         
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
         homeBtn.tintColor = UIColor.whiteColor()
@@ -85,10 +86,22 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(animated: Bool) {
         activityTable.reloadData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        GoalDataManager().updateGoalAnswer(theGoal!, answer: textView.text)
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     func show() {
@@ -99,7 +112,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return relations.count
     }
-
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "ViewActivitiesTableViewCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath:  indexPath) as! ViewActivitiesTableViewCell
@@ -107,7 +120,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         let theRelate = relations.allObjects[indexPath.row]
         let name = String(theRelate.valueForKey("name")!)
         let status = CGFloat(Float(String(theRelate.valueForKey("status")!))!)
-
+        
         cell.label.text = name
         
         cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
@@ -130,7 +143,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             
             status = Float(newValue)
             name = String(self.relations.allObjects[index].valueForKey("name")!)
-
+            
             self.changeStatus(name, status: status)
         }
     }
@@ -252,12 +265,12 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     @IBAction func dailyViewTap(gesture: UITapGestureRecognizer?) {
         
         if(isWeeklyGraphShowing) {
-        UIView.transitionFromView(WeeklyView, toView: DailyView, duration: 1.0, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: nil)
+            UIView.transitionFromView(WeeklyView, toView: DailyView, duration: 1.0, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: nil)
         }
         else {
             UIView.transitionFromView(DailyView, toView: WeeklyView, duration: 1.0, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: nil)
         }
-        isWeeklyGraphShowing = !isWeeklyGraphShowing    
+        isWeeklyGraphShowing = !isWeeklyGraphShowing
     }
     
     
@@ -286,7 +299,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
                 print(graphPoints)
                 print(dates)
             }
-
+                
             else {
                 for index in 0..<progressRelations.count {
                     let theRelate = theArray.objectAtIndex(index)
@@ -328,5 +341,5 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         desController.index = index
         self.navigationController!.pushViewController(desController, animated: true)
     }
-
+    
 }

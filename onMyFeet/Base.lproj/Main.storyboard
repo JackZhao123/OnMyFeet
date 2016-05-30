@@ -154,10 +154,10 @@
                                 <action selector="syncData:" destination="BYZ-38-t0r" id="A3F-OW-hEL"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Log Out" id="Yj9-Kd-mMc">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="Yj9-Kd-mMc">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="logOut:" destination="BYZ-38-t0r" id="o30-7u-naV"/>
+                                <action selector="Reset:" destination="BYZ-38-t0r" id="yDG-7X-M18"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -810,7 +810,7 @@
         <!--View Goals View Controller-->
         <scene sceneID="B0l-ud-y8x">
             <objects>
-                <viewController storyboardIdentifier="ViewGoalsViewController" automaticallyAdjustsScrollViewInsets="NO" id="uyn-Wp-Svx" customClass="ViewGoalsViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewGoalsViewController" id="uyn-Wp-Svx" customClass="ViewGoalsViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ztC-El-xZz"/>
                         <viewControllerLayoutGuide type="bottom" id="Jy4-cI-aa8"/>
@@ -847,7 +847,7 @@
                                                         <constraint firstAttribute="width" secondItem="1gX-Zt-EFr" secondAttribute="height" multiplier="4:3" id="ELd-Ik-B9G"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="lkdjfklsdjf;lksdjf;lksdjf;skdlfj;lskdfsdfsd" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nmN-Vg-frA">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="lkdjfklsdjf;lksdjf;lksdjf;skdlfj;lskdfsdfsd" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nmN-Vg-frA">
                                                     <rect key="frame" x="150" y="8" width="402" height="103"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -1002,7 +1002,7 @@
                                     <action selector="finishSelecting:" destination="VsY-8q-3uP" eventType="touchUpInside" id="txh-PB-543"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1: Check goals important to you" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNs-nc-QtW">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1: Check the goals that are important to you" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNs-nc-QtW">
                                 <rect key="frame" x="20" y="40" width="560" height="155"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -1158,7 +1158,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5FP-tj-YDp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2741" y="-221"/>
+            <point key="canvasLocation" x="2741" y="-165"/>
         </scene>
         <!--Personalize Goals View Controller-->
         <scene sceneID="s0x-L7-h8K">
@@ -1423,7 +1423,7 @@
                                             <constraint firstAttribute="width" constant="200" id="pGo-n6-eQR"/>
                                         </constraints>
                                     </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="kld;sfs kl;djsf;js ; ;lk djsf;lsk ;lkdjsfl;sk " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Y4f-Ht-LL1">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="kld;sfs kl;djsf;js ; ;lk djsf;lsk ;lkdjsfl;sk " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Y4f-Ht-LL1">
                                         <rect key="frame" x="0.0" y="150" width="560" height="50"/>
                                         <color key="backgroundColor" red="0.82015013690000005" green="0.94415187310000004" blue="0.82015013690000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>

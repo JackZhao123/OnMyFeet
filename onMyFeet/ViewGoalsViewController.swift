@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UITextViewDelegate {
     
     @IBOutlet weak var goalTable: UITableView!
     @IBOutlet weak var setGoalsBtn: UIButton!
@@ -18,16 +18,16 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
     var goals = [Goal]()
     var fetchResultController: NSFetchedResultsController!
     
-
+    
     @IBAction func setGoalsAction(sender: UIButton) {
         goNext()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         goalTable.delegate = self
         goalTable.dataSource = self
-
+        
         let fetchRequest = NSFetchRequest (entityName: "Goal")
         let sortDescriptor = NSSortDescriptor (key: "question", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -66,7 +66,7 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         setGoalsBtn.layer.borderColor = UIColor.grayColor().CGColor
         setGoalsBtn.layer.borderWidth = 1.5
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         goalTable.setContentOffset(CGPointZero, animated: true)
     }
@@ -80,7 +80,7 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         return goals.count
     }
     
-
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "ViewGoalsTableViewCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ViewGoalsTableViewCell
@@ -89,8 +89,33 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.theImage.image = UIImage (data: goal.picture)
         cell.theLabel.text = goal.answer
+        cell.theLabel.delegate = self
         
         return cell
+    }
+    
+//    func textViewDidBeginEditing(textView: UITextView) {
+//        let point = textView.convertPoint(textView.bounds.origin, toView: self.goalTable)
+//        let indexPath = self.goalTable.indexPathForRowAtPoint(point)
+//        self.goalTable.scrollToRowAtIndexPath(indexPath!, atScrollPosition: .Middle, animated: true)
+//        print(indexPath)
+//    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        let point = textView.convertPoint(textView.bounds.origin, toView: self.goalTable)
+        let index = self.goalTable.indexPathForRowAtPoint(point)?.row
+        let theGoal = goals[index!]
+        
+        GoalDataManager().updateGoalAnswer(theGoal, answer: textView.text)
+    }
+    
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -128,12 +153,12 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
             if let _newIndexPath = newIndexPath {
                 goalTable.insertRowsAtIndexPaths([_newIndexPath], withRowAnimation: .Fade)
             }
-
+            
         case .Delete:
             if let _indexPath = indexPath {
                 goalTable.deleteRowsAtIndexPaths([_indexPath], withRowAnimation: .Fade)
             }
-        
+            
         case .Update:
             if let _indexPath = indexPath {
                 goalTable.reloadRowsAtIndexPaths([_indexPath], withRowAnimation: .Fade)
