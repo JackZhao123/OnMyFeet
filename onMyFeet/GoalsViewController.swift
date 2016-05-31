@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GoalsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class GoalsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
     
     //MARK: Properties
     @IBOutlet var goalView: UIView!
@@ -31,11 +31,15 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     @IBAction func finishSelecting(sender: UIButton) {
         
-        if (selectedIndexes.count == 0) {
+        if ((selectedIndexes.count == 0) && (flagForPersonalGoal == false)) {
             let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .Alert)
             let cancelAction = UIAlertAction (title: "Cancel", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
             presentViewController(alert, animated: true, completion: nil)
+        }
+            
+        if ((selectedIndexes.count == 0) && (flagForPersonalGoal != false)) {
+            goBack()
         }
         
         else {
@@ -67,6 +71,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             collectionView.reloadData()
         }
     }
+    var flagForPersonalGoal = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +121,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 16
+        return 17
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuserIdentifier, forIndexPath: indexPath) as! GoalsCollectionViewCell
@@ -133,13 +138,20 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let indexSelected = selectedIndexes.indexOf(indexPath) {
-            selectedIndexes.removeAtIndex(indexSelected)
-            selectedImages.removeAtIndex(indexSelected)
-            
-        }else {
-            selectedIndexes.append(indexPath)
-            selectedImages.append(UIImage(named: "\(indexPath.item)")!)
+        if (indexPath.row != 16) {
+            if let indexSelected = selectedIndexes.indexOf(indexPath) {
+                selectedIndexes.removeAtIndex(indexSelected)
+                selectedImages.removeAtIndex(indexSelected)
+                
+            }else {
+                selectedIndexes.append(indexPath)
+                selectedImages.append(UIImage(named: "\(indexPath.item)")!)
+            }
+        }
+        
+        else {
+            flagForPersonalGoal = true
+            setPersonalGoal()
         }
     }
     
@@ -215,6 +227,44 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
 
     }
     
+    func setPersonalGoal() {
+        let setGoal = UIAlertController(title: "Add a personal goal that is important to you", message: "", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "", message: nil, preferredStyle: .Alert)
+        setGoal.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Enter your personal goal here"
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let saveAction = UIAlertAction(title: "Save", style: .Default, handler:{ (action) -> Void in
+            let thePicture = UIImage(named: "noImage")
+            let theQuestion = setGoal.textFields![0].text
+            let theExample = setGoal.textFields![0].text
+            let theAnswer = setGoal.textFields![0].text
+            if ((theAnswer!.isEmpty) == true) {
+                alert.title = "Please enter your personal goal"
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            else {
+                let goal = Goal.MR_createEntity()
+                if let goal = goal {
+                    goal.picture = UIImageJPEGRepresentation(thePicture!, 1.0)
+                    goal.question = theQuestion
+                    goal.example = theExample
+                    goal.answer = theAnswer
+                    NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+                }
+            }
+        })
+        
+        alert.addAction(cancelAction)
+        setGoal.addAction(saveAction)
+        setGoal.addAction(cancelAction)
+        presentViewController(setGoal, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     //MARK: Actions
     func goBack(){

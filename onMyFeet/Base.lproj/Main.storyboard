@@ -1343,15 +1343,38 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="745-WZ-dZS">
+                                            <rect key="frame" x="108" y="17" width="384" height="36"/>
+                                            <color key="backgroundColor" red="0.9489709734916687" green="0.90163779258728027" blue="0.99816709756851196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <state key="normal" title="  Add Others  ">
+                                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="4f7-r0-zEo" secondAttribute="trailing" id="7KN-Zu-lqw"/>
+                                        <constraint firstItem="745-WZ-dZS" firstAttribute="leading" secondItem="ffK-IT-GyX" secondAttribute="leadingMargin" constant="100" id="Cdz-YL-BoH"/>
                                         <constraint firstItem="4f7-r0-zEo" firstAttribute="leading" secondItem="ffK-IT-GyX" secondAttribute="leadingMargin" id="RG4-dy-fIJ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="745-WZ-dZS" secondAttribute="trailing" constant="100" id="Wcq-ob-RTt"/>
+                                        <constraint firstItem="745-WZ-dZS" firstAttribute="centerX" secondItem="ffK-IT-GyX" secondAttribute="centerX" id="enH-K3-R5k"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="4f7-r0-zEo" secondAttribute="bottom" id="gHT-FZ-b0u"/>
                                         <constraint firstItem="4f7-r0-zEo" firstAttribute="top" secondItem="ffK-IT-GyX" secondAttribute="topMargin" id="und-AY-OxZ"/>
+                                        <constraint firstItem="745-WZ-dZS" firstAttribute="centerY" secondItem="ffK-IT-GyX" secondAttribute="centerY" id="vyp-4s-Iel"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="enH-K3-R5k"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="button" destination="745-WZ-dZS" id="XEK-FO-5tt"/>
                                     <outlet property="label" destination="4f7-r0-zEo" id="0b8-T9-wNK"/>
                                 </connections>
                             </tableViewCell>
@@ -1454,7 +1477,7 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HID-0t-9Zr" customClass="GradientSlider" customModule="OnMyFeet" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HID-0t-9Zr" customClass="GradientSlider" customModule="OnMyFeet" customModuleProvider="target">
                                                             <rect key="frame" x="129" y="14" width="420" height="42"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="34" id="fmZ-Ze-2nn"/>
@@ -1626,7 +1649,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bEC-NE-zac" userLabel="Daily View">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOu-2B-ppM" customClass="GradientSlider" customModule="OnMyFeet" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GOu-2B-ppM" customClass="GradientSlider" customModule="OnMyFeet" customModuleProvider="target">
                                                         <rect key="frame" x="18" y="111" width="264" height="38"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="52r-uL-mmX"/>

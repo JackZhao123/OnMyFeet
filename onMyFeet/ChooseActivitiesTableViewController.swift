@@ -28,6 +28,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     var activities = [Activity]()
     var theGoal: Goal?
     var theActivity: Activity?
+    var footerView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,6 +61,8 @@ class ChooseActivitiesTableViewController: UITableViewController {
             return occpationalActs.count
         case 1:
             return physicalActs.count
+        case 2:
+            return 0
         default:
             return 0
         }
@@ -123,35 +126,72 @@ class ChooseActivitiesTableViewController: UITableViewController {
         
         switch (section) {
         case 0:
+            headerCell.button.hidden = true
             headerCell.label.text = "Occupational Therapy Activities"
             headerCell.backgroundColor = UIColor (red: 248/255, green: 235/255, blue: 195/255, alpha: 0.95)
         case 1:
+            headerCell.button.hidden = true
             headerCell.label.text = "Physical Therapy Activities"
             headerCell.backgroundColor = UIColor (red: 234/255, green: 253/255, blue: 251/255, alpha: 0.95)
+        case 2:
+            headerCell.button.hidden = false
+            headerCell.label.hidden = true
+            headerCell.button.addTarget(self, action: #selector(ChooseActivitiesTableViewController.setPersonalActivity), forControlEvents: .TouchUpInside)
+
         default:
             headerCell.label.text = "Others"
         }
         
         return headerCell
     }
+
+    
+    func setPersonalActivity() {
+        let setAct = UIAlertController(title: "Add a personal activity that is important to you", message: "", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "", message: nil, preferredStyle: .Alert)
+        setAct.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Enter your personal activity here"
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let saveAction = UIAlertAction(title: "Save", style: .Default, handler:{ (action) -> Void in
+            let theName = setAct.textFields![0].text
+            
+            let predicate = NSPredicate(format: "name == %@", theName!)
+            self.theActivity = Activity.MR_findFirstWithPredicate(predicate)
+            if(self.theActivity == nil) {
+                self.theActivity = Activity.MR_createEntity()
+                self.theActivity?.name = theName!
+                self.theActivity?.status = 0
+            }
+            
+            let actGoalRelation = self.theGoal?.mutableSetValueForKey("activities")
+            actGoalRelation?.addObject(self.theActivity!)
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        })
+        
+        alert.addAction(cancelAction)
+        setAct.addAction(saveAction)
+        setAct.addAction(cancelAction)
+        presentViewController(setAct, animated: true, completion: nil)
+    }
     
     func done() {
-            for index in 0..<theIndexes.count {
-                let theIndex = theIndexes[index]
-                let theName = names[theIndex]
-                
-                let predicate = NSPredicate(format: "name == %@", theName)
-                theActivity = Activity.MR_findFirstWithPredicate(predicate)
-                if theActivity == nil {
-                    theActivity = Activity.MR_createEntity()
-                    theActivity?.name = theName
-                    theActivity?.status = 0
-                }
-                
-                let actGoalRelation = theGoal!.mutableSetValueForKey("activities")
-                actGoalRelation.addObject(theActivity!)
-                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        for index in 0..<theIndexes.count {
+            let theIndex = theIndexes[index]
+            let theName = names[theIndex]
+            
+            let predicate = NSPredicate(format: "name == %@", theName)
+            theActivity = Activity.MR_findFirstWithPredicate(predicate)
+            if theActivity == nil {
+                theActivity = Activity.MR_createEntity()
+                theActivity?.name = theName
+                theActivity?.status = 0
             }
+            
+            let actGoalRelation = theGoal!.mutableSetValueForKey("activities")
+            actGoalRelation.addObject(theActivity!)
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        }
         goBack()
     }
     
