@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="El3-YL-tlA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="El3-YL-tlA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1344,7 +1344,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="745-WZ-dZS">
-                                            <rect key="frame" x="108" y="17" width="384" height="36"/>
+                                            <rect key="frame" x="18" y="17" width="564" height="36"/>
                                             <color key="backgroundColor" red="0.9489709734916687" green="0.90163779258728027" blue="0.99816709756851196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <state key="normal" title="  Add Others  ">
@@ -1359,9 +1359,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="4f7-r0-zEo" secondAttribute="trailing" id="7KN-Zu-lqw"/>
-                                        <constraint firstItem="745-WZ-dZS" firstAttribute="leading" secondItem="ffK-IT-GyX" secondAttribute="leadingMargin" constant="100" id="Cdz-YL-BoH"/>
+                                        <constraint firstItem="745-WZ-dZS" firstAttribute="leading" secondItem="ffK-IT-GyX" secondAttribute="leadingMargin" constant="10" id="Cdz-YL-BoH"/>
                                         <constraint firstItem="4f7-r0-zEo" firstAttribute="leading" secondItem="ffK-IT-GyX" secondAttribute="leadingMargin" id="RG4-dy-fIJ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="745-WZ-dZS" secondAttribute="trailing" constant="100" id="Wcq-ob-RTt"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="745-WZ-dZS" secondAttribute="trailing" constant="10" id="Wcq-ob-RTt"/>
                                         <constraint firstItem="745-WZ-dZS" firstAttribute="centerX" secondItem="ffK-IT-GyX" secondAttribute="centerX" id="enH-K3-R5k"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="4f7-r0-zEo" secondAttribute="bottom" id="gHT-FZ-b0u"/>
                                         <constraint firstItem="4f7-r0-zEo" firstAttribute="top" secondItem="ffK-IT-GyX" secondAttribute="topMargin" id="und-AY-OxZ"/>
