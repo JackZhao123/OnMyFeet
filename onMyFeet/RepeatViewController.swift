@@ -11,7 +11,7 @@ protocol RepeatViewControllerDelegate {
     func didPopUp(weekDay:[String])
 }
 
-class RepeatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RepeatViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var mTableView: UITableView!
     
@@ -21,10 +21,6 @@ class RepeatViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.title = "Repeat"
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
         mTableView.delegate = self
         mTableView.dataSource = self

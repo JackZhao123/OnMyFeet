@@ -62,7 +62,6 @@ class FitbitAPI: NSObject,NSURLSessionDataDelegate, NSURLSessionDelegate {
     
     //MARK: Method
     class func logIn(forceLogIn flag:Bool){
-        
         let url: NSURL!
         if flag {
             url = NSURL(string: Constants.Fitbit.AuthenticationURL)

@@ -80,6 +80,9 @@
 		2AF9BE491CB07F0A007F534E /* Alarm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */; };
 		2AF9BE4A1CB07F0A007F534E /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF9BE481CB07F0A007F534E /* Alarm.swift */; };
 		2AFBE8141CFB7EB00029B08F /* Goal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFBE8131CFB7EB00029B08F /* Goal+CoreDataProperties.swift */; };
+		EB2F92141CFE086B008E65FC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2F92131CFE086B008E65FC /* BaseViewController.swift */; };
+		EB2F92171CFE0949008E65FC /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2F92161CFE0949008E65FC /* UIView+Additions.swift */; };
+		EB2F92191CFE0970008E65FC /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +175,9 @@
 		A40C493384D9D96DF593D99E /* Pods_OnMyFeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnMyFeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9B1226655717A11AB60C84B /* Pods-OnMyFeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.release.xcconfig"; sourceTree = "<group>"; };
 		D935031F20E2855BB481DE90 /* Pods-OnMyFeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnMyFeet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OnMyFeet/Pods-OnMyFeet.debug.xcconfig"; sourceTree = "<group>"; };
+		EB2F92131CFE086B008E65FC /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		EB2F92161CFE0949008E65FC /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
+		EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +292,7 @@
 				2A03947E1CAE631800B2B1AE /* ActionViewController.swift */,
 				2ADFECAE1CAF742500DB16DA /* AlarmLabelViewController.swift */,
 				2ADFECAF1CAF742500DB16DA /* AlarmLabelViewController.xib */,
+				EB2F92131CFE086B008E65FC /* BaseViewController.swift */,
 				2A01948D1CAF7C7E00481E0F /* CheckInViewController.swift */,
 				2AF8357E1C7B560000287892 /* LogInViewController.swift */,
 				2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */,
@@ -356,6 +363,8 @@
 		EB43673E1CFDE23C005CA193 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				EB2F92161CFE0949008E65FC /* UIView+Additions.swift */,
+				EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -466,7 +475,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */;
+			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -590,6 +599,7 @@
 				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				187572F11CB2167D0095F112 /* GoalsCollectionViewCell.swift in Sources */,
 				187572F31CB216980095F112 /* ChooseGoalsViewController.swift in Sources */,
+				EB2F92191CFE0970008E65FC /* UIColor+Additions.swift in Sources */,
 				2A01948C1CAF7C0E00481E0F /* QuestionnaireViewController.swift in Sources */,
 				2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */,
 				2AF9BE491CB07F0A007F534E /* Alarm+CoreDataProperties.swift in Sources */,
@@ -600,6 +610,7 @@
 				18C896211CB212260075D3B6 /* GoalBackendData.swift in Sources */,
 				2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */,
 				2A03947F1CAE631800B2B1AE /* ActionViewController.swift in Sources */,
+				EB2F92141CFE086B008E65FC /* BaseViewController.swift in Sources */,
 				2AE39B1A1CA4A8D4000BAC6B /* ProgressViewController.swift in Sources */,
 				2ADFECA81CAF615100DB16DA /* TimePickerCell.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
@@ -618,6 +629,7 @@
 				2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */,
 				2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
+				EB2F92171CFE0949008E65FC /* UIView+Additions.swift in Sources */,
 				187572EF1CB216750095F112 /* GoalsViewController.swift in Sources */,
 				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
 				2A9FD5211CB19C0500CD3BEB /* ArrayDataConverter.swift in Sources */,
@@ -754,7 +766,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
@@ -767,7 +779,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
@@ -801,7 +813,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */ = {
+		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F61C72960300957BEF /* Debug */,

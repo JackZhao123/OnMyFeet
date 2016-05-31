@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DataCoordinatorDelegate {
+class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, DataCoordinatorDelegate {
 //    MARK: Outlet
     @IBOutlet weak var menuTableView: UITableView!
     @IBOutlet weak var indicatiorView: UIView!
@@ -38,10 +38,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         indicatiorView.layer.cornerRadius = 8.0
         indicatiorView.clipsToBounds = true
         hideIndicator()
-        
-        navigationController?.navigationBar.barTintColor = UIColor(red: 0.000, green: 0.741, blue: 0.231, alpha: 1.00)
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
-        
         
         coordinator.delegate = self
     }
@@ -217,10 +213,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             switch categories.count {
                 case 4:
                     categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action", "Developer"]
-                    print("4")
                 case 5:
                     categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
-                    print("5")
                 default:
                     break
             }
