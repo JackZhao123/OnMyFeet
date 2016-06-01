@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class TestData: NSObject, ZXResponseSerializerProtocol {
     func serializeResponseObjectToModel(responseObject: NSData?, requestUserInfo: NSDictionary?) {
-        
+        print(JSON(data: responseObject!))
     }
 }

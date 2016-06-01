@@ -16,8 +16,9 @@ let classes: [String: ()->ZXResponseSerializerProtocol] = ["TestData":{return Te
 class ZXAPIManager: NSObject {
     var defaultParameters: [String: AnyObject]?
     var backgroundQueue: dispatch_queue_t!
+    var baseURL: NSURL?
 
-    static var sharedManager = ZXAPIManager()
+    static var sharedManager = ZXAPIManager.init()
     
     override init() {
         backgroundQueue = dispatch_queue_create("com.jackzhao.tool.bgqueue", nil)
@@ -28,7 +29,18 @@ class ZXAPIManager: NSObject {
         super.init()
     }
     
-    func startRequestWith(relativeURL:String,
+    class func setBaseURL(baseURL:NSURL?) {
+        var url = baseURL
+        if let baseURL = baseURL {
+            if (baseURL.path!.characters.count)>0 && !baseURL.absoluteString.hasSuffix("/") {
+                url = baseURL.URLByAppendingPathComponent("")
+            }
+        }
+        
+        self.sharedManager.baseURL = url
+    }
+    
+    func startRequestWithRelativeURL(relativeURL:String,
                           method:String,
                           params:[String: AnyObject]?,
                           headers:[String:String]?,
@@ -39,6 +51,8 @@ class ZXAPIManager: NSObject {
     {
         var requestHash: String?
         
+        let URLString = NSURL(string: relativeURL, relativeToURL: self.baseURL)!.absoluteString
+        
         var fullDictionary = self.defaultParameters
         if fullDictionary != nil {
             if let params = params {
@@ -48,7 +62,7 @@ class ZXAPIManager: NSObject {
             fullDictionary = params
         }
         
-        if let responseObject = self.retrieveCacheFor(relativeURL, params: fullDictionary) {
+        if let responseObject = self.retrieveCacheFor(URLString, params: fullDictionary) {
             self.processResponseCache(cacheLength,
                                       requestHash: requestHash,
                                       serializerClassName: serializerClassName,
@@ -61,7 +75,7 @@ class ZXAPIManager: NSObject {
             
             
             Alamofire.request(Method(rawValue:method)!,
-                relativeURL, parameters: fullDictionary,
+                URLString, parameters: fullDictionary,
                 encoding: .URLEncodedInURL,
                 headers: headers).response(completionHandler: {[unowned self](request, response, data, error) in
                     self.processResponseCache(cacheLength,

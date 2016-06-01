@@ -25,7 +25,9 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
-        ZXAPIManager.sharedManager.startRequestWith("https://httpbin.org/get", method: "GET", params: ["foo":"bar"], headers: nil, cacheLength: nil, serializerClassName: "TestData", requestInfo: nil){ (request, response, data, errpr) in
+        
+        ZXAPIManager.setBaseURL(NSURL(string: "https://httpbin.org/"))
+        ZXAPIManager.sharedManager.startRequestWithRelativeURL("get", method: "GET", params: ["foo":"bar"], headers: nil, cacheLength: nil, serializerClassName: "TestData", requestInfo: nil){ (request, response, data, error) in
             
         }
         
