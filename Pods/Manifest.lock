@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (3.4.0)
+  - Alamofire (3.1.5)
   - Charts (2.2.3):
     - Charts/Core (= 2.2.3)
   - Charts/Core (2.2.3)
@@ -8,12 +8,12 @@ PODS:
   - MagicalRecord/Core (2.3.2)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
+  - Alamofire (~> 3.1.0)
   - Charts (= 2.2.3)
   - MagicalRecord (~> 2.3.2)
 
 SPEC CHECKSUMS:
-  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
+  Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   Charts: f54267bb3f0f0e74520c6f248517cf5074dfd6fc
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
 

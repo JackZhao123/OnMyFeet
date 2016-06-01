@@ -25,6 +25,10 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         super.viewDidLoad()
         self.menuTableView.delegate = self
         self.menuTableView.dataSource = self
+        ZXAPIManager.sharedManager.startRequestWith("https://httpbin.org/get", method: "GET", params: ["foo":"bar"], headers: nil, cacheLength: nil, serializerClassName: "TestData", requestInfo: nil){ (request, response, data, errpr) in
+            
+        }
+        
         
 //        self.refreshControl = UIRefreshControl()
 //        self.refreshControl.backgroundColor = UIColor(red: 0.831, green: 0.859, blue: 0.710, alpha: 1.00)

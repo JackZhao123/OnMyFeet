@@ -83,6 +83,10 @@
 		EB2F92141CFE086B008E65FC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2F92131CFE086B008E65FC /* BaseViewController.swift */; };
 		EB2F92171CFE0949008E65FC /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2F92161CFE0949008E65FC /* UIView+Additions.swift */; };
 		EB2F92191CFE0970008E65FC /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */; };
+		EB4424551CFF2524001AA3D6 /* ZXAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4424541CFF2524001AA3D6 /* ZXAPIManager.swift */; };
+		EB7D8C611CFF477B007D4983 /* ZXResponseSerializerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D8C601CFF477B007D4983 /* ZXResponseSerializerProtocol.swift */; };
+		EB7D8C651CFF6824007D4983 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D8C641CFF6824007D4983 /* TestData.swift */; };
+		EB7D8C671CFF7627007D4983 /* Operators+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7D8C661CFF7627007D4983 /* Operators+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +182,10 @@
 		EB2F92131CFE086B008E65FC /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		EB2F92161CFE0949008E65FC /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
+		EB4424541CFF2524001AA3D6 /* ZXAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXAPIManager.swift; sourceTree = "<group>"; };
+		EB7D8C601CFF477B007D4983 /* ZXResponseSerializerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXResponseSerializerProtocol.swift; sourceTree = "<group>"; };
+		EB7D8C641CFF6824007D4983 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		EB7D8C661CFF7627007D4983 /* Operators+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operators+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +364,9 @@
 				2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */,
 				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
 				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
+				EB4424541CFF2524001AA3D6 /* ZXAPIManager.swift */,
+				EB7D8C641CFF6824007D4983 /* TestData.swift */,
+				EB7D8C601CFF477B007D4983 /* ZXResponseSerializerProtocol.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -365,6 +376,7 @@
 			children = (
 				EB2F92161CFE0949008E65FC /* UIView+Additions.swift */,
 				EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */,
+				EB7D8C661CFF7627007D4983 /* Operators+Additions.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -475,7 +487,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */;
+			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -596,6 +608,7 @@
 				2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */,
 				2AFBE8141CFB7EB00029B08F /* Goal+CoreDataProperties.swift in Sources */,
 				2A01948B1CAF7C0E00481E0F /* Questionnaire.swift in Sources */,
+				EB7D8C611CFF477B007D4983 /* ZXResponseSerializerProtocol.swift in Sources */,
 				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				187572F11CB2167D0095F112 /* GoalsCollectionViewCell.swift in Sources */,
 				187572F31CB216980095F112 /* ChooseGoalsViewController.swift in Sources */,
@@ -616,6 +629,7 @@
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
 				2AF9BE4A1CB07F0A007F534E /* Alarm.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
+				EB7D8C651CFF6824007D4983 /* TestData.swift in Sources */,
 				187572FB1CB216B80095F112 /* ViewGoalsTableViewCell.swift in Sources */,
 				2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */,
 				2A0194941CAF7CAE00481E0F /* IntradaySleepTime.swift in Sources */,
@@ -626,12 +640,14 @@
 				2A18DAE81CA81AAF00FC4D71 /* WeekView.swift in Sources */,
 				2AF69B0E1CB0CC1B00A570E7 /* RepeatCell.swift in Sources */,
 				187572FF1CB216C20095F112 /* ViewActivitiesTableViewCell.swift in Sources */,
+				EB4424551CFF2524001AA3D6 /* ZXAPIManager.swift in Sources */,
 				2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */,
 				2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */,
 				2A780F341C750B51000B2424 /* FitbitAPI.swift in Sources */,
 				EB2F92171CFE0949008E65FC /* UIView+Additions.swift in Sources */,
 				187572EF1CB216750095F112 /* GoalsViewController.swift in Sources */,
 				2AAA60E41C72960300957BEF /* OnMyFeet.xcdatamodeld in Sources */,
+				EB7D8C671CFF7627007D4983 /* Operators+Additions.swift in Sources */,
 				2A9FD5211CB19C0500CD3BEB /* ArrayDataConverter.swift in Sources */,
 				187573031CB216D10095F112 /* ChooseActivitiesTableViewCell.swift in Sources */,
 				2ADFECAC1CAF6C9300DB16DA /* RepeatViewController.swift in Sources */,
@@ -813,7 +829,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */ = {
+		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F61C72960300957BEF /* Debug */,
