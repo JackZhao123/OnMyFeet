@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 @objc protocol FitbitAPIDelegate {
     optional func handleDailyOf(dataType: String, data: NSData)

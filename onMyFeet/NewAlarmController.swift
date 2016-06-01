@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyJSON
+
 protocol NewAlarmDelegate {
     func newAlarmDidDismissed()
 }

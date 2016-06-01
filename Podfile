@@ -7,6 +7,7 @@ target 'OnMyFeet' do
 pod 'Charts', ‘2.2.3'
 pod 'Alamofire', '~> 3.1.0’
 pod 'MagicalRecord’, '~> 2.3.2’
+pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 end
 
 target 'OnMyFeetTests' do

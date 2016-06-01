@@ -58,7 +58,6 @@
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
 		2ABFEC701C960EE00093D574 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC6F1C960EE00093D574 /* Constants.swift */; };
 		2ABFEC731C9699630093D574 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC721C9699630093D574 /* TestViewController.swift */; };
-		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
 		2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */; };
 		2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */; };
 		2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */; };
@@ -154,7 +153,6 @@
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2ABFEC6F1C960EE00093D574 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2ABFEC721C9699630093D574 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
-		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
 		2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmCell.xib; sourceTree = "<group>"; };
 		2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAlarmController.swift; sourceTree = "<group>"; };
@@ -363,9 +361,8 @@
 				2ABFEC6F1C960EE00093D574 /* Constants.swift */,
 				2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */,
 				2A780F331C750B51000B2424 /* FitbitAPI.swift */,
-				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
-				EB4424541CFF2524001AA3D6 /* ZXAPIManager.swift */,
 				EB7D8C641CFF6824007D4983 /* TestData.swift */,
+				EB4424541CFF2524001AA3D6 /* ZXAPIManager.swift */,
 				EB7D8C601CFF477B007D4983 /* ZXResponseSerializerProtocol.swift */,
 			);
 			name = Core;
@@ -487,7 +484,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */;
+			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -602,7 +599,6 @@
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
 				187572ED1CB216690095F112 /* GoalDataManager.swift in Sources */,
 				2A0194881CAF7BD000481E0F /* IntradaySedentary.swift in Sources */,
-				2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */,
 				187572F91CB216B30095F112 /* ViewGoalsViewController.swift in Sources */,
 				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
 				2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */,
@@ -829,7 +825,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */ = {
+		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F61C72960300957BEF /* Debug */,

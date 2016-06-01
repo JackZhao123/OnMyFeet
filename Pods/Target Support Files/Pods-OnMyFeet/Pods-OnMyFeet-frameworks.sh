@@ -87,9 +87,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-OnMyFeet/Alamofire.framework"
   install_framework "Pods-OnMyFeet/Charts.framework"
   install_framework "Pods-OnMyFeet/MagicalRecord.framework"
+  install_framework "Pods-OnMyFeet/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-OnMyFeet/Alamofire.framework"
   install_framework "Pods-OnMyFeet/Charts.framework"
   install_framework "Pods-OnMyFeet/MagicalRecord.framework"
+  install_framework "Pods-OnMyFeet/SwiftyJSON.framework"
 fi

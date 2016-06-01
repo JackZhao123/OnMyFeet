@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
+
 protocol DataCoordinatorDelegate {
     func summariesDataDidSaved(dataType:String, startDate:String, endDate:String)
 }
