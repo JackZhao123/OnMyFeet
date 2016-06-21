@@ -20,6 +20,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     @IBOutlet weak var prioritizeThem: UIButton!
     @IBOutlet weak var selectLabel: UILabel!
     @IBOutlet weak var constraintLength: NSLayoutConstraint!
+    @IBOutlet weak var countLable: UILabel!
     
     
 
@@ -27,6 +28,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         if (selectedIndexes.count != 0) {
             selectedIndexes.removeAll()
             selectedImages.removeAll()
+            countLable.text = "Number of goals selected: 0"
         }
     }
     @IBAction func finishSelecting(sender: UIButton) {
@@ -72,6 +74,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
     }
     var flagForPersonalGoal = false
+    var goalsNum = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +103,8 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         prioritizeThem.layer.cornerRadius = 5.0;
         prioritizeThem.layer.borderColor = UIColor.grayColor().CGColor
         prioritizeThem.layer.borderWidth = 1.5
+        
+        self.navigationController?.interactivePopGestureRecognizer?.enabled = false
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -142,10 +147,12 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             if let indexSelected = selectedIndexes.indexOf(indexPath) {
                 selectedIndexes.removeAtIndex(indexSelected)
                 selectedImages.removeAtIndex(indexSelected)
+                goalsNum -= 1
                 
             }else {
                 selectedIndexes.append(indexPath)
                 selectedImages.append(UIImage(named: "\(indexPath.item)")!)
+                goalsNum += 1
             }
         }
         
@@ -153,6 +160,8 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             flagForPersonalGoal = true
             setPersonalGoal()
         }
+        
+        countLable.text = "Number of goals selected: " + String(goalsNum)
     }
     
     //MARK: Animations
@@ -252,6 +261,8 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
                     goal.answer = theAnswer
                     NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
                 }
+                self.goalsNum += 1
+                self.countLable.text = "Number of goals selected: " + String(self.goalsNum)
             }
         })
         

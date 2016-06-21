@@ -119,27 +119,27 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
         cell.theSlider.value = status
         
-        chooseSlider(cell.theSlider, status: status)
-        getStatus(cell.theSlider)
+        //chooseSlider(cell.theSlider, status: status)
+        //getStatus(cell.theSlider)
         
         return cell
     }
     
     
-    func getStatus(slider: GradientSlider) {
-        var status: Float = 0.0
-        var name: String = ""
-        slider.endBlock = {slider, newValue, newLocation in
-            let point = newLocation
-            let pointInCell = slider.convertPoint(point, toView: self.activityTable)
-            let index = self.activityTable.indexPathForRowAtPoint(pointInCell)!.row
-            
-            status = Float(newValue)
-            name = String(self.relations.allObjects[index].valueForKey("name")!)
-            
-            self.changeStatus(name, status: status)
-        }
-    }
+//    func getStatus(slider: GradientSlider) {
+//        var status: Float = 0.0
+//        var name: String = ""
+//        slider.endBlock = {slider, newValue, newLocation in
+//            let point = newLocation
+//            let pointInCell = slider.convertPoint(point, toView: self.activityTable)
+//            let index = self.activityTable.indexPathForRowAtPoint(pointInCell)!.row
+//            
+//            status = Float(newValue)
+//            name = String(self.relations.allObjects[index].valueForKey("name")!)
+//            
+//            self.changeStatus(name, status: status)
+//        }
+//    }
     
     func saveStatus(slider: GradientSlider, indexPath: NSIndexPath) {
         var status: Float = 0.0
