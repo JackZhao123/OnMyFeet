@@ -6,83 +6,86 @@
 //  Copyright © 2016年 OnMyFeet Group. All rights reserved.
 //
 
-import UIKit
-import CoreData
+//import UIKit
+//import CoreData
+//
+//class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
+//    var goal: Goal?
+//    var activity: Activity?
+//    var progress: ActivityProgress?
+//    var goals = [Goal]()
+//    var activities = [Activity]()
+//    var progresses = [ActivityProgress]()
+//    var actGoalRelate: NSMutableSet?
+//    var progressActRelate: NSMutableSet?
+//    var fetchResultController: NSFetchedResultsController!
+//    
+//    func executeProgressUpdate(context: NSManagedObjectContext, theAct: Activity, theDate: String, theStatus: Float) {
+//        
+//        let results = ActivityProgress.MR_findAllSortedBy("date", ascending: true, withPredicate: NSPredicate(format: "activity.name == %@ AND date == %@", theAct.name, theDate), inContext: NSManagedObjectContext.MR_defaultContext())
+//        
+//        
+//        guard let allProgress = results as? [ActivityProgress] else {
+//            return
+//        }
+//        
+//        if (allProgress.count == 0) {
+//            let progress = ActivityProgress.MR_createEntity()
+//            
+//            guard let newProgress = progress else {
+//                return
+//            }
+//            
+//            newProgress.date = theDate
+//            newProgress.status = theStatus
+//            
+//            progressActRelate = theAct.mutableSetValueForKey("activityProgresses")
+//            progressActRelate?.addObject(newProgress)
+//            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+//        }
+//        else {
+//            allProgress[0].status = theStatus
+//            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+//        }
+//    }
+    
+//    func save(context: NSManagedObjectContext) {
+//        do {
+//            try context.save()
+//        } catch {
+//            print(error)
+//        }
+//    }
 
-class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
-    var goal: Goal?
-    var activity: Activity?
-    var progress: ActivityProgress?
-    var goals = [Goal]()
-    var activities = [Activity]()
-    var progresses = [ActivityProgress]()
-    var actGoalRelate: NSMutableSet?
-    var progressActRelate: NSMutableSet?
-    var fetchResultController: NSFetchedResultsController!
+//    func insertProgressData (context: NSManagedObjectContext, date: String, status: Float) -> ActivityProgress {
+//        progress = NSEntityDescription.insertNewObjectForEntityForName("ActivityProgress", inManagedObjectContext: context) as? ActivityProgress
+//        progress!.date = date
+//        progress!.status = status
+//        return progress!
+//    }
+//
+//    func insertActGoalRelation (theGoal: Goal, theAct: Activity) {
+//        actGoalRelate = theGoal.mutableSetValueForKey("activities")
+//        actGoalRelate?.addObject(theAct)
+//    }
+
+//    func predicateFetchActivity(context: NSManagedObjectContext, theName: String) -> Activity {
+//        let predicate = NSPredicate(format: "name == %@", theName)
+//        var theActivity = Activity.MR_findFirstWithPredicate(predicate)
+//
+//        if theActivity == nil {
+//            theActivity = Activity.MR_createEntity()
+//            theActivity?.name = theName
+//            theActivity?.status = 0
+//        }
+//        
+//        return theActivity!
+//    }
     
-    func save(context: NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print(error)
-        }
-    }
-    
-    func insertProgressData (context: NSManagedObjectContext, date: String, status: Float) -> ActivityProgress {
-        progress = NSEntityDescription.insertNewObjectForEntityForName("ActivityProgress", inManagedObjectContext: context) as? ActivityProgress
-        progress!.date = date
-        progress!.status = status
-        return progress!
-    }
-    
-    func insertActGoalRelation (theGoal: Goal, theAct: Activity) {
-        actGoalRelate = theGoal.mutableSetValueForKey("activities")
-        actGoalRelate?.addObject(theAct)
-    }
-    
-    func insertProgressActRelation (theAct: Activity, theProgress: ActivityProgress) {
-        progressActRelate = theAct.mutableSetValueForKey("activityProgresses")
-        progressActRelate?.addObject(theProgress)
-    }
-    
-    func predicateFetchActivity(context: NSManagedObjectContext, theName: String) -> Activity {
-        let predicate = NSPredicate(format: "name == %@", theName)
-        var theActivity = Activity.MR_findFirstWithPredicate(predicate)
-        
-        if theActivity == nil {
-            theActivity = Activity.MR_createEntity()
-            theActivity?.name = theName
-            theActivity?.status = 0
-        }
-        
-        return theActivity!
-    }
-    
-    func executeProgressUpdate(context: NSManagedObjectContext, theAct: Activity, theDate: String, theStatus: Float) {
-        let fetchRequest = NSFetchRequest(entityName: "ActivityProgress")
-        fetchRequest.predicate = NSPredicate(format: "activity.name == %@ AND date == %@", theAct.name, theDate)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
-        
-        do {
-            let result = try context.executeFetchRequest(fetchRequest) as! [ActivityProgress]
-            if (result.count == 0) {
-                let progress = insertProgressData(context, date: theDate, status: theStatus)
-                insertProgressActRelation(theAct, theProgress: progress)
-                save(context)
-            }
-            else {
-                updateProgressStatus(result[0], status: theStatus)
-            }
-        }
-        catch {
-            print(error)
-        }
-    }
-    
-    func updateProgressStatus(theProgress: ActivityProgress, status: Float) {
-        theProgress.status = status
-        save(NSManagedObjectContext.MR_defaultContext())
-    }
+//    func updateProgressStatus(theProgress: ActivityProgress, status: Float) {
+//        theProgress.status = status
+//        save(NSManagedObjectContext.MR_defaultContext())
+//    }
     
 //    func insertGoalData(context: NSManagedObjectContext, picture: UIImage, question:String, example: String, answer: String) {
 //        goal = NSEntityDescription.insertNewObjectForEntityForName("Goal", inManagedObjectContext: context) as? Goal
@@ -206,4 +209,4 @@ class GoalDataManager: NSObject, NSFetchedResultsControllerDelegate {
 //        return true
 //    }
     
-}
+//}

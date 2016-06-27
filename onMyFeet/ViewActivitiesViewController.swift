@@ -194,12 +194,44 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             theActivity = Activity.MR_createEntity()
         }
         
-        theActivity!.name = name
-        theActivity!.status = status
+        guard let activity = theActivity else {
+            return
+        }
+        
+        activity.name = name
+        activity.status = status
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
         
         let date = getDate()
-        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: theActivity!, theDate: date, theStatus: status)
+//        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: activity, theDate: date, theStatus: status)
+        
+        let results = ActivityProgress.MR_findAllSortedBy("date", ascending: true, withPredicate: NSPredicate(format: "activity.name == %@ AND date == %@", activity.name, date), inContext: NSManagedObjectContext.MR_defaultContext())
+        
+        guard let allProgress = results as? [ActivityProgress] else {
+            return
+        }
+        
+        if (allProgress.count == 0) {
+            let progress = ActivityProgress.MR_createEntity()
+            
+            guard let newProgress = progress else {
+                return
+            }
+            
+            var progressActRelate = NSMutableSet()
+            
+            newProgress.date = date
+            newProgress.status = theStatus
+            
+            progressActRelate = activity.mutableSetValueForKey("activityProgresses")
+            progressActRelate.addObject(newProgress)
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        }
+        else {
+            allProgress[0].status = theStatus
+            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        }
+        
         setLableText(name)
     }
     
@@ -219,15 +251,27 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let theName = String(relations.allObjects[indexPath.row].valueForKey("name")!)
-            let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
-            relations.removeObject(theActivity)
+//            let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
+            var theActivity = Activity.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", theName))
+            
+            if theActivity == nil {
+                theActivity = Activity.MR_createEntity()
+                theActivity?.name = theName
+                theActivity?.status = 0
+            }
+            
+            guard let activity = theActivity else {
+                return
+            }
+            
+            relations.removeObject(activity)
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade )
             tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
             
             
-            if (theActivity.mutableSetValueForKey("goals").count == 0) {
-                theActivity.MR_deleteEntity()
+            if (activity.mutableSetValueForKey("goals").count == 0) {
+                activity.MR_deleteEntity()
 //                GoalBackendData().postActivityLatestData()
             }
             
@@ -273,8 +317,21 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         var theDates: [String] = ["", "", "", "", "", "", ""]
         var graphPoints = [Int]()
         
-        let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: name)
-        progressRelations = theActivity.mutableSetValueForKey("activityProgresses")
+//        let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: name)
+        
+        var theActivity = Activity.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", theName))
+        
+        if theActivity == nil {
+            theActivity = Activity.MR_createEntity()
+            theActivity?.name = theName
+            theActivity?.status = 0
+        }
+        
+        guard let activity = theActivity else {
+            return
+        }
+        
+        progressRelations = activity.mutableSetValueForKey("activityProgresses")
         let theArray: NSArray = progressRelations.sortedArrayUsingDescriptors([NSSortDescriptor(key: "date", ascending: true)])
         
         if progressRelations.count > 7 {
