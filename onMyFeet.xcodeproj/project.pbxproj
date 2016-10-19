@@ -39,10 +39,7 @@
 		2A2E41E11C80AE8700E78A37 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DD1C80AE8700E78A37 /* Person.swift */; };
 		2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */; };
 		2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */; };
-		2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */; };
 		2A3562B01CA7260500C20CEF /* DateStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3562AF1CA7260500C20CEF /* DateStruct.swift */; };
-		2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */; };
-		2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42C4B01C950FFB00EE472D /* JSONHandler.swift */; };
 		2A60D87D1CA6F07500205B01 /* DashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60D87C1CA6F07500205B01 /* DashView.swift */; };
 		2A60D8811CA7026F00205B01 /* DataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A60D8801CA7026F00205B01 /* DataItem.swift */; };
 		2A7228C91DB737EA00C00BFE /* MagicalRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7228C81DB737EA00C00BFE /* MagicalRecord.framework */; };
@@ -56,7 +53,6 @@
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
 		2ABFEC701C960EE00093D574 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC6F1C960EE00093D574 /* Constants.swift */; };
 		2ABFEC731C9699630093D574 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC721C9699630093D574 /* TestViewController.swift */; };
-		2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */; };
 		2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */; };
 		2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */; };
 		2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */; };
@@ -69,7 +65,6 @@
 		2ADFECB11CAF742500DB16DA /* AlarmLabelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECAF1CAF742500DB16DA /* AlarmLabelViewController.xib */; };
 		2ADFECB41CAF756E00DB16DA /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFECB21CAF756E00DB16DA /* LabelCell.swift */; };
 		2ADFECB51CAF756E00DB16DA /* LabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFECB31CAF756E00DB16DA /* LabelCell.xib */; };
-		2AE766301C9270D80065471B /* BackendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE7662F1C9270D80065471B /* BackendOperation.swift */; };
 		2AF69B0E1CB0CC1B00A570E7 /* RepeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF69B0C1CB0CC1B00A570E7 /* RepeatCell.swift */; };
 		2AF69B0F1CB0CC1B00A570E7 /* RepeatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AF69B0D1CB0CC1B00A570E7 /* RepeatCell.xib */; };
 		2AF8357F1C7B560000287892 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF8357E1C7B560000287892 /* LogInViewController.swift */; };
@@ -128,10 +123,7 @@
 		2A2E41DD1C80AE8700E78A37 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DailySummary+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
-		2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientDataManager.swift; sourceTree = "<group>"; };
 		2A3562AF1CA7260500C20CEF /* DateStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateStruct.swift; sourceTree = "<group>"; };
-		2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
-		2A42C4B01C950FFB00EE472D /* JSONHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
 		2A60D87C1CA6F07500205B01 /* DashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashView.swift; sourceTree = "<group>"; };
 		2A60D8801CA7026F00205B01 /* DataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataItem.swift; sourceTree = "<group>"; };
 		2A7228C81DB737EA00C00BFE /* MagicalRecord.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MagicalRecord.framework; path = "../../../../Volumes/MyDrive/Developer2/OnMyFeet-amsdwvlbnvvxlcehrgjbgevoxmah/Build/Products/Debug-iphonesimulator/MagicalRecord/MagicalRecord.framework"; sourceTree = "<group>"; };
@@ -149,7 +141,6 @@
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2ABFEC6F1C960EE00093D574 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2ABFEC721C9699630093D574 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
-		2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
 		2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmCell.xib; sourceTree = "<group>"; };
 		2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAlarmController.swift; sourceTree = "<group>"; };
@@ -162,7 +153,6 @@
 		2ADFECAF1CAF742500DB16DA /* AlarmLabelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmLabelViewController.xib; sourceTree = "<group>"; };
 		2ADFECB21CAF756E00DB16DA /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		2ADFECB31CAF756E00DB16DA /* LabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LabelCell.xib; sourceTree = "<group>"; };
-		2AE7662F1C9270D80065471B /* BackendOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendOperation.swift; sourceTree = "<group>"; };
 		2AF69B0C1CB0CC1B00A570E7 /* RepeatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatCell.swift; sourceTree = "<group>"; };
 		2AF69B0D1CB0CC1B00A570E7 /* RepeatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepeatCell.xib; sourceTree = "<group>"; };
 		2AF8357E1C7B560000287892 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -334,7 +324,6 @@
 			children = (
 				2AF9BE481CB07F0A007F534E /* Alarm.swift */,
 				2AF9BE471CB07F0A007F534E /* Alarm+CoreDataProperties.swift */,
-				2A2E41E61C80AF8100E78A37 /* ClientDataManager.swift */,
 				2A2E41DF1C80AE8700E78A37 /* DailySummary.swift */,
 				2A2E41DE1C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift */,
 				2A60D8801CA7026F00205B01 /* DataItem.swift */,
@@ -355,10 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				2A9FD5201CB19C0500CD3BEB /* ArrayDataConverter.swift */,
-				2AE7662F1C9270D80065471B /* BackendOperation.swift */,
 				2ABFEC6F1C960EE00093D574 /* Constants.swift */,
-				2A3AEB501C81670B00CD97A9 /* DataCoordinator.swift */,
-				2AC22A311C81DA25000040E8 /* SwiftyJSON.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -413,7 +399,6 @@
 			isa = PBXGroup;
 			children = (
 				2A3562AF1CA7260500C20CEF /* DateStruct.swift */,
-				2A42C4B01C950FFB00EE472D /* JSONHandler.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -474,9 +459,13 @@
 				TargetAttributes = {
 					2AAA60D71C72960300957BEF = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = V6R2PW25Y7;
+						LastSwiftMigration = 0800;
 					};
 					2AAA60EE1C72960300957BEF = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = V6R2PW25Y7;
+						LastSwiftMigration = 0800;
 						TestTargetID = 2AAA60D71C72960300957BEF;
 					};
 				};
@@ -633,7 +622,6 @@
 				2ADFECB01CAF742500DB16DA /* AlarmLabelViewController.swift in Sources */,
 				2A0194921CAF7CA100481E0F /* IntradaySleepTime+CoreDataProperties.swift in Sources */,
 				18C896251CB2124E0075D3B6 /* GradientBG.swift in Sources */,
-				2A42C4B11C950FFB00EE472D /* JSONHandler.swift in Sources */,
 				187573051CB216D80095F112 /* HeaderCell.swift in Sources */,
 				187572FD1CB216BD0095F112 /* ViewActivitiesViewController.swift in Sources */,
 				18C896231CB212440075D3B6 /* LineChart.swift in Sources */,
@@ -641,20 +629,17 @@
 				2AAA60DE1C72960300957BEF /* ViewController.swift in Sources */,
 				187572ED1CB216690095F112 /* GoalDataManager.swift in Sources */,
 				2A0194881CAF7BD000481E0F /* IntradaySedentary.swift in Sources */,
-				2AC22A321C81DA25000040E8 /* SwiftyJSON.swift in Sources */,
 				187572F91CB216B30095F112 /* ViewGoalsViewController.swift in Sources */,
 				2A2E41E21C80AE8700E78A37 /* DailySummary+CoreDataProperties.swift in Sources */,
 				2A1F7C701C9296A700C942CF /* QuestionSet+CoreDataProperties.swift in Sources */,
 				2AFBE8141CFB7EB00029B08F /* Goal+CoreDataProperties.swift in Sources */,
 				2A01948B1CAF7C0E00481E0F /* Questionnaire.swift in Sources */,
-				2A3AEB511C81670B00CD97A9 /* DataCoordinator.swift in Sources */,
 				187572F11CB2167D0095F112 /* GoalsCollectionViewCell.swift in Sources */,
 				187572F31CB216980095F112 /* ChooseGoalsViewController.swift in Sources */,
 				EB2F92191CFE0970008E65FC /* UIColor+Additions.swift in Sources */,
 				2A01948C1CAF7C0E00481E0F /* QuestionnaireViewController.swift in Sources */,
 				2A2E41E01C80AE8700E78A37 /* Person+CoreDataProperties.swift in Sources */,
 				2AF9BE491CB07F0A007F534E /* Alarm+CoreDataProperties.swift in Sources */,
-				2AE766301C9270D80065471B /* BackendOperation.swift in Sources */,
 				187572EB1CB216650095F112 /* Goal.swift in Sources */,
 				2AAA60DC1C72960300957BEF /* AppDelegate.swift in Sources */,
 				187573011CB216CD0095F112 /* ChooseActivitiesTableViewController.swift in Sources */,
@@ -683,7 +668,6 @@
 				2A9FD5211CB19C0500CD3BEB /* ArrayDataConverter.swift in Sources */,
 				187573031CB216D10095F112 /* ChooseActivitiesTableViewCell.swift in Sources */,
 				2ADFECAC1CAF6C9300DB16DA /* RepeatViewController.swift in Sources */,
-				2A2E41E71C80AF8100E78A37 /* ClientDataManager.swift in Sources */,
 				2ABFEC701C960EE00093D574 /* Constants.swift in Sources */,
 				2ADFECB41CAF756E00DB16DA /* LabelCell.swift in Sources */,
 			);
@@ -813,11 +797,13 @@
 			baseConfigurationReference = 240F89CFB8837FD94FE6A809 /* Pods-OnMyFeet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V6R2PW25Y7;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -826,11 +812,13 @@
 			baseConfigurationReference = BC286E178DDF9E0E05D66733 /* Pods-OnMyFeet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V6R2PW25Y7;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -839,11 +827,13 @@
 			baseConfigurationReference = 320C6CBE8ABB473EBF484FB9 /* Pods-OnMyFeetTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = V6R2PW25Y7;
 				INFOPLIST_FILE = onMyFeetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeetTests;
 				PRODUCT_NAME = OnMyFeet;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename.app/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnMyFeet.app/OnMyFeet";
 			};
 			name = Debug;
 		};
@@ -852,11 +842,13 @@
 			baseConfigurationReference = A6DE8B1916BD7B2CDD486993 /* Pods-OnMyFeetTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = V6R2PW25Y7;
 				INFOPLIST_FILE = onMyFeetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeetTests;
 				PRODUCT_NAME = OnMyFeet;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename.app/onMyFeet.temp_caseinsensitive_rename.temp_caseinsensitive_rename.temp_caseinsensitive_rename";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OnMyFeet.app/OnMyFeet";
 			};
 			name = Release;
 		};

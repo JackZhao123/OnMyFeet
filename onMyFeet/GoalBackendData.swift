@@ -12,7 +12,7 @@ class GoalBackendData {
     
     func postActivityLatestData() {
         
-        if let activities = Activity.MR_findAll() {
+        if let activities = Activity.mr_findAll() {
             
             var parameters = [String:AnyObject]()
             var activityData = [String:Int]()
@@ -24,7 +24,7 @@ class GoalBackendData {
                 activityData[theName] = theStatus
             }
             
-            parameters = ["fb_id": "\(Constants.Fitbit.id)", "goals": activityData]
+            parameters = ["fb_id": "\(Constants.Fitbit.id)" as AnyObject, "goals": activityData as AnyObject]
         }
     }
 }

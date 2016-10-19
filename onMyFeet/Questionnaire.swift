@@ -17,11 +17,11 @@ class Questionnaire: NSObject, NSCoding {
     
     required init?(coder aDecoder: NSCoder) {
         
-        let testEntry = aDecoder.decodeObjectForKey("testEntry") as? String
-        let numberOfValue = aDecoder.decodeIntegerForKey("numberOfValue") as Int?
-        let onlyTextEnable = aDecoder.decodeBoolForKey("onlyTextEnable") as Bool?
-        let labelDic = aDecoder.decodeObjectForKey("labelDic") as? [Int:String]
-        let questionSet = aDecoder.decodeObjectForKey("questionSet") as? [String]
+        let testEntry = aDecoder.decodeObject(forKey: "testEntry") as? String
+        let numberOfValue = aDecoder.decodeInteger(forKey: "numberOfValue") as Int?
+        let onlyTextEnable = aDecoder.decodeBool(forKey: "onlyTextEnable") as Bool?
+        let labelDic = aDecoder.decodeObject(forKey: "labelDic") as? [Int:String]
+        let questionSet = aDecoder.decodeObject(forKey: "questionSet") as? [String]
         
         self.testEntry = testEntry!
         self.numberOfValue = numberOfValue!
@@ -30,12 +30,12 @@ class Questionnaire: NSObject, NSCoding {
         self.questionSet = questionSet!
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.testEntry, forKey: "testEntry")
-        aCoder.encodeInteger(self.numberOfValue, forKey: "numberOfValue")
-        aCoder.encodeBool(onlyTextEnable, forKey: "onlyTextEnable")
-        aCoder.encodeObject(labelDic, forKey: "labelDic")
-        aCoder.encodeObject(questionSet, forKey: "questionSet")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.testEntry, forKey: "testEntry")
+        aCoder.encode(self.numberOfValue, forKey: "numberOfValue")
+        aCoder.encode(onlyTextEnable, forKey: "onlyTextEnable")
+        aCoder.encode(labelDic, forKey: "labelDic")
+        aCoder.encode(questionSet, forKey: "questionSet")
         
     }
     

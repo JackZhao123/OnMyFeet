@@ -24,20 +24,20 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     
 
-    @IBAction func deselectAll(sender: UIButton) {
+    @IBAction func deselectAll(_ sender: UIButton) {
         if (selectedIndexes.count != 0) {
             selectedIndexes.removeAll()
             selectedImages.removeAll()
             countLable.text = "Number of goals selected: 0"
         }
     }
-    @IBAction func finishSelecting(sender: UIButton) {
+    @IBAction func finishSelecting(_ sender: UIButton) {
         
         if ((selectedIndexes.count == 0) && (flagForPersonalGoal == false)) {
-            let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction (title: "Cancel", style: .Cancel, handler: nil)
+            let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .alert)
+            let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
             
         if ((selectedIndexes.count == 0) && (flagForPersonalGoal != false)) {
@@ -45,20 +45,20 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
         
         else {
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
                 self.deselectAll.alpha = 0.0
                 self.finishSelecting.alpha = 0.0
                 self.BoxView.alpha = 1.0
                 }, completion: { finished in
                     
-                    UIView.animateWithDuration(2.0, delay: 0.0, options: .CurveEaseOut, animations: { () -> Void in
+                    UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseOut, animations: { () -> Void in
                         self.animation()
                         }, completion: { finished in
-                            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                            UIView.animate(withDuration: 0.5, animations: { () -> Void in
                                 self.BoxView.alpha = 0.0
                                 self.prioritizeThem.alpha = 1.0
                                 }, completion: { finished in
-                                    self.prioritizeThem.enabled = true
+                                    self.prioritizeThem.isEnabled = true
                             })
                     })
             })
@@ -68,7 +68,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     let reuserIdentifier = "GoalCell"
     var selectedImages = [UIImage]()
-    var selectedIndexes = [NSIndexPath]() {
+    var selectedIndexes = [IndexPath]() {
         didSet {
             collectionView.reloadData()
         }
@@ -84,8 +84,8 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
 //        backBtn.tintColor = UIColor.whiteColor()
 //        navigationItem.leftBarButtonItem = backBtn
         
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goHome))
-        homeBtn.tintColor = UIColor.whiteColor()
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(GoalsViewController.goHome))
+        homeBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = homeBtn
 
         
@@ -93,21 +93,21 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         collectionView.delegate = self
         
         deselectAll.layer.cornerRadius = 5.0;
-        deselectAll.layer.borderColor = UIColor.grayColor().CGColor
+        deselectAll.layer.borderColor = UIColor.gray.cgColor
         deselectAll.layer.borderWidth = 1.5
         
         finishSelecting.layer.cornerRadius = 5.0;
-        finishSelecting.layer.borderColor = UIColor.grayColor().CGColor
+        finishSelecting.layer.borderColor = UIColor.gray.cgColor
         finishSelecting.layer.borderWidth = 1.5
         
         prioritizeThem.layer.cornerRadius = 5.0;
-        prioritizeThem.layer.borderColor = UIColor.grayColor().CGColor
+        prioritizeThem.layer.borderColor = UIColor.gray.cgColor
         prioritizeThem.layer.borderWidth = 1.5
         
-        self.navigationController?.interactivePopGestureRecognizer?.enabled = false
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         BoxView.alpha = 0.0
         prioritizeThem.alpha = 0.0
         deselectAll.alpha = 1.0
@@ -116,7 +116,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         
         selectedIndexes.removeAll()
         selectedImages.removeAll()
-        collectionView.setContentOffset(CGPointZero, animated: true)
+        collectionView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,33 +125,33 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 17
     }
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuserIdentifier, forIndexPath: indexPath) as! GoalsCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! GoalsCollectionViewCell
         
-        cell.GoalPicture.image = UIImage (named: "\(indexPath.item)")
+        cell.GoalPicture.image = UIImage (named: "\((indexPath as NSIndexPath).item)")
         
-        if self.selectedIndexes.indexOf(indexPath) == nil {
-            cell.CheckView.hidden = true
+        if self.selectedIndexes.index(of: indexPath) == nil {
+            cell.CheckView.isHidden = true
         } else {
-            cell.CheckView.hidden = false
+            cell.CheckView.isHidden = false
         }
         
         return cell
     }
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if (indexPath.row != 16) {
-            if let indexSelected = selectedIndexes.indexOf(indexPath) {
-                selectedIndexes.removeAtIndex(indexSelected)
-                selectedImages.removeAtIndex(indexSelected)
+        if ((indexPath as NSIndexPath).row != 16) {
+            if let indexSelected = selectedIndexes.index(of: indexPath) {
+                selectedIndexes.remove(at: indexSelected)
+                selectedImages.remove(at: indexSelected)
                 goalsNum -= 1
                 
             }else {
                 selectedIndexes.append(indexPath)
-                selectedImages.append(UIImage(named: "\(indexPath.item)")!)
+                selectedImages.append(UIImage(named: "\((indexPath as NSIndexPath).item)")!)
                 goalsNum += 1
             }
         }
@@ -191,20 +191,20 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             
             
             
-            UIView.animateKeyframesWithDuration(duration, delay: delay, options: UIViewKeyframeAnimationOptions.CalculationModePaced, animations: {
-                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
-                    goal.transform = CGAffineTransformMakeRotation (1/3 * fullRotation)
+            UIView.animateKeyframes(withDuration: duration, delay: delay, options: UIViewKeyframeAnimationOptions.calculationModePaced, animations: {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0, animations: {
+                    goal.transform = CGAffineTransform (rotationAngle: 1/3 * fullRotation)
                 })
-                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
-                    goal.transform = CGAffineTransformMakeRotation (2/3 * fullRotation)
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0, animations: {
+                    goal.transform = CGAffineTransform (rotationAngle: 2/3 * fullRotation)
                 })
-                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
-                    goal.transform = CGAffineTransformMakeRotation (3/3 * fullRotation)
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0, animations: {
+                    goal.transform = CGAffineTransform (rotationAngle: 3/3 * fullRotation)
                 })
                 }, completion: { finished in
                     goal.bounds = CGRect(x: b1.origin.x, y: b1.origin.y, width: 0, height: 0)
                     
-                    UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 5, options: .AllowAnimatedContent, animations: {
+                    UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 5, options: .allowAnimatedContent, animations: {
                         self.BoxView.bounds = CGRect(x: b2.origin.x - 20, y: b2.origin.y - 20, width: b2.size.width + 30, height: b2.size.height + 30)
                         }, completion: { finished in
                             self.BoxView.bounds = CGRect (x: b2.origin.x, y: b2.origin.y, width: b2.size.width, height: b2.size.width)
@@ -217,49 +217,49 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             let h1 = b5.size.height+b4.size.height/2+constraintLength.constant*2
             
             if (self.selectedImages.count == 1) {
-                path.moveToPoint(CGPoint (x: width/2, y: h1))
+                path.move(to: CGPoint (x: width/2, y: h1))
             }else {
-                path.moveToPoint(CGPoint (x: w1*CGFloat(i), y: h1))
+                path.move(to: CGPoint (x: w1*CGFloat(i), y: h1))
             }
             
-            path.addLineToPoint(CGPoint(x: width/2, y: height-150))
+            path.addLine(to: CGPoint(x: width/2, y: height-150))
             
             let anim = CAKeyframeAnimation (keyPath: "position")
-            anim.path = path.CGPath
+            anim.path = path.cgPath
             anim.rotationMode = kCAAnimationRotateAuto
             anim.duration = duration
             anim.timeOffset = delay
             
-            goal.layer.addAnimation (anim, forKey: "animate position along path")
+            goal.layer.add (anim, forKey: "animate position along path")
             
         }
 
     }
     
     func setPersonalGoal() {
-        let setGoal = UIAlertController(title: "Add a personal goal that is important to you", message: "", preferredStyle: .Alert)
-        let alert = UIAlertController(title: "", message: nil, preferredStyle: .Alert)
-        setGoal.addTextFieldWithConfigurationHandler { (textField) -> Void in
+        let setGoal = UIAlertController(title: "Add a personal goal that is important to you", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "", message: nil, preferredStyle: .alert)
+        setGoal.addTextField { (textField) -> Void in
             textField.placeholder = "Enter your personal goal here"
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        let saveAction = UIAlertAction(title: "Save", style: .Default, handler:{ (action) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler:{ (action) -> Void in
             let thePicture = UIImage(named: "noImage")
             let theQuestion = setGoal.textFields![0].text
             let theExample = setGoal.textFields![0].text
             let theAnswer = setGoal.textFields![0].text
             if ((theAnswer!.isEmpty) == true) {
                 alert.title = "Please enter your personal goal"
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             else {
-                let goal = Goal.MR_createEntity()
+                let goal = Goal.mr_createEntity()
                 if let goal = goal {
                     goal.picture = UIImageJPEGRepresentation(thePicture!, 1.0)
                     goal.question = theQuestion
                     goal.example = theExample
                     goal.answer = theAnswer
-                    NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+                    NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
                 }
                 self.goalsNum += 1
                 self.countLable.text = "Number of goals selected: " + String(self.goalsNum)
@@ -269,30 +269,30 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         alert.addAction(cancelAction)
         setGoal.addAction(saveAction)
         setGoal.addAction(cancelAction)
-        presentViewController(setGoal, animated: true, completion: nil)
+        present(setGoal, animated: true, completion: nil)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     //MARK: Actions
     func goBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func goHome(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
     
     //MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PrioritizeGoals" {
-            if let des = segue.destinationViewController as? ChooseGoalsViewController {
+            if let des = segue.destination as? ChooseGoalsViewController {
                 for index in 0..<selectedIndexes.count {
-                    des.indexes.append(selectedIndexes[index].item)
+                    des.indexes.append((selectedIndexes[index] as NSIndexPath).item)
                 }
             }
         }

@@ -19,7 +19,7 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     
     var indexes = [Int]()
     var finalIndexes = [Int]()
-    var selectedIndexes = [NSIndexPath]() {
+    var selectedIndexes = [IndexPath]() {
         didSet {
             collectionView.reloadData()
         }
@@ -41,78 +41,78 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
 //        backBtn.tintColor = UIColor.whiteColor()
 //        navigationItem.leftBarButtonItem = backBtn
         
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goHome))
-        homeBtn.tintColor = UIColor.whiteColor()
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChooseGoalsViewController.goHome))
+        homeBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = homeBtn
         
         collectionView.dataSource = self
         collectionView.delegate = self
         
         personalizeBtn.layer.cornerRadius = 5.0;
-        personalizeBtn.layer.borderColor = UIColor.grayColor().CGColor
+        personalizeBtn.layer.borderColor = UIColor.gray.cgColor
         personalizeBtn.layer.borderWidth = 1.5
         
         initialization()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         selectedIndexes.removeAll()
         finalIndexes.removeAll()
-        collectionView.setContentOffset(CGPointZero, animated: true)
+        collectionView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return indexes.count
     }
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! ChooseGoalsCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ChooseGoalsCollectionViewCell
         
-        let theIndex = indexes[indexPath.item]
+        let theIndex = indexes[(indexPath as NSIndexPath).item]
         cell.imageView.image = pictures[theIndex]
         
-        if self.selectedIndexes.indexOf(indexPath) == nil {
-            cell.checkView.hidden = true
+        if self.selectedIndexes.index(of: indexPath) == nil {
+            cell.checkView.isHidden = true
         } else {
-            cell.checkView.hidden = false
+            cell.checkView.isHidden = false
         }
         
         return cell
     }
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let indexSelected = selectedIndexes.indexOf(indexPath) {
-            selectedIndexes.removeAtIndex(indexSelected)
+        if let indexSelected = selectedIndexes.index(of: indexPath) {
+            selectedIndexes.remove(at: indexSelected)
             
         }else {
             selectedIndexes.append(indexPath)
         }
     }
     
-    @IBAction func personalizeBtn(sender: UIButton) {
+    @IBAction func personalizeBtn(_ sender: UIButton) {
         if (selectedIndexes.count == 0 || selectedIndexes.count > 4) {
-            let alert = UIAlertController (title: "", message: "", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction (title: "Cancel", style: .Cancel, handler: nil)
+            let alert = UIAlertController (title: "", message: "", preferredStyle: .alert)
+            let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
             
             if (selectedIndexes.count == 0) {
                 alert.title = "Please select your goals"
                 alert.message = "You should select at least 1 goal"
-                presentViewController(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
             }
             
             if (selectedIndexes.count > 4) {
                 alert.title = "More than 4 goals are selected"
                 if (selectedIndexes.count == 5) {
                     alert.message = "Please deselect 1 goal"
-                    presentViewController(alert, animated: true, completion: nil)
+                    present(alert, animated: true, completion: nil)
                 }
                 else {
                     alert.message = "Please deselect \(selectedIndexes.count - 4) goals"
-                    presentViewController(alert, animated: true, completion: nil)
+                    present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -120,7 +120,7 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
         else {
             
             for index in 0..<selectedIndexes.count {
-                finalIndexes.append(indexes[selectedIndexes[index].row])
+                finalIndexes.append(indexes[(selectedIndexes[index] as NSIndexPath).row])
             }
             
             goNext()
@@ -128,16 +128,16 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     func goBack(){
-       self.navigationController?.popViewControllerAnimated(true)
+       self.navigationController?.popViewController(animated: true)
     }
 
     func goHome(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func goNext(){
         let storyboardIdentifier = "PersonalizeGoalsViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! PersonalizeGoalsViewController
+        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardIdentifier) as! PersonalizeGoalsViewController
         desController.indexes = self.finalIndexes
         self.navigationController!.pushViewController(desController, animated: true)
     }

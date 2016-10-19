@@ -9,8 +9,8 @@
 import UIKit
 
 class CheckInViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    let screenWidth = UIScreen.mainScreen().bounds.width
-    let screenHeight = UIScreen.mainScreen().bounds.height
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     
     var titleTextView: UITextView!
     var buttonTableView: UITableView!
@@ -18,48 +18,7 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
-        var questions: [QuestionSet]?
-
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            if NSUserDefaults.standardUserDefaults().boolForKey("NoNeed") == false {
-                ClientDataManager.sharedInstance().initQuestionSetData()
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "NoNeed")
-            }
-            dispatch_async(dispatch_get_main_queue()) {
-                questions = ClientDataManager.sharedInstance().fetchQuestionSet()
-                if let questions = questions {
-                    self.allQuestionnaire = questions
-                }
-                
-                self.titleTextView = UITextView(frame: CGRect(x: 8.0, y: 72.0, width: self.screenWidth - 16, height: 100.0))
-                self.titleTextView.textAlignment = .Justified
-                self.titleTextView.font = UIFont.systemFontOfSize(18.0)
-                self.titleTextView.text = "Are any of these problems affecting your ability to participate in therapy?\n\nSelect all that have been problems for you this week:"
-                
-                let fixedWidth = self.titleTextView.frame.size.width
-                let newSize = self.titleTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-                var newFrame = self.titleTextView.frame
-                newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-                self.titleTextView.textColor = UIColor.whiteColor()
-                self.titleTextView.backgroundColor = .None
-                self.titleTextView.frame = newFrame;
-                self.titleTextView.userInteractionEnabled = false
-                
-                let backgroundView = UIView(frame: CGRect(x: 0.0, y: 64.0, width: self.screenWidth, height: newFrame.origin.y + newSize.height + 8))
-                backgroundView.backgroundColor = UIColor(red: (139/255.0), green: (195/255.0), blue: (74/255.0), alpha: 1.0)
-                
-                self.buttonTableView = UITableView(frame: CGRect(x: 0.0, y: newFrame.origin.y + newSize.height + 16 , width: self.screenWidth, height: self.screenHeight - newFrame.origin.y - 16 - newSize.height))
-                self.buttonTableView.delegate = self
-                self.buttonTableView.dataSource = self
-                
-                self.view.addSubview(backgroundView)
-                self.view.addSubview(self.buttonTableView)
-                self.view.addSubview(self.titleTextView)
-            }
-        }
-        
+        self.automaticallyAdjustsScrollViewInsets = false        
         
 
     }
@@ -69,32 +28,32 @@ class CheckInViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allQuestionnaire.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = buttonTableView.dequeueReusableCellWithIdentifier("buttonCell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = buttonTableView.dequeueReusableCell(withIdentifier: "buttonCell")
         if cell == nil {
-            cell = UITableViewCell(style: .Value1, reuseIdentifier: "buttonCell")
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "buttonCell")
         }
-        let q = allQuestionnaire[indexPath.row]
-        let ques = NSKeyedUnarchiver.unarchiveObjectWithData(q.questionnaire!) as! Questionnaire
+        let q = allQuestionnaire[(indexPath as NSIndexPath).row]
+        let ques = NSKeyedUnarchiver.unarchiveObject(with: q.questionnaire! as Data) as! Questionnaire
         cell?.textLabel?.text = q.symptom
         cell?.detailTextLabel?.text = "\(ques.questionSet.count)"
         return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let q = allQuestionnaire[indexPath.row]
-        let ques = NSKeyedUnarchiver.unarchiveObjectWithData(q.questionnaire!) as! Questionnaire
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let q = allQuestionnaire[(indexPath as NSIndexPath).row]
+        let ques = NSKeyedUnarchiver.unarchiveObject(with: q.questionnaire! as Data) as! Questionnaire
         
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("questionView") as! QuestionnaireViewController
+        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "questionView") as! QuestionnaireViewController
         desController.question = ques
         desController.questionTitle = q.title
         
         self.navigationController?.pushViewController(desController, animated: true)
         
-        buttonTableView.cellForRowAtIndexPath(indexPath)?.selected = false
+        buttonTableView.cellForRow(at: indexPath)?.isSelected = false
     }
 }

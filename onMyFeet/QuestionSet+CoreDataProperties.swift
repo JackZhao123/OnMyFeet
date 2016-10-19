@@ -16,6 +16,6 @@ extension QuestionSet {
 
     @NSManaged var title: String?
     @NSManaged var symptom: String?
-    @NSManaged var questionnaire: NSData?
+    @NSManaged var questionnaire: Data?
 
 }

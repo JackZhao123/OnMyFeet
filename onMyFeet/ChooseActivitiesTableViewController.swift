@@ -16,7 +16,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     
     var names = ["Toilet", "Bath/Shower", "Dressing", "Grooming", "Eating", "Meal Preparation", "Gathering Items", "Carrying Groceries", "Transfers", "Bed Mobility", "Walking", "Balance", "Stairs", "Coordination", "Strenthening", "Endurance"]
     
-    var selectedIndexes = [NSIndexPath]() {
+    var selectedIndexes = [IndexPath]() {
         didSet {
             tableView.reloadData()
         }
@@ -39,8 +39,8 @@ class ChooseActivitiesTableViewController: UITableViewController {
         //        backBtn.tintColor = UIColor.whiteColor()
         //        navigationItem.leftBarButtonItem = backBtn
         
-        let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
-        nextBtn.tintColor = UIColor.whiteColor()
+        let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
+        nextBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = nextBtn
         
     }
@@ -51,11 +51,11 @@ class ChooseActivitiesTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
         case 0:
             return occpationalActs.count
@@ -68,51 +68,51 @@ class ChooseActivitiesTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ChooseActivitiesTableViewCell", forIndexPath: indexPath) as! ChooseActivitiesTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChooseActivitiesTableViewCell", for: indexPath) as! ChooseActivitiesTableViewCell
         
-        switch (indexPath.section) {
+        switch ((indexPath as NSIndexPath).section) {
         case 0:
-            cell.label.text = occpationalActs[indexPath.row]
+            cell.label.text = occpationalActs[(indexPath as NSIndexPath).row]
         case 1:
-            cell.label.text = physicalActs[indexPath.row]
+            cell.label.text = physicalActs[(indexPath as NSIndexPath).row]
         default:
             cell.label.text = "Other"
         }
         
-        if self.selectedIndexes.indexOf(indexPath) == nil {
-            cell.checkView.hidden = true
+        if self.selectedIndexes.index(of: indexPath) == nil {
+            cell.checkView.isHidden = true
         }
         else {
-            cell.checkView.hidden = false
+            cell.checkView.isHidden = false
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch (indexPath.section) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch ((indexPath as NSIndexPath).section) {
         case 0:
-            if let indexSelected = selectedIndexes.indexOf(indexPath) {
-                selectedIndexes.removeAtIndex(indexSelected)
-                theIndexes.removeAtIndex(indexSelected)
+            if let indexSelected = selectedIndexes.index(of: indexPath) {
+                selectedIndexes.remove(at: indexSelected)
+                theIndexes.remove(at: indexSelected)
             }
             else {
                 selectedIndexes.append(indexPath)
-                theIndexes.append(indexPath.row)
+                theIndexes.append((indexPath as NSIndexPath).row)
             }
         case 1:
-            if let indexSelected = selectedIndexes.indexOf(indexPath) {
-                selectedIndexes.removeAtIndex(indexSelected)
-                theIndexes.removeAtIndex(indexSelected)
+            if let indexSelected = selectedIndexes.index(of: indexPath) {
+                selectedIndexes.remove(at: indexSelected)
+                theIndexes.remove(at: indexSelected)
             }
             else {
                 selectedIndexes.append(indexPath)
-                theIndexes.append(indexPath.row + occpationalActs.count)
+                theIndexes.append((indexPath as NSIndexPath).row + occpationalActs.count)
             }
         default:
-            if let indexSelected = selectedIndexes.indexOf(indexPath) {
-                selectedIndexes.removeAtIndex(indexSelected)
+            if let indexSelected = selectedIndexes.index(of: indexPath) {
+                selectedIndexes.remove(at: indexSelected)
             }
             else {
                 selectedIndexes.append(indexPath)
@@ -121,22 +121,22 @@ class ChooseActivitiesTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! HeaderCell
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as! HeaderCell
         
         switch (section) {
         case 0:
-            headerCell.button.hidden = true
+            headerCell.button.isHidden = true
             headerCell.label.text = "Occupational Therapy Activities"
             headerCell.backgroundColor = UIColor (red: 248/255, green: 235/255, blue: 195/255, alpha: 0.95)
         case 1:
-            headerCell.button.hidden = true
+            headerCell.button.isHidden = true
             headerCell.label.text = "Physical Therapy Activities"
             headerCell.backgroundColor = UIColor (red: 234/255, green: 253/255, blue: 251/255, alpha: 0.95)
         case 2:
-            headerCell.button.hidden = false
-            headerCell.label.hidden = true
-            headerCell.button.addTarget(self, action: #selector(ChooseActivitiesTableViewController.setPersonalActivity), forControlEvents: .TouchUpInside)
+            headerCell.button.isHidden = false
+            headerCell.label.isHidden = true
+            headerCell.button.addTarget(self, action: #selector(ChooseActivitiesTableViewController.setPersonalActivity), for: .touchUpInside)
 
         default:
             headerCell.label.text = "Others"
@@ -147,32 +147,32 @@ class ChooseActivitiesTableViewController: UITableViewController {
 
     
     func setPersonalActivity() {
-        let setAct = UIAlertController(title: "Add a personal activity that is important to you", message: "", preferredStyle: .Alert)
-        let alert = UIAlertController(title: "", message: nil, preferredStyle: .Alert)
-        setAct.addTextFieldWithConfigurationHandler { (textField) -> Void in
+        let setAct = UIAlertController(title: "Add a personal activity that is important to you", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "", message: nil, preferredStyle: .alert)
+        setAct.addTextField { (textField) -> Void in
             textField.placeholder = "Enter your personal activity here"
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        let saveAction = UIAlertAction(title: "Save", style: .Default, handler:{ (action) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler:{ (action) -> Void in
             let theName = setAct.textFields![0].text
             
             let predicate = NSPredicate(format: "name == %@", theName!)
-            self.theActivity = Activity.MR_findFirstWithPredicate(predicate)
+            self.theActivity = Activity.mr_findFirst(with: predicate)
             if(self.theActivity == nil) {
-                self.theActivity = Activity.MR_createEntity()
+                self.theActivity = Activity.mr_createEntity()
                 self.theActivity?.name = theName!
                 self.theActivity?.status = 0
             }
             
-            let actGoalRelation = self.theGoal?.mutableSetValueForKey("activities")
-            actGoalRelation?.addObject(self.theActivity!)
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            let actGoalRelation = self.theGoal?.mutableSetValue(forKey: "activities")
+            actGoalRelation?.add(self.theActivity!)
+            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         })
         
         alert.addAction(cancelAction)
         setAct.addAction(saveAction)
         setAct.addAction(cancelAction)
-        presentViewController(setAct, animated: true, completion: nil)
+        present(setAct, animated: true, completion: nil)
     }
     
     func done() {
@@ -181,21 +181,21 @@ class ChooseActivitiesTableViewController: UITableViewController {
             let theName = names[theIndex]
             
             let predicate = NSPredicate(format: "name == %@", theName)
-            theActivity = Activity.MR_findFirstWithPredicate(predicate)
+            theActivity = Activity.mr_findFirst(with: predicate)
             if theActivity == nil {
-                theActivity = Activity.MR_createEntity()
+                theActivity = Activity.mr_createEntity()
                 theActivity?.name = theName
                 theActivity?.status = 0
             }
             
-            let actGoalRelation = theGoal!.mutableSetValueForKey("activities")
-            actGoalRelation.addObject(theActivity!)
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            let actGoalRelation = theGoal!.mutableSetValue(forKey: "activities")
+            actGoalRelation.add(theActivity!)
+            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
         goBack()
     }
     
     func goBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 }

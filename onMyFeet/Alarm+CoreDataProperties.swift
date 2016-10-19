@@ -17,7 +17,7 @@ extension Alarm {
     @NSManaged var time: String?
     @NSManaged var label: String?
     @NSManaged var id: String?
-    @NSManaged var period: NSData?
+    @NSManaged var period: Data?
     @NSManaged var on: NSNumber?
 
 }

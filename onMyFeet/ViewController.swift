@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, DataCoordinatorDelegate {
+class ViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 //    MARK: Outlet
     @IBOutlet weak var menuTableView: UITableView!
     @IBOutlet weak var indicatiorView: UIView!
@@ -18,7 +18,6 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     var userInfo: String!
     var categories = ["My Goals", "Monitoring Progress", "Checking in", "Taking Action"]
     var refreshControl: UIRefreshControl!
-    var coordinator: DataCoordinator = DataCoordinator()
     
 //    MARK: view initialize
     override func viewDidLoad() {
@@ -39,10 +38,9 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         indicatiorView.clipsToBounds = true
         hideIndicator()
         
-        coordinator.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 //        if let info = NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") as? String {
 //            self.userInfo = info
 //        } else {
@@ -57,29 +55,29 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     }
     
     //MARK: tableView
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("menuCell", forIndexPath: indexPath) as! MenuCell
-        cell.categoryName.text = categories[indexPath.row]
-        if indexPath.row == 4 {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuCell
+        cell.categoryName.text = categories[(indexPath as NSIndexPath).row]
+        if (indexPath as NSIndexPath).row == 4 {
             
-            cell.categoryName.textColor = UIColor.redColor()
+            cell.categoryName.textColor = UIColor.red
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let tableViewHeight = self.menuTableView.frame.height - 64;
         return (tableViewHeight / (CGFloat)(categories.count));
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var storyboardIdentifier: String?
-        switch indexPath.row {
+        switch (indexPath as NSIndexPath).row {
         case 0:
             storyboardIdentifier = "ViewGoalsViewController"
         default:
@@ -87,49 +85,49 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         }
         
         if let storyboardIdentifier = storyboardIdentifier {
-            let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
+            let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardIdentifier)
             self.navigationController!.pushViewController(desController, animated: true)
         }
         
-        menuTableView.cellForRowAtIndexPath(indexPath)?.selected = false
+        menuTableView.cellForRow(at: indexPath)?.isSelected = false
     }
     
     //MARK: Indicator
     func showIndicator() {
         mIndicator.startAnimating()
-        indicatiorView.hidden = false
+        indicatiorView.isHidden = false
     }
     
     func hideIndicator() {
-        indicatiorView.hidden = true
+        indicatiorView.isHidden = true
         mIndicator.stopAnimating()
     }
     //MARK: Actions
 
-    @IBAction func logOut(sender: AnyObject) {
+    @IBAction func logOut(_ sender: AnyObject) {
         
-        let finishAlertController = UIAlertController(title: "Successfully Deleted All Goals and Activities", message: nil, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: {
+        let finishAlertController = UIAlertController(title: "Successfully Deleted All Goals and Activities", message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: {
             (okAction) in
-            finishAlertController.dismissViewControllerAnimated(true, completion: nil)
+            finishAlertController.dismiss(animated: true, completion: nil)
         })
         finishAlertController.addAction(okAction)
         
-        let resetAlertController = UIAlertController(title: "Reset All Data", message: "This operation could not be undo", preferredStyle: .ActionSheet)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {(cancelAction) in
-            resetAlertController.dismissViewControllerAnimated(true, completion: nil)
+        let resetAlertController = UIAlertController(title: "Reset All Data", message: "This operation could not be undo", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(cancelAction) in
+            resetAlertController.dismiss(animated: true, completion: nil)
         })
-        let resetDataAction = UIAlertAction(title: "Reset All Goals and Activities", style: .Destructive, handler: {
+        let resetDataAction = UIAlertAction(title: "Reset All Goals and Activities", style: .destructive, handler: {
             (resetDataAction) in
-            Goal.MR_truncateAll()
-            Activity.MR_truncateAll()
-            ActivityProgress.MR_truncateAll()
-            self.presentViewController(finishAlertController, animated: true, completion: nil)
+            Goal.mr_truncateAll()
+            Activity.mr_truncateAll()
+            ActivityProgress.mr_truncateAll()
+            self.present(finishAlertController, animated: true, completion: nil)
         })
         
         resetAlertController.addAction(cancelAction)
         resetAlertController.addAction(resetDataAction)
-        self.presentViewController(resetAlertController, animated: true, completion: nil)
+        self.present(resetAlertController, animated: true, completion: nil)
 //        let alertView = UIAlertController(title: "Logging Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
 //        alertView.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: {(action) in
 //            
@@ -148,57 +146,44 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
 //        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
-    @IBAction func syncData(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "fitbit://")!)
+    @IBAction func syncData(_ sender: AnyObject) {
+        UIApplication.shared.openURL(URL(string: "fitbit://")!)
         self.scheduleLocal(self)
     }
     
     func refresh() {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {            
-            dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {            
+            DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
             }
         }
     }
     
-    func scheduleLocal(sender: AnyObject) {
-        let setting = UIApplication.sharedApplication().currentUserNotificationSettings()
+    func scheduleLocal(_ sender: AnyObject) {
+        let setting = UIApplication.shared.currentUserNotificationSettings
         
-        if setting?.types == .None {
-            let ac = UIAlertController(title: "Can't Schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            presentViewController(ac, animated: true, completion: nil)
+        if setting?.types == .none {
+            let ac = UIAlertController(title: "Can't Schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(ac, animated: true, completion: nil)
             return
         }
         
         let notification = UILocalNotification()
-        notification.fireDate = NSDate(timeIntervalSinceNow: 5)
+        notification.fireDate = Date(timeIntervalSinceNow: 5)
         notification.alertBody = "Get back to OnMyFeet, once you have Fitbit running"
         notification.alertAction = "get back to OnMyFeet"
         notification.soundName = UILocalNotificationDefaultSoundName
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        UIApplication.shared.scheduleLocalNotification(notification)
     }
     
-    func summariesDataDidSaved(dataType: String, startDate: String, endDate: String) {
-        if Constants.develop.ifGetStepDistance {
-            switch dataType {
-            case "steps":
-                BackendOperation.sendStepData(startDate, end: endDate)
-            case "distance":
-                BackendOperation.sendDistanceData(startDate, end: endDate)
-            case "StepDistance":
-                BackendOperation.sendDistanceData(startDate, end: endDate)
-                BackendOperation.sendStepData(startDate, end: endDate)
-            default:
-                break
-            }
-        }
+    func summariesDataDidSaved(_ dataType: String, startDate: String, endDate: String) {
 
     }
     
     //MARK: Motion
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake {
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
             
             switch categories.count {
                 case 4:

@@ -39,8 +39,8 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBAction func previousBtn(sender: UIButton) {
-        nextBtn.setTitle("Next", forState: .Normal)
+    @IBAction func previousBtn(_ sender: UIButton) {
+        nextBtn.setTitle("Next", for: UIControlState())
         if (index > 0) {
             if (_flag == false) {
                 finalAnswers[index] = ""
@@ -58,14 +58,14 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
                 finalAnswers[index] = textView.text!
             }
             if (index == 0) {
-                previousBtn.enabled = false
+                previousBtn.isEnabled = false
                 previousBtn.alpha = 0.5
             }
         }
     }
     
-    @IBAction func nextBtn(sender: UIButton) {
-        previousBtn.enabled = true
+    @IBAction func nextBtn(_ sender: UIButton) {
+        previousBtn.isEnabled = true
         previousBtn.alpha = 1.0
         if (index < indexes.count) {
             if (_flag == false) {
@@ -84,7 +84,7 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
                 index += 1
                 show()
                 if (index == indexes.count - 1 ) {
-                    nextBtn.setTitle("Finished", forState: .Normal)
+                    nextBtn.setTitle("Finished", for: UIControlState())
                 }
             }
         }
@@ -98,13 +98,13 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
             let theExample = finalExamples[index]
             let theAnswer = finalAnswers[index]
             
-            let goal = Goal.MR_createEntity()
+            let goal = Goal.mr_createEntity()
             if let goal = goal {
                 goal.picture = UIImageJPEGRepresentation(thePicture, 1.0)
                 goal.question = theQuestion
                 goal.example = theExample
                 goal.answer = theAnswer
-                NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
             }
         }
     }
@@ -131,25 +131,25 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         if (index == 0) {
             show()
             if (indexes.count == 1) {
-                nextBtn.setTitle("Finished", forState: .Normal)
+                nextBtn.setTitle("Finished", for: UIControlState())
             }
         }
         
         textView.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         if (index <= 0) {
-            previousBtn.enabled = false
+            previousBtn.isEnabled = false
             previousBtn.alpha = 0.5
         }
         
         previousBtn.layer.cornerRadius = 5.0;
-        previousBtn.layer.borderColor = UIColor.grayColor().CGColor
+        previousBtn.layer.borderColor = UIColor.gray.cgColor
         previousBtn.layer.borderWidth = 1.5
         
         nextBtn.layer.cornerRadius = 5.0;
-        nextBtn.layer.borderColor = UIColor.grayColor().CGColor
+        nextBtn.layer.borderColor = UIColor.gray.cgColor
         nextBtn.layer.borderWidth = 1.5
         
         self.title = "Personalizing Goals"
@@ -158,8 +158,8 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         //        backBtn.tintColor = UIColor.whiteColor()
         //        navigationItem.leftBarButtonItem = backBtn
         
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PersonalizeGoalsViewController.goHome))
-        homeBtn.tintColor = UIColor.whiteColor()
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PersonalizeGoalsViewController.goHome))
+        homeBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = homeBtn
         
         if (self.view.frame.height > self.view.frame.width) {
@@ -184,16 +184,16 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         
         if textView.text.isEmpty {
             textView.text = "Please enter your personalized goal here"
-            textView.textColor = UIColor.lightGrayColor()
+            textView.textColor = UIColor.lightGray
             _flag = false
         }
         else {
-            textView.textColor = UIColor.blackColor()
+            textView.textColor = UIColor.black
             _flag = true
         }
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             return false
@@ -201,17 +201,17 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         return true
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        keyboardFrame = self.view.convertRect(keyboardFrame, fromView: nil)
+    func keyboardWillShow(_ notification: Notification) {
+        var userInfo = (notification as NSNotification).userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
         
         if (theFlag == true) {
             length = self.textView.contentSize.height
             distance = keyboardFrame.size.height - self.textView.frame.height - nextBtn.frame.height + length
         }
         
-        scrollView.scrollEnabled = true
+        scrollView.isScrollEnabled = true
         
         self.scrollView.setContentOffset(CGPoint(x: 0, y: distance), animated: true)
         
@@ -221,12 +221,12 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         self.scrollView.setContentOffset(CGPoint(x: 0,y: 0), animated: true)
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if (self.textView.contentSize.height < textView.frame.height) {
             self.scrollView.setContentOffset(CGPoint(x: 0, y: distance + self.textView.contentSize.height - length), animated: true)
             distance += self.textView.contentSize.height - length
@@ -235,34 +235,34 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.textColor == UIColor.lightGrayColor() {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.blackColor()
+            textView.textColor = UIColor.black
         }
         _flag = true
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Please enter your personalized goal here"
-            textView.textColor = UIColor.lightGrayColor()
+            textView.textColor = UIColor.lightGray
             _flag = false
         }
     }
     
     func goBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func goHome(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
         
     }
     
     func goNext(){
         let storyboardIdentifier = "ViewGoalsViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier)
+        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardIdentifier)
         self.navigationController!.pushViewController(desController, animated: true)
     }
     

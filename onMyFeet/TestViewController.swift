@@ -19,11 +19,10 @@ class TestViewController: UIViewController {
         idLabel.text = "Current FitbitID: \(Constants.Fitbit.id)"
     }
     
-    @IBAction func wipeAllData(sender: AnyObject) {
-        ClientDataManager.sharedInstance().deleteAllDataFor("DailySummary")
+    @IBAction func wipeAllData(_ sender: AnyObject) {
     }
     
-    @IBAction func getSendingStatus(sender: AnyObject) {
+    @IBAction func getSendingStatus(_ sender: AnyObject) {
         var intradayStatus = "false"
         var stepDistanceStatus = "false"
         if Constants.develop.ifGetIntraday {
@@ -39,31 +38,31 @@ class TestViewController: UIViewController {
     }
     
     
-    @IBAction func changeDistance(sender: AnyObject) {
+    @IBAction func changeDistance(_ sender: AnyObject) {
         let b = Constants.develop.ifGetStepDistance
         Constants.develop.ifGetStepDistance = !b
         getSendingStatus(self)
     }
     
-    @IBAction func changeIntraday(sender: AnyObject) {
+    @IBAction func changeIntraday(_ sender: AnyObject) {
         let b = Constants.develop.ifGetIntraday
         Constants.develop.ifGetIntraday = !b
         getSendingStatus(self)
     }
     
     
-    @IBAction func setToOne(sender: AnyObject) {
+    @IBAction func setToOne(_ sender: AnyObject) {
         Constants.Fitbit.id = "11111111"
         idLabel.text = "Current FitbitID: \(Constants.Fitbit.id)"
     }
 
-    @IBAction func setToZero(sender: AnyObject) {
+    @IBAction func setToZero(_ sender: AnyObject) {
         Constants.Fitbit.id = "00000000"
         idLabel.text = "Current FitbitID: \(Constants.Fitbit.id)"
     }
     
     
-    @IBAction func getSystemToken(sender: AnyObject) {
+    @IBAction func getSystemToken(_ sender: AnyObject) {
         let accessToken = Constants.FitbitParameterValue.AccessToken
         let refreshCode = Constants.FitbitParameterValue.RefreshCode
         if let accessToken = accessToken, let refreshCode = refreshCode {
@@ -74,7 +73,7 @@ class TestViewController: UIViewController {
         }
     }
     
-    @IBAction func refreshToken(sender: AnyObject) {
+    @IBAction func refreshToken(_ sender: AnyObject) {
     }
     
     

@@ -53,43 +53,43 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         activityTable.delegate = self
         activityTable.dataSource = self
         
-        relations = (theGoal!.mutableSetValueForKey("activities"))
+        relations = (theGoal!.mutableSetValue(forKey: "activities"))
         
         self.title = "My Activities"
         
         show()
         
-        RainbowView.hidden = true
-        stackView.hidden = false
-        textView.hidden = false
+        RainbowView.isHidden = true
+        stackView.isHidden = false
+        textView.isHidden = false
         textView.delegate = self
         
 
-        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
-        homeBtn.tintColor = UIColor.whiteColor()
+        let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
+        homeBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = homeBtn
         
-        self.edgesForExtendedLayout = UIRectEdge.None
+        self.edgesForExtendedLayout = UIRectEdge()
         
         doneBtn.layer.cornerRadius = 5.0;
-        doneBtn.layer.borderColor = UIColor.grayColor().CGColor
+        doneBtn.layer.borderColor = UIColor.gray.cgColor
         doneBtn.layer.borderWidth = 1.5
         DailyView.layer.cornerRadius = 10.0
         greenView.layer.cornerRadius = 10.0
         redView.layer.cornerRadius = 10.0
     }
     
-    override func viewWillAppear(animated: Bool) {
-        relations = (theGoal!.mutableSetValueForKey("activities"))
+    override func viewWillAppear(_ animated: Bool) {
+        relations = (theGoal!.mutableSetValue(forKey: "activities"))
         activityTable.reloadData()
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         theGoal?.answer = textView.text
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()
             return false
@@ -98,26 +98,28 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func show() {
-        imageView.image = UIImage(data: theGoal!.picture!)
+        imageView.image = UIImage(data: theGoal!.picture! as Data)
         textView.text = theGoal!.answer
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return relations.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ViewActivitiesTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath:  indexPath) as! ViewActivitiesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:  indexPath) as! ViewActivitiesTableViewCell
         
-        let theRelate = relations.allObjects[indexPath.row]
-        let name = String(theRelate.valueForKey("name")!)
-        let status = CGFloat(Float(String(theRelate.valueForKey("status")!))!)
+        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row]
         
-        cell.label.text = name
+//        let name = (theRelate as AnyObject).value(forKey: "name")
+//        let status = (theRelate as AnyObject).value(forKey: "status")
+//        let status = CGFloat(Float(String((theRelate describing: as AnyObject),.value(forKey: "status")!))!)
         
-        cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        cell.theSlider.value = status
+        cell.label.text = "name"
+        
+        cell.theSlider.thumbColor = UIColor(hue: 1 / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        cell.theSlider.value = 2
         
         //chooseSlider(cell.theSlider, status: status)
         //getStatus(cell.theSlider)
@@ -141,19 +143,19 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
 //        }
 //    }
     
-    func saveStatus(slider: GradientSlider, indexPath: NSIndexPath) {
-        var status: Float = 0.0
-        var name: String = ""
-        slider.endBlock = {slider, newValue, newLocation in
-            let theRelate = self.relations.allObjects[indexPath.row]
-            name = String(theRelate.valueForKey("name")!)
-            status = Float(newValue)
-            self.changeStatus(name, status: status)
-        }
+    func saveStatus(_ slider: GradientSlider, indexPath: IndexPath) {
+//        var status: Float = 0.0
+//        var name: String = ""
+//        slider.endBlock = {slider, newValue, newLocation in
+//            let theRelate = self.relations.allObjects[(indexPath as NSIndexPath).row]
+//            name = String((theRelate describing: as AnyObject).value(forKey: "name")!)
+//            status = Float(newValue)
+//            self.changeStatus(name, status: status)
+//        }
     }
     
     
-    func chooseSlider(slider: GradientSlider, status: CGFloat) {
+    func chooseSlider(_ slider: GradientSlider, status: CGFloat) {
         slider.actionBlock = {slider, newValue in
             CATransaction.begin()
             CATransaction.setValue(true, forKey: kCATransactionDisableActions)
@@ -164,34 +166,34 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        RainbowView.hidden = false
-        stackView.hidden = true
-        
-        let theRelate = relations.allObjects[indexPath.row]
-        theName = String(theRelate.valueForKey("name")!)
-        theStatus = Float(String(theRelate.valueForKey("status")!))!
-        
-        actLabel.text = theName
-        theSlider.value = CGFloat(theStatus)
-        theSlider.thumbColor = UIColor(hue: CGFloat(theStatus) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        
-        chooseSlider(theSlider, status: CGFloat(theStatus))
-        saveStatus(theSlider, indexPath: indexPath)
-        setLableText(theName)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        RainbowView.isHidden = false
+//        stackView.isHidden = true
+//        
+//        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row]
+//        theName = String((theRelate describing: as AnyObject).value(forKey: "name")!)
+//        theStatus = Float(String((theRelate describing: as AnyObject).value(forKey: "status")!))!
+//        
+//        actLabel.text = theName
+//        theSlider.value = CGFloat(theStatus)
+//        theSlider.thumbColor = UIColor(hue: CGFloat(theStatus) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+//        
+//        chooseSlider(theSlider, status: CGFloat(theStatus))
+//        saveStatus(theSlider, indexPath: indexPath)
+//        setLableText(theName)
     }
     
-    @IBAction func doneBtn(sender: UIButton) {
-        RainbowView.hidden = true
-        stackView.hidden = false
+    @IBAction func doneBtn(_ sender: UIButton) {
+        RainbowView.isHidden = true
+        stackView.isHidden = false
         activityTable.reloadData()
     }
     
-    func changeStatus(name: String, status: Float) {
+    func changeStatus(_ name: String, status: Float) {
         let predicate = NSPredicate(format: "name == %@", name)
-        var theActivity = Activity.MR_findFirstWithPredicate(predicate)
+        var theActivity = Activity.mr_findFirst(with: predicate)
         if theActivity == nil {
-            theActivity = Activity.MR_createEntity()
+            theActivity = Activity.mr_createEntity()
         }
         
         guard let activity = theActivity else {
@@ -200,19 +202,19 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         activity.name = name
         activity.status = status
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         
         let date = getDate()
 //        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: activity, theDate: date, theStatus: status)
         
-        let results = ActivityProgress.MR_findAllSortedBy("date", ascending: true, withPredicate: NSPredicate(format: "activity.name == %@ AND date == %@", activity.name, date), inContext: NSManagedObjectContext.MR_defaultContext())
+        let results = ActivityProgress.mr_findAllSorted(by: "date", ascending: true, with: NSPredicate(format: "activity.name == %@ AND date == %@", activity.name, date), in: NSManagedObjectContext.mr_default())
         
         guard let allProgress = results as? [ActivityProgress] else {
             return
         }
         
         if (allProgress.count == 0) {
-            let progress = ActivityProgress.MR_createEntity()
+            let progress = ActivityProgress.mr_createEntity()
             
             guard let newProgress = progress else {
                 return
@@ -223,39 +225,40 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             newProgress.date = date
             newProgress.status = theStatus
             
-            progressActRelate = activity.mutableSetValueForKey("activityProgresses")
-            progressActRelate.addObject(newProgress)
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            progressActRelate = activity.mutableSetValue(forKey: "activityProgresses")
+            progressActRelate.add(newProgress)
+            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
         else {
             allProgress[0].status = theStatus
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
         
         setLableText(name)
     }
     
     func getDate() -> String {
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components ([.Day, .Month, .Year], fromDate: date)
+        let date = Date()
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components ([.day, .month, .year], from: date)
         
-        let year = String(components.year)
-        let month = String(format: "%02d", components.month)
-        let day = String(format: "%02d", components.day)
+        let year = String(describing: components.year)
+        let month = String(format: "%02d", components.month!)
+        let day = String(format: "%02d", components.day!)
         
         let theDate = year + month + day
         return theDate
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let theName = String(relations.allObjects[indexPath.row].valueForKey("name")!)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let theName = "asd"
+//            let theName = String((relations.allObjects[(indexPath as NSIndexPath).row] describing: as AnyObject).value(forKey: "name")!)
 //            let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
-            var theActivity = Activity.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", theName))
+            var theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
             
             if theActivity == nil {
-                theActivity = Activity.MR_createEntity()
+                theActivity = Activity.mr_createEntity()
                 theActivity?.name = theName
                 theActivity?.status = 0
             }
@@ -264,54 +267,54 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
                 return
             }
             
-            relations.removeObject(activity)
+            relations.remove(activity)
             
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade )
-            tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .None)
+            tableView.deleteRows(at: [indexPath], with: .fade )
+            tableView.reloadSections(IndexSet(integer: 0), with: .none)
             
             
-            if (activity.mutableSetValueForKey("goals").count == 0) {
-                activity.MR_deleteEntity()
+            if (activity.mutableSetValue(forKey: "goals").count == 0) {
+                activity.mr_deleteEntity()
 //                GoalBackendData().postActivityLatestData()
             }
             
-            NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
+            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 70
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView = UIView (frame: CGRectMake (0, 0, tableView.frame.width, 70))
-        footerView!.backgroundColor = UIColor.whiteColor()
-        let button = UIButton (frame: CGRectMake (tableView.frame.width/2-30, 5, 60, 60))
-        button.setImage(UIImage (named: "addBtn"), forState: UIControlState.Normal)
-        button.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), forControlEvents: UIControlEvents.TouchUpInside)
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.frame.width, height: 70))
+        footerView!.backgroundColor = UIColor.white
+        let button = UIButton (frame: CGRect (x: tableView.frame.width/2-30, y: 5, width: 60, height: 60))
+        button.setImage(UIImage (named: "addBtn"), for: UIControlState())
+        button.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: UIControlEvents.touchUpInside)
         footerView!.addSubview(button)
         
         return footerView
     }
     
-    @IBAction func dailyViewTap(gesture: UITapGestureRecognizer?) {
+    @IBAction func dailyViewTap(_ gesture: UITapGestureRecognizer?) {
         
         if(isWeeklyGraphShowing) {
-            UIView.transitionFromView(WeeklyView, toView: DailyView, duration: 1.0, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: nil)
+            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
         }
         else {
-            UIView.transitionFromView(DailyView, toView: WeeklyView, duration: 1.0, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: nil)
+            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
         }
         isWeeklyGraphShowing = !isWeeklyGraphShowing
     }
     
     
-    func setLableText(name: String) {
+    func setLableText(_ name: String) {
         
         var dates: [String] = ["", "", "", "", "", "", ""]
         var theDates: [String] = ["", "", "", "", "", "", ""]
@@ -319,10 +322,10 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
 //        let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: name)
         
-        var theActivity = Activity.MR_findFirstWithPredicate(NSPredicate(format: "name == %@", theName))
+        var theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
         
         if theActivity == nil {
-            theActivity = Activity.MR_createEntity()
+            theActivity = Activity.mr_createEntity()
             theActivity?.name = theName
             theActivity?.status = 0
         }
@@ -331,17 +334,17 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             return
         }
         
-        progressRelations = activity.mutableSetValueForKey("activityProgresses")
-        let theArray: NSArray = progressRelations.sortedArrayUsingDescriptors([NSSortDescriptor(key: "date", ascending: true)])
+        progressRelations = activity.mutableSetValue(forKey: "activityProgresses")
+        let theArray: NSArray = progressRelations.sortedArray(using: [NSSortDescriptor(key: "date", ascending: true)]) as NSArray
         
         if progressRelations.count > 7 {
             for index in 0..<7 {
-                let theRelate = theArray.objectAtIndex(progressRelations.count-(7-index))
+                let theRelate = theArray.object(at: progressRelations.count-(7-index))
                 
-                dates[index] = String(theRelate.valueForKey("date")!)
-                theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
+//                dates[index] = String((theRelate describing: as AnyObject).value(forKey: "date")!)
+                theDates[index] = dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].startIndex, offsetBy: 4)..<dates[index].characters.index(dates[index].endIndex, offsetBy: -2))) + "/" + dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].endIndex, offsetBy: -2)..<dates[index].endIndex))
                 
-                graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
+//                graphPoints.append(Int(Float(String((theRelate describing: as AnyObject).value(forKey: "status")!))! * 1000))
             }
 
             print(graphPoints)
@@ -349,16 +352,16 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         }
         else {
             for index in 0..<progressRelations.count {
-                let theRelate = theArray.objectAtIndex(index)
-                dates[index] = String(theRelate.valueForKey("date")!)
+                let theRelate = theArray.object(at: index)
+//                dates[index] = String((theRelate describing: as AnyObject).value(forKey: "date")!)
                 
                 if (dates[index].characters.count != 0) {
-                    theDates[index] = dates[index].substringWithRange(Range<String.Index> (dates[index].startIndex.advancedBy(4)..<dates[index].endIndex.advancedBy(-2))) + "/" + dates[index].substringWithRange(Range<String.Index> (dates[index].endIndex.advancedBy(-2)..<dates[index].endIndex))
+                    theDates[index] = dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].startIndex, offsetBy: 4)..<dates[index].characters.index(dates[index].endIndex, offsetBy: -2))) + "/" + dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].endIndex, offsetBy: -2)..<dates[index].endIndex))
                 }
                 else {
                     theDates[index] = dates[index]
                 }
-                graphPoints.append(Int(Float(String(theRelate.valueForKey("status")!))! * 1000))
+//                graphPoints.append(Int(Float(String((theRelate describing: as AnyObject).value(forKey: "status")!))! * 1000))
             }
         }
         
@@ -374,16 +377,16 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func goBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func goHome(){
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func goNext(){
         let storyboardIdentifier = "ChooseActivitiesTableViewController"
-        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(storyboardIdentifier) as! ChooseActivitiesTableViewController
+        let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardIdentifier) as! ChooseActivitiesTableViewController
 //        desController.index = index
         desController.theGoal = theGoal
         self.navigationController!.pushViewController(desController, animated: true)

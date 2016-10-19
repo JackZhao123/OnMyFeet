@@ -43,78 +43,78 @@ class DataItem: NSObject {
     }
     
     func setNumber(){
-        let titleDictionary = ["Steps":"steps", "Distance":"distance","Sleep Hours":"minutesAsleep", "Intensity":"minutesSedentary"]
-        let key = titleDictionary[title]
-        
-        let dailySummary = ClientDataManager.sharedInstance().fetchSummaryWith(date)
-        if let dailySummary = dailySummary {
-        let active = dailySummary.valueForKey("minutesActive")
-        let sedentary = dailySummary.valueForKey("minutesSedentary")
-        let lightly = dailySummary.valueForKey("minutesLightlyActive")
-        
-        if let active = active {
-            self.activeNum = active as! Double
-        }
-        
-        if let sedentary = sedentary {
-            self.sedentaryNum = sedentary as! Double
-        }
-        
-        if let lightly = lightly {
-            self.lightlyNum = lightly as! Double
-        }
-        
-        
-            if let key = key {
-                let num = dailySummary.valueForKey(key)
-                if let num = num {
-                    self.number = num as! Double
-                }
-            }
-        } else {
-            activeNum = 0
-            sedentaryNum = 0
-            lightlyNum = 0
-            number = 0
-        }
+//        let titleDictionary = ["Steps":"steps", "Distance":"distance","Sleep Hours":"minutesAsleep", "Intensity":"minutesSedentary"]
+//        let key = titleDictionary[title]
+//        
+//        let dailySummary = ClientDataManager.sharedInstance().fetchSummaryWith(date)
+//        if let dailySummary = dailySummary {
+//        let active = dailySummary.value(forKey: "minutesActive")
+//        let sedentary = dailySummary.value(forKey: "minutesSedentary")
+//        let lightly = dailySummary.value(forKey: "minutesLightlyActive")
+//        
+//        if let active = active {
+//            self.activeNum = active as! Double
+//        }
+//        
+//        if let sedentary = sedentary {
+//            self.sedentaryNum = sedentary as! Double
+//        }
+//        
+//        if let lightly = lightly {
+//            self.lightlyNum = lightly as! Double
+//        }
+//        
+//        
+//            if let key = key {
+//                let num = dailySummary.value(forKey: key)
+//                if let num = num {
+//                    self.number = num as! Double
+//                }
+//            }
+//        } else {
+//            activeNum = 0
+//            sedentaryNum = 0
+//            lightlyNum = 0
+//            number = 0
+//        }
     }
     
     func getWeeklyData() {
-        var startDate = firstDayOfWeek
-        weeklyData = [0,0,0,0,0,0,0]
-        weeklyActive = [0,0,0,0,0,0,0]
-        weeklyLightly = [0,0,0,0,0,0,0]
-        
-        let titleDictionary = ["Steps":"steps", "Distance":"distance","Sleep Hours":"minutesAsleep", "Intensity":"minutesSedentary"]
-        let key = titleDictionary[title]
-        
-        if let key = key {
-            for i in 0..<7 {
-                let summary = ClientDataManager.sharedInstance().fetchSummaryWith(startDate)
-                if let num = summary?.valueForKey(key) {
-                    var temp = num as! Double
-                    if title == "Distance" {
-                        temp = temp * 1000
-                    }
-                    
-                    if title == "Sleep Hours" {
-                        temp = temp / 60
-                    }
-                    weeklyData[i] = temp
-                }
-                
-                if key == "minutesSedentary" {
-                    if let num = summary?.valueForKey("minutesLightlyActive") {
-                        weeklyLightly[i] = num as! Double
-                    }
-                    
-                    if let num = summary?.valueForKey("minutesActive") {
-                        weeklyActive[i] = num as! Double
-                    }
-                }
-                startDate = DateStruct.dateValueChangeFrom(startDate, by: 1)
-            }
-        }
+//        var startDate = firstDayOfWeek
+//        weeklyData = [0,0,0,0,0,0,0]
+//        weeklyActive = [0,0,0,0,0,0,0]
+//        weeklyLightly = [0,0,0,0,0,0,0]
+//        
+//        let titleDictionary = ["Steps":"steps", "Distance":"distance","Sleep Hours":"minutesAsleep", "Intensity":"minutesSedentary"]
+//        let key = titleDictionary[title]
+//        
+//        if let key = key {
+//            for i in 0..<7 {
+//                let summary = ClientDataManager.sharedInstance().fetchSummaryWith(startDate)
+//                if let num = summary?.value(forKey: key) {
+//                    var temp = num as! Double
+//                    if title == "Distance" {
+//                        temp = temp * 1000
+//                    }
+//                    
+//                    if title == "Sleep Hours" {
+//                        temp = temp / 60
+//                    }
+//                    weeklyData[i] = temp
+//                }
+//                
+//                if key == "minutesSedentary" {
+//                    if let num = summary?.value(forKey: "minutesLightlyActive") {
+//                        weeklyLightly[i] = num as! Double
+//                    }
+//                    
+//                    if let num = summary?.value(forKey: "minutesActive") {
+//                        weeklyActive[i] = num as! Double
+//                    }
+//                }
+//                startDate = DateStruct.dateValueChangeFrom(startDate, by: 1)
+//            }
+//        }
     }
     
 }

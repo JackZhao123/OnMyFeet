@@ -14,7 +14,7 @@ import CoreData
 
 extension IntradaySleepTime {
 
-    @NSManaged var sleepJson: NSData?
+    @NSManaged var sleepJson: Data?
     @NSManaged var dateTime: String?
 
 }

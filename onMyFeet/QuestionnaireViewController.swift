@@ -14,8 +14,8 @@ class QuestionnaireViewController: UIViewController {
     @IBOutlet weak var indicatorView: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    let screenWidth = UIScreen.mainScreen().bounds.width
-    let screenHeight = UIScreen.mainScreen().bounds.height
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     
     var testEntryView: UITextView!
     var testEntry: String?
@@ -39,11 +39,11 @@ class QuestionnaireViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         self.automaticallyAdjustsScrollViewInsets = false
         
-        let finishButton = UIBarButtonItem(title: "Submit", style: .Done, target: self, action: #selector(QuestionnaireViewController.submit))
-        finishButton.tintColor = UIColor.whiteColor()
+        let finishButton = UIBarButtonItem(title: "Submit", style: .done, target: self, action: #selector(QuestionnaireViewController.submit))
+        finishButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = finishButton
         
         mScrollView = UIScrollView(frame: CGRect(x: 0, y: 64.0, width: screenWidth, height: screenHeight - 64.0))
@@ -58,21 +58,21 @@ class QuestionnaireViewController: UIViewController {
         
         initAllLabel()
         
-        self.view.bringSubviewToFront(indicatorView)
+        self.view.bringSubview(toFront: indicatorView)
         indicatorView.layer.cornerRadius = 8.0
         indicatorView.clipsToBounds = true
-        indicatorView.hidden = true
+        indicatorView.isHidden = true
     }
     
     func initAllLabel() {
         
         testEntryView = UITextView(frame: CGRect(x: 8.0, y: 72.0, width: screenWidth, height: 100.0))
-        testEntryView.backgroundColor = .None
-        testEntryView.textColor = UIColor.whiteColor()
+        testEntryView.backgroundColor = .none
+        testEntryView.textColor = UIColor.white
 
-        testEntryView.textAlignment = .Left
-        testEntryView.font = UIFont.systemFontOfSize(18.0)
-        testEntryView.userInteractionEnabled = false
+        testEntryView.textAlignment = .left
+        testEntryView.font = UIFont.systemFont(ofSize: 18.0)
+        testEntryView.isUserInteractionEnabled = false
         
         if let testEntry = testEntry {
             testEntryView.text = testEntry
@@ -97,12 +97,12 @@ class QuestionnaireViewController: UIViewController {
                 resultArray.append(0)
                 //QuestionTextView
                 let questionTextView = UITextView(frame: CGRect(x: 8.0, y: startPoint + margin, width: screenWidth - 16.0, height: 32.0))
-                questionTextView.textAlignment = .Left
-                questionTextView.userInteractionEnabled = false
-                questionTextView.font = UIFont.systemFontOfSize(18.0)
-                let mark = NSMutableAttributedString(string: "\(index+1)/\(questionSet.count), ", attributes: [NSForegroundColorAttributeName:UIColor.grayColor(), NSFontAttributeName:UIFont.systemFontOfSize(18.0)])
+                questionTextView.textAlignment = .left
+                questionTextView.isUserInteractionEnabled = false
+                questionTextView.font = UIFont.systemFont(ofSize: 18.0)
+                let mark = NSMutableAttributedString(string: "\(index+1)/\(questionSet.count), ", attributes: [NSForegroundColorAttributeName:UIColor.gray, NSFontAttributeName:UIFont.systemFont(ofSize: 18.0)])
                 
-                mark.appendAttributedString( NSAttributedString(string: questionSet[index], attributes: [NSFontAttributeName:UIFont.systemFontOfSize(18.0)]) )
+                mark.append( NSAttributedString(string: questionSet[index], attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 18.0)]) )
                 
                 questionTextView.attributedText =  mark
                 
@@ -119,15 +119,15 @@ class QuestionnaireViewController: UIViewController {
                 defaultValue = (slider.maximumValue) / 2
             
                 slider.value = defaultValue
-                slider.addTarget(self, action: #selector(QuestionnaireViewController.sliderValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+                slider.addTarget(self, action: #selector(QuestionnaireViewController.sliderValueChanged(_:)), for: UIControlEvents.valueChanged)
                 
                 self.mScrollView.addSubview(slider)
                 
                 //ResultLabel
                 let resultLabel = UILabel(frame:(CGRect(x:8.0, y: slider.frame.origin.y - 21, width: screenWidth - 16.0, height:21)))
-                resultLabel.font = UIFont.systemFontOfSize(15.0)
-                resultLabel.textColor = UIColor.blueColor()
-                resultLabel.textAlignment = .Center
+                resultLabel.font = UIFont.systemFont(ofSize: 15.0)
+                resultLabel.textColor = UIColor.blue
+                resultLabel.textAlignment = .center
                 resultLabel.text = ""
                 resultLabel.tag = index
                 self.mScrollView.addSubview(resultLabel)
@@ -135,7 +135,7 @@ class QuestionnaireViewController: UIViewController {
                 
                 //LeftAndRightLabel
                 let leftLabel = UILabel(frame:(CGRect(x:4.0, y: slider.frame.origin.y + 32, width:91, height:21)))
-                leftLabel.textColor = UIColor.lightGrayColor()
+                leftLabel.textColor = UIColor.lightGray
                 
                 if let leftText = labelDic[0] {
                     leftLabel.text = leftText
@@ -147,8 +147,8 @@ class QuestionnaireViewController: UIViewController {
                 self.mScrollView.addSubview(leftLabel)
                 
                 let rightLabel = UILabel(frame:(CGRect(x:screenWidth - 91 - 4, y: slider.frame.origin.y + 32, width:91, height:21)))
-                rightLabel.textAlignment = .Right
-                rightLabel.textColor = UIColor.lightGrayColor()
+                rightLabel.textAlignment = .right
+                rightLabel.textColor = UIColor.lightGray
                 
                 if let rightText = labelDic[numOfValue - 1] {
                     rightLabel.text = rightText
@@ -165,9 +165,9 @@ class QuestionnaireViewController: UIViewController {
         mScrollView.contentSize = newSize
     }
     
-    func fitSizeWithContent(view:UIView) {
+    func fitSizeWithContent(_ view:UIView) {
         let fixedWidth = view.frame.size.width
-        let newSize = view.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newSize = view.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         var newFrame = view.frame
         if(view.frame.origin.x + newSize.width >= screenWidth) {
             newFrame = CGRect(x: screenWidth - newSize.width - 4, y: view.frame.origin.y , width: newSize.width, height: newSize.height)
@@ -181,7 +181,7 @@ class QuestionnaireViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func sliderValueChanged(sender:AnyObject) {
+    func sliderValueChanged(_ sender:AnyObject) {
         let slider = sender as? UISlider
         
         
@@ -219,21 +219,21 @@ class QuestionnaireViewController: UIViewController {
                 message = message + "\(i). "
             }
             
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Sure", style: .Default, handler: {(action) -> Void in
-                alert.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Sure", style: .default, handler: {(action) -> Void in
+                alert.dismiss(animated: true, completion: nil)
             }))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         } else {
-            indicatorView.hidden = false
+            indicatorView.isHidden = false
             indicator.startAnimating()
             
             var data = [String:AnyObject]()
             var answerData = [String:AnyObject]()
             
-            data["title"] = questionTitle
-            data["group"] = 0
+            data["title"] = questionTitle as AnyObject?
+            data["group"] = 0 as AnyObject?
             
             for i in 0..<questionSet.count {
                 let answerValue = Int(resultArray[i])
@@ -245,12 +245,12 @@ class QuestionnaireViewController: UIViewController {
                     label = answerLabel
                 }
                 
-                let answerArray: [AnyObject] = [answerValue, answerPercent, label, labelDic[0]!, labelDic[numOfValue - 1]!]
-                answerData[questionSet[i]] = answerArray
+                let answerArray: [AnyObject] = [answerValue as AnyObject, answerPercent as AnyObject, label as AnyObject, labelDic[0]! as AnyObject, labelDic[numOfValue - 1]! as AnyObject]
+                answerData[questionSet[i]] = answerArray as AnyObject?
             }
             
-            data["feedback"] = answerData
-            data["fb_id"] = "\(Constants.Fitbit.id)"
+            data["feedback"] = answerData as AnyObject?
+            data["fb_id"] = "\(Constants.Fitbit.id)" as AnyObject?
             
         }
     }

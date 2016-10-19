@@ -16,7 +16,7 @@ extension Goal {
 
     @NSManaged var answer: String?
     @NSManaged var example: String?
-    @NSManaged var picture: NSData?
+    @NSManaged var picture: Data?
     @NSManaged var question: String?
     @NSManaged var activities: NSSet?
 

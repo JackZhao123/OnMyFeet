@@ -29,7 +29,7 @@ import UIKit
         super.init(coder: aDecoder)
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         let context = UIGraphicsGetCurrentContext()
         
@@ -53,35 +53,35 @@ import UIKit
             return (h - y)
         }
         
-        UIColor.whiteColor().setFill()
-        UIColor.whiteColor().setStroke()
+        UIColor.white.setFill()
+        UIColor.white.setStroke()
         
         if graphPoints.count >= 1 {
             
             let graphPath = UIBezierPath()
             
-            graphPath.moveToPoint(CGPoint(x:xPoint(0), y:yPoint(graphPoints[0])))
+            graphPath.move(to: CGPoint(x:xPoint(0), y:yPoint(graphPoints[0])))
             
             for i in 1..<graphPoints.count {
                 let nextPoint = CGPoint(x: xPoint(i), y: yPoint(graphPoints[i]))
-                graphPath.addLineToPoint(nextPoint)
+                graphPath.addLine(to: nextPoint)
             }
             graphPath.stroke()
             
             
-            CGContextSaveGState(context)
+            context?.saveGState()
             let clippingPath = graphPath.copy() as! UIBezierPath
             
-            clippingPath.addLineToPoint(CGPoint (x: xPoint(graphPoints.count - 1), y: h))
-            clippingPath.addLineToPoint(CGPoint(x: xPoint(0), y: h))
-            clippingPath.closePath()
+            clippingPath.addLine(to: CGPoint (x: xPoint(graphPoints.count - 1), y: h))
+            clippingPath.addLine(to: CGPoint(x: xPoint(0), y: h))
+            clippingPath.close()
             
             clippingPath.addClip()
             
             UIColor(white: 1.0, alpha: 0.15).setFill()
             let rectPath = UIBezierPath(rect: self.bounds)
             rectPath.fill()
-            CGContextRestoreGState(context)
+            context?.restoreGState()
             
             graphPath.lineWidth = 2.0
             graphPath.stroke()
@@ -93,12 +93,12 @@ import UIKit
                 point.x -= 4.0/2
                 point.y -= 4.0/2
                 
-                let circle = UIBezierPath(ovalInRect: CGRect(origin: point, size: CGSize(width: 4, height: 4)))
+                let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: 4, height: 4)))
                 circle.fill()
                 
                 let line = UIBezierPath()
-                line.moveToPoint(CGPoint(x: xPoint(i), y: h-2))
-                line.addLineToPoint(CGPoint(x: xPoint(i), y: yPoint(graphPoints[i])))
+                line.move(to: CGPoint(x: xPoint(i), y: h-2))
+                line.addLine(to: CGPoint(x: xPoint(i), y: yPoint(graphPoints[i])))
                 
                 let color = UIColor(white: 1.0, alpha: 0.7)
                 color.setStroke()
@@ -111,11 +111,11 @@ import UIKit
             
             let linePath = UIBezierPath()
             
-            linePath.moveToPoint(CGPoint(x: margin/2, y: 2))
-            linePath.addLineToPoint(CGPoint(x: w - margin/2, y: 2))
+            linePath.move(to: CGPoint(x: margin/2, y: 2))
+            linePath.addLine(to: CGPoint(x: w - margin/2, y: 2))
             
-            linePath.moveToPoint(CGPoint(x: margin/2, y: h - 2))
-            linePath.addLineToPoint(CGPoint(x: w - margin/2, y: h - 2))
+            linePath.move(to: CGPoint(x: margin/2, y: h - 2))
+            linePath.addLine(to: CGPoint(x: w - margin/2, y: h - 2))
             
             let color = UIColor(white: 1.0, alpha: 0.7)
             color.setStroke()

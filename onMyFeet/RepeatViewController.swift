@@ -8,7 +8,7 @@
 
 import UIKit
 protocol RepeatViewControllerDelegate {
-    func didPopUp(weekDay:[String])
+    func didPopUp(_ weekDay:[String])
 }
 
 class RepeatViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
@@ -31,13 +31,13 @@ class RepeatViewController: BaseViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         if let delegate = delegate {
             var repeatArray = [String]()
             for i in 0..<7 {
-                let index = NSIndexPath(forRow: i, inSection: 0)
-                let cell = mTableView.cellForRowAtIndexPath(index) as! RepeatCell
-                if !cell.repeatImage.hidden {
+                let index = IndexPath(row: i, section: 0)
+                let cell = mTableView.cellForRow(at: index) as! RepeatCell
+                if !cell.repeatImage.isHidden {
                     repeatArray.append(weekArray[i])
                 }
             }
@@ -46,34 +46,34 @@ class RepeatViewController: BaseViewController, UITableViewDelegate, UITableView
     }
     
     //MARK: TableView Delegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 7
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = NSBundle.mainBundle().loadNibNamed("RepeatCell", owner: self, options: nil).first as! RepeatCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = Bundle.main.loadNibNamed("RepeatCell", owner: self, options: nil)?.first as! RepeatCell
         
         if let initArray = initArray {
-            if (initArray.indexOf(weekArray[indexPath.row]) != nil) {
-                cell.repeatImage.hidden = false
+            if (initArray.index(of: weekArray[(indexPath as NSIndexPath).row]) != nil) {
+                cell.repeatImage.isHidden = false
             }
         }
         
-        let weekday = NSString(string: weekArray[indexPath.row]).capitalizedString as String
+        let weekday = NSString(string: weekArray[(indexPath as NSIndexPath).row]).capitalized as String
         cell.repeatLabel?.text = "Every \(weekday)"
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = mTableView.cellForRowAtIndexPath(indexPath) as! RepeatCell
-        let hidden = cell.repeatImage.hidden
-        cell.repeatImage.hidden = !hidden
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = mTableView.cellForRow(at: indexPath) as! RepeatCell
+        let hidden = cell.repeatImage.isHidden
+        cell.repeatImage.isHidden = !hidden
         
-        cell.selected = false
+        cell.isSelected = false
     }
 }

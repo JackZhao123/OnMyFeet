@@ -9,17 +9,17 @@
 import UIKit
 
 protocol DashViewDelegate {
-    func dateValueDidChangeFrom(dateTime:String, by interval:Int)
+    func dateValueDidChangeFrom(_ dateTime:String, by interval:Int)
 }
 
 class DashView: UIView {
-    let screenWidth = UIScreen.mainScreen().bounds.width
-    let screenHeight = UIScreen.mainScreen().bounds.height
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     let dateLabel: UILabel! = UILabel()
     let numLabel:UILabel! = UILabel()
     let nameLabel:UILabel! = UILabel()
-    let rightBtn: UIButton! = UIButton(type: .System)
-    let leftBtn: UIButton! = UIButton(type: .System)
+    let rightBtn: UIButton! = UIButton(type: .system)
+    let leftBtn: UIButton! = UIButton(type: .system)
     
     let activeLabel:UILabel! = UILabel()
     let sedentaryLabel:UILabel! = UILabel()
@@ -61,17 +61,17 @@ class DashView: UIView {
         self.backgroundColor = UIColor(red: 66/255.0, green: 67/255.0, blue: 70/255.0, alpha: 1.00)
         //DateLabel
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.font = UIFont.systemFontOfSize(22.0)
-        dateLabel.textAlignment = .Center
+        dateLabel.font = UIFont.systemFont(ofSize: 22.0)
+        dateLabel.textAlignment = .center
         dateLabel.textColor = yColor
         self.addSubview(dateLabel)
         
         //NumLabel
-        numLabel.font = UIFont.systemFontOfSize(60.0)
+        numLabel.font = UIFont.systemFont(ofSize: 60.0)
         configureLabel(numLabel)
         
         //NameLabel
-        nameLabel.font = UIFont.systemFontOfSize(37.0)
+        nameLabel.font = UIFont.systemFont(ofSize: 37.0)
         configureLabel(nameLabel)
         
         setLabelText()
@@ -82,13 +82,13 @@ class DashView: UIView {
         leftBtn.tintColor = yColor
         rightBtn.tintColor = yColor
         
-        leftBtn.setImage(UIImage(named: "left-arrow"), forState: .Normal)
+        leftBtn.setImage(UIImage(named: "left-arrow"), for: UIControlState())
         leftBtn.frame = CGRect(x: leftMargin, y: 8, width: 28, height: 28)
-        leftBtn.addTarget(self, action: #selector(DashView.decreaseDay), forControlEvents: .TouchUpInside)
+        leftBtn.addTarget(self, action: #selector(DashView.decreaseDay), for: .touchUpInside)
         
-        rightBtn.setImage(UIImage(named: "right-arrow" ), forState: .Normal)
+        rightBtn.setImage(UIImage(named: "right-arrow" ), for: UIControlState())
         rightBtn.frame = CGRect(x: rightMargin, y: 8, width: 28, height: 28)
-        rightBtn.addTarget(self, action: #selector(DashView.addDay), forControlEvents: .TouchUpInside)
+        rightBtn.addTarget(self, action: #selector(DashView.addDay), for: .touchUpInside)
         
         self.addSubview(leftBtn)
         self.addSubview(rightBtn)
@@ -97,12 +97,12 @@ class DashView: UIView {
         let viewsDictionary = ["date":dateLabel, "view":self, "data":numLabel, "name":nameLabel,"leftBtn":leftBtn]
         
         //Constraints
-        let date_centerX_constraint = NSLayoutConstraint(item: dateLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1.0, constant: 0.0)
-        let date_control_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-8-[date(28)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
-        let date_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[date(200)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
-        let data_control_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[data]-0-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
-        let name_control_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[name]-0-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
-        let bottom_control_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[data(60)]-[name(44)]-30-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
+        let date_centerX_constraint = NSLayoutConstraint(item: dateLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+        let date_control_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[date(28)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
+        let date_constraint_H = NSLayoutConstraint.constraints(withVisualFormat: "H:[date(200)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
+        let data_control_constraint_H = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[data]-0-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
+        let name_control_constraint_H = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[name]-0-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
+        let bottom_control_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[data(60)]-[name(44)]-30-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: viewsDictionary)
         
         self.addConstraints(data_control_constraint_H)
         self.addConstraints(name_control_constraint_H)
@@ -116,9 +116,9 @@ class DashView: UIView {
         configureLabel(sedentaryLabel)
         configureLabel(activeLabel)
         configureLabel(lightlyLabel)
-        sedentaryLabel.font = UIFont.systemFontOfSize(40.0)
-        activeLabel.font = UIFont.systemFontOfSize(40.0)
-        lightlyLabel.font = UIFont.systemFontOfSize(40.0)
+        sedentaryLabel.font = UIFont.systemFont(ofSize: 40.0)
+        activeLabel.font = UIFont.systemFont(ofSize: 40.0)
+        lightlyLabel.font = UIFont.systemFont(ofSize: 40.0)
         
         activeLabel.textColor = activeColor
         lightlyLabel.textColor = yColor
@@ -129,10 +129,10 @@ class DashView: UIView {
         lightlyLabel.text = "9999"
 
         //Intensity Constraints
-        let intensity_control_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[active]-[lightly(==active)]-[sedentary(==active)]-|", options: .AlignAllCenterY, metrics: nil, views: secDictionary)
-        let lightly_control_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[lightly(60)]-74-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: secDictionary)
-        let active_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[active(60)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: secDictionary)
-        let sedentary_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[sedentary(60)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: secDictionary)
+        let intensity_control_constraint_H = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[active]-[lightly(==active)]-[sedentary(==active)]-|", options: .alignAllCenterY, metrics: nil, views: secDictionary)
+        let lightly_control_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[lightly(60)]-74-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: secDictionary)
+        let active_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[active(60)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: secDictionary)
+        let sedentary_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[sedentary(60)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: secDictionary)
         
         self.addConstraints(intensity_control_constraint_H)
         self.addConstraints(lightly_control_constraint_V)
@@ -152,17 +152,17 @@ class DashView: UIView {
         activeName.textColor = activeColor
         lightlyName.textColor = yColor
         
-        sedentaryName.font = UIFont.systemFontOfSize(20.0)
-        activeName.font = UIFont.systemFontOfSize(20.0)
-        lightlyName.font = UIFont.systemFontOfSize(20.0)
+        sedentaryName.font = UIFont.systemFont(ofSize: 20.0)
+        activeName.font = UIFont.systemFont(ofSize: 20.0)
+        lightlyName.font = UIFont.systemFont(ofSize: 20.0)
         
         let thirDictionary = ["sName": sedentaryName, "aName":activeName, "lName":lightlyName]
         
         //Intensity Name Constraint
-        let intensity_name_control_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[aName]-[lName(==aName)]-[sName(==aName)]-|", options: .AlignAllCenterY, metrics: nil, views: thirDictionary)
-        let lightlyName_control_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[lName(44)]-40-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: thirDictionary)
-        let activeName_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[aName(44)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: thirDictionary)
-        let sedentaryName_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[sName(44)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: thirDictionary)
+        let intensity_name_control_H = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[aName]-[lName(==aName)]-[sName(==aName)]-|", options: .alignAllCenterY, metrics: nil, views: thirDictionary)
+        let lightlyName_control_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[lName(44)]-40-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: thirDictionary)
+        let activeName_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[aName(44)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: thirDictionary)
+        let sedentaryName_constraint_V = NSLayoutConstraint.constraints(withVisualFormat: "V:[sName(44)]", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: thirDictionary)
         
         self.addConstraints(intensity_name_control_H)
         self.addConstraints(lightlyName_control_constraint_V)
@@ -173,10 +173,10 @@ class DashView: UIView {
         configureIntensityView()
     }
     
-    func configureLabel(label:UILabel) {
+    func configureLabel(_ label:UILabel) {
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.whiteColor()
-        label.textAlignment = .Center
+        label.textColor = UIColor.white
+        label.textAlignment = .center
         self.addSubview(label)
     }
     
@@ -205,25 +205,25 @@ class DashView: UIView {
     
     func configureIntensityView() {
         if self.dataItem.title == "Intensity" {
-            self.numLabel.hidden = true
-            self.nameLabel.hidden = true
+            self.numLabel.isHidden = true
+            self.nameLabel.isHidden = true
             
-            self.activeLabel.hidden = false
-            self.activeName.hidden = false
-            self.lightlyLabel.hidden = false
-            self.lightlyName.hidden = false
-            self.sedentaryName.hidden = false
-            self.sedentaryLabel.hidden = false
+            self.activeLabel.isHidden = false
+            self.activeName.isHidden = false
+            self.lightlyLabel.isHidden = false
+            self.lightlyName.isHidden = false
+            self.sedentaryName.isHidden = false
+            self.sedentaryLabel.isHidden = false
         } else {
-            self.numLabel.hidden = false
-            self.nameLabel.hidden = false
+            self.numLabel.isHidden = false
+            self.nameLabel.isHidden = false
             
-            self.activeLabel.hidden = true
-            self.activeName.hidden = true
-            self.lightlyLabel.hidden = true
-            self.lightlyName.hidden = true
-            self.sedentaryName.hidden = true
-            self.sedentaryLabel.hidden = true
+            self.activeLabel.isHidden = true
+            self.activeName.isHidden = true
+            self.lightlyLabel.isHidden = true
+            self.lightlyName.isHidden = true
+            self.sedentaryName.isHidden = true
+            self.sedentaryLabel.isHidden = true
         }
     }
     

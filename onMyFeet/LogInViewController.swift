@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 
 class LogInViewController: UIViewController {
-    let screenHeight = UIScreen.mainScreen().bounds.height
+    let screenHeight = UIScreen.main.bounds.height
     
       //MARK: Outlets
     @IBOutlet weak var logInBtn: UIButton!
@@ -21,7 +21,7 @@ class LogInViewController: UIViewController {
         logInBtn.layer.cornerRadius = 8.0;
         logInBtn.clipsToBounds = true;
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LogInViewController.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LogInViewController.didBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,17 +30,17 @@ class LogInViewController: UIViewController {
     }
     
     func didBecomeActive() {
-            if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
-                self.dismissViewControllerAnimated(true, completion: nil)
+            if UserDefaults.standard.object(forKey: "RefreshCode") != nil {
+                self.dismiss(animated: true, completion: nil)
             }
     }
     
-    @IBAction func logIn(sender: AnyObject) {
+    @IBAction func logIn(_ sender: AnyObject) {
         
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
 }

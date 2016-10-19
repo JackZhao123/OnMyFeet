@@ -43,43 +43,43 @@ struct Constants {
             "sleep":"sleep-minutesAsleep"
         ]
         
-        static func getTimeSeriesUrl(resourcePath:String?, baseDate:String, endDate:String) -> NSURL? {
+        static func getTimeSeriesUrl(_ resourcePath:String?, baseDate:String, endDate:String) -> URL? {
             var activitiesPath: String?
             if let resourcePath = resourcePath {
-                activitiesPath = "activities/".stringByAppendingString(resourcePath)
+                activitiesPath = "activities/" + resourcePath
             } else {
                 activitiesPath = "activities"
             }
             
             let apiPath = String(format: ActivitiesTimeSeriesPathFormat, arguments: [activitiesPath!,baseDate,endDate])
-            let components = NSURLComponents()
+            var components = URLComponents()
             components.scheme = APIScheme
             components.host = APIHost
             components.path = apiPath
             
-            return components.URL
+            return components.url
         }
         
-        static func getDailySummaryURL(dateTime:String) -> NSURL? {
+        static func getDailySummaryURL(_ dateTime:String) -> URL? {
             let apiPath = String(format: DailySummaryPathFormat, arguments: [dateTime])
-            let components = NSURLComponents()
+            var components = URLComponents()
             components.scheme = APIScheme
             components.host = APIHost
             components.path = apiPath
             
-            return components.URL
+            return components.url
         }
         
-        static func getMinutesAsleepURL(baseDate:String, endDate:String) -> NSURL? {
+        static func getMinutesAsleepURL(_ baseDate:String, endDate:String) -> URL? {
             let apiPath: String?
             apiPath = String(format: SleepTimeSeriesPathFormat, arguments: [baseDate,endDate])
             
-            let components = NSURLComponents()
+            var components = URLComponents()
             components.scheme = APIScheme
             components.host = APIHost
-            components.path = apiPath
+            components.path = apiPath!
             
-            return components.URL
+            return components.url
         }
     }
     
@@ -108,17 +108,17 @@ struct Constants {
         }
         
         static var EncodedSecret: String? {
-            return "\(ClientID):\(ClientSecret)".dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithLineFeed)
+            return "\(ClientID):\(ClientSecret)".data(using: String.Encoding.utf8)?.base64EncodedString(options: NSData.Base64EncodingOptions.endLineWithLineFeed)
         }
         
         static var AuthorizationCode: String? {
-            return NSUserDefaults.standardUserDefaults().objectForKey(UserDefaultsKey.AuthorizationCode) as? String
+            return UserDefaults.standard.object(forKey: UserDefaultsKey.AuthorizationCode) as? String
         }
         static var AccessToken: String? {
-            return NSUserDefaults.standardUserDefaults().objectForKey(UserDefaultsKey.AccessToken) as? String
+            return UserDefaults.standard.object(forKey: UserDefaultsKey.AccessToken) as? String
         }
         static var RefreshCode: String? {
-            return NSUserDefaults.standardUserDefaults().objectForKey(UserDefaultsKey.RefreshCode) as? String
+            return UserDefaults.standard.object(forKey: UserDefaultsKey.RefreshCode) as? String
         }
     }
     
