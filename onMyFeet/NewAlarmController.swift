@@ -11,7 +11,7 @@ protocol NewAlarmDelegate {
     func newAlarmDidDismissed()
 }
 
-@objc class NewAlarmController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepeatViewControllerDelegate, AlarmLabelViewControllerDelegate, FitbitAPIDelegate {
+@objc class NewAlarmController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepeatViewControllerDelegate, AlarmLabelViewControllerDelegate {
     @IBOutlet weak var mTableView: UITableView!
     
     var timeString: String?
@@ -78,7 +78,6 @@ protocol NewAlarmDelegate {
                     }
                     a.period = ArrayDataConverter.stringArrayToNSData(repeatArray!)
                     
-                    FitbitAPI.sharedAPI().updateAlarmFor(a.id!, alarm: a)
                 }
                 ClientDataManager.sharedInstance().saveContext()
                 
@@ -102,10 +101,6 @@ protocol NewAlarmDelegate {
                 
                 let parameters:[String:AnyObject] = ["time":time, "enabled":true, "recurring":recurring, "weekDays": weekDays]
                 
-                let fitbitAPI = FitbitAPI()
-                fitbitAPI.delegate = self
-                
-                fitbitAPI.addAlarm(parameters, id: id)
             }
         }
     }
@@ -230,7 +225,6 @@ protocol NewAlarmDelegate {
             if let id = displayAlarm?.id {
                 
                 ClientDataManager.sharedInstance().deleteDataFor("Alarm", parameter: ["id"], argument: [id])
-                FitbitAPI.sharedAPI().deleteAlarmFor(id)
             }
             self.navigationController?.popViewControllerAnimated(true)
         default:

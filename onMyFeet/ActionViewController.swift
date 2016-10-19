@@ -136,7 +136,6 @@ class ActionViewController: UIViewController, UITableViewDelegate, UITableViewDa
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
                 ClientDataManager.sharedInstance().deleteAllDataFor("Alarm")
                 self.alarmList = nil
-                FitbitAPI.sharedAPI().getAllAlarm()
                 self.getAlarmsFromDataBase()
                 dispatch_async(dispatch_get_main_queue()) {
                     self.actionTableView.reloadData()

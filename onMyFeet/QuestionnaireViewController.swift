@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class QuestionnaireViewController: UIViewController {
     
@@ -252,18 +251,6 @@ class QuestionnaireViewController: UIViewController {
             
             data["feedback"] = answerData
             data["fb_id"] = "\(Constants.Fitbit.id)"
-            
-            Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/feedback", parameters: data, encoding: .JSON).responseString(completionHandler: {response in
-                print("Response, \(response.result.value)")
-                if let error = response.result.error {
-                    print(error)
-                } else {
-                    self.indicatorView.hidden = true
-                    self.indicator.stopAnimating()
-                    self.navigationController?.popViewControllerAnimated(true)
-                }
-            })
-            
             
         }
     }

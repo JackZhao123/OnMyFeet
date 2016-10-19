@@ -11,7 +11,7 @@ protocol DataCoordinatorDelegate {
     func summariesDataDidSaved(dataType:String, startDate:String, endDate:String)
 }
 
-@objc class DataCoordinator:NSObject, FitbitAPIDelegate {
+@objc class DataCoordinator:NSObject {
     //MARK: Properties
     var stepsJson: JSON?
     var distancesJson: JSON?
@@ -59,27 +59,6 @@ protocol DataCoordinatorDelegate {
         return ClientDataManager.sharedInstance()
     }()
     
-    var fitbitAPI = FitbitAPI()
-    
-    
-    //MARK: Fetching Data
-    func syncData() {
-        let userName = NSUserDefaults.standardUserDefaults().objectForKey("CurrentUser") as? String
-        
-        fitbitAPI.refreshAccessToken()
-        fitbitAPI.delegate = self
-        
-        if let userName = userName {
-            let userData: Person
-            if dataManager.fetchPersonWith(userName) == nil {
-                dataManager.createPersonData(userName)
-            }
-
-            userData = dataManager.fetchPersonWith(userName)!
-            updateData(userData)
-        }
-    }
-    
     func updateData(userData: Person) {
         
         client = userData
@@ -117,21 +96,16 @@ protocol DataCoordinatorDelegate {
     }
     
     func getDataFrom(startDate: String, toEndDate endDate: String) {
-        self.fitbitAPI.getDaily(startDate, toEndDate: endDate)
     }
     
     func getIntradaySleep(startDate:String, endDate:String) {
         var startTime = startDate
         let endTime = endDate
         var interval = DateStruct.compare(startTime, with: endTime)
-        self.fitbitAPI.delegate = self
 
         var sleepData = [String:AnyObject]()
         
         while interval <= 0 {
-            self.fitbitAPI.getIntradayDataOf("sleep", onDate: startTime)
-            while(gettingIntradaySleep){}
-            
             if let intradaySleepTimeJson = intradaySleepTimeJson {
                 for i in 0..<intradaySleepTimeJson["sleep"].count {
                     var sleepStart = intradaySleepTimeJson["sleep"][i]["startTime"].stringValue
@@ -163,12 +137,8 @@ protocol DataCoordinatorDelegate {
         
         var intensityData = [String:AnyObject]()
         
-        fitbitAPI.delegate = self
         
         while interval <= 0 {
-            self.fitbitAPI.getIntradayDataOf("minutesSedentary", onDate: startTime)
-            self.fitbitAPI.getIntradayDataOf("minutesLightlyActive", onDate: startTime)
-            
             while(gettingIntensityDataFlag()){}
             
             if let sedentaryJson = sedentaryJson, let lightlyActiveJson = lightlyActiveJson {

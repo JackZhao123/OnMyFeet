@@ -20,22 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] {
-            initFitbitAPI(url as! NSURL)
         }
         MagicalRecord.setupCoreDataStackWithStoreNamed("NewOnMyFeet.sqlite")
         return true
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        initFitbitAPI(url)
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories:nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
         return true
-    }
-    
-    func initFitbitAPI(url:NSURL) {
-        FitbitAPI.sharedAPI().getAuthorizationCodeFromURL(url)
-        FitbitAPI.sharedAPI().requestAccessToken()
     }
     
     // MARK: Hanlde status changed

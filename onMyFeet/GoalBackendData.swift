@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 class GoalBackendData {
     
@@ -26,10 +25,6 @@ class GoalBackendData {
             }
             
             parameters = ["fb_id": "\(Constants.Fitbit.id)", "goals": activityData]
-            
-            Alamofire.request(.POST, "http://do.zhaosiyang.com:3000/postData/goals", parameters: parameters, encoding: .JSON).responseString(completionHandler: {response in
-                print("Response, \(response.result.value)")
-            })
         }
     }
 }

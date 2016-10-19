@@ -162,9 +162,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     }
     
     func refresh() {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            self.coordinator.syncData()
-            
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {            
             dispatch_async(dispatch_get_main_queue()) {
                 self.refreshControl.endRefreshing()
             }

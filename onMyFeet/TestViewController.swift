@@ -75,7 +75,6 @@ class TestViewController: UIViewController {
     }
     
     @IBAction func refreshToken(sender: AnyObject) {
-        FitbitAPI.sharedAPI().refreshAccessToken()
     }
     
     

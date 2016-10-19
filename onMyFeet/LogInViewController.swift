@@ -16,8 +16,6 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var logInBtn: UIButton!
     @IBOutlet weak var appLabel: UILabel!
     
-    let fitbitAPI = FitbitAPI()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         logInBtn.layer.cornerRadius = 8.0;
@@ -33,21 +31,11 @@ class LogInViewController: UIViewController {
     
     func didBecomeActive() {
             if NSUserDefaults.standardUserDefaults().objectForKey("RefreshCode") != nil {
-                print("Loged in")
-                fitbitAPI.refreshAccessToken()
-                fitbitAPI.getUserName()
-                fitbitAPI.getFitbitID()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
     }
     
     @IBAction func logIn(sender: AnyObject) {
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("LogOutManually") == true {
-            FitbitAPI.logIn(forceLogIn: true)
-        } else {
-            FitbitAPI.logIn(forceLogIn: false)
-        }
         
     }
     
