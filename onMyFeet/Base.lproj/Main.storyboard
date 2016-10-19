@@ -470,24 +470,6 @@
             </objects>
             <point key="canvasLocation" x="2721" y="2050"/>
         </scene>
-        <!--Progress View Controller-->
-        <scene sceneID="4BK-jU-Whp">
-            <objects>
-                <viewController storyboardIdentifier="ProgressController" id="aS5-nF-C6q" customClass="ProgressViewController" customModule="OnMyFeet" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gni-ZT-lTy"/>
-                        <viewControllerLayoutGuide type="bottom" id="5zc-n5-Nrw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="EXR-F8-ml8">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0yy-df-ZkR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1223" y="1191"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="OTa-hn-g9T">
             <objects>

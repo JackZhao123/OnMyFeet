@@ -58,7 +58,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
     
     //MARK: tableView
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -82,14 +82,6 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         switch indexPath.row {
         case 0:
             storyboardIdentifier = "ViewGoalsViewController"
-        case 1:
-            storyboardIdentifier = "ProgressController"
-        case 2:
-            storyboardIdentifier = "CheckIn"
-        case 3:
-            storyboardIdentifier = "Action"
-        case 4:
-            storyboardIdentifier = "TestModule"
         default:
             storyboardIdentifier = nil
         }

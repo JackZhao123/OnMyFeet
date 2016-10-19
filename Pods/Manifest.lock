@@ -1,19 +1,14 @@
 PODS:
-  - Charts (2.2.3):
-    - Charts/Core (= 2.2.3)
-  - Charts/Core (2.2.3)
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
 
 DEPENDENCIES:
-  - Charts (= 2.2.3)
   - MagicalRecord (~> 2.3.2)
 
 SPEC CHECKSUMS:
-  Charts: f54267bb3f0f0e74520c6f248517cf5074dfd6fc
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
 
-PODFILE CHECKSUM: 9a8321bfb429e06ebe087b87ce10c0bdd10acb56
+PODFILE CHECKSUM: 21d3643463b952addcff8c6b492b9f20458dfe7d
 
 COCOAPODS: 1.0.1

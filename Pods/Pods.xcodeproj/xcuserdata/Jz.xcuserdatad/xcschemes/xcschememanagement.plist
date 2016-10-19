@@ -4,15 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Charts.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>MagicalRecord.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<true/>
+			<false/>
 		</dict>
 		<key>Pods-OnMyFeet.xcscheme</key>
 		<dict>
@@ -32,12 +27,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B47C10DB28C22B4327729744324EC174</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6828C2508515BC0428D6BDAA1292DC9</key>
+		<key>882203FA80AD99246D2B446FDCECC943</key>
 		<dict>
 			<key>primary</key>
 			<true/>
