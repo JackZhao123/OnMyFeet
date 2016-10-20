@@ -470,7 +470,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */;
+			buildConfigurationList = 2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -804,6 +804,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -819,6 +820,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -855,7 +857,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "onMyFeet" */ = {
+		2AAA60D31C72960300957BEF /* Build configuration list for PBXProject "OnMyFeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2AAA60F61C72960300957BEF /* Debug */,
