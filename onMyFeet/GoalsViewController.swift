@@ -279,11 +279,11 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     //MARK: Actions
     func goBack(){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func goHome(){
-        self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
     }
 
     

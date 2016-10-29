@@ -143,7 +143,7 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func goBack(){
-        self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
     func goNext(){

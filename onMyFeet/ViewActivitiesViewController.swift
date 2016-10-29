@@ -110,16 +110,18 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         let cellIdentifier = "ViewActivitiesTableViewCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:  indexPath) as! ViewActivitiesTableViewCell
         
-        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row]
+        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
         
-//        let name = (theRelate as AnyObject).value(forKey: "name")
-//        let status = (theRelate as AnyObject).value(forKey: "status")
-//        let status = CGFloat(Float(String((theRelate describing: as AnyObject),.value(forKey: "status")!))!)
+        let name = theRelate.name
+        let status = CGFloat(theRelate.status)
         
-        cell.label.text = "name"
+
         
-        cell.theSlider.thumbColor = UIColor(hue: 1 / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        cell.theSlider.value = 2
+        
+        cell.label.text = name
+        
+        cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        cell.theSlider.value = status
         
         //chooseSlider(cell.theSlider, status: status)
         //getStatus(cell.theSlider)
@@ -144,14 +146,14 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
 //    }
     
     func saveStatus(_ slider: GradientSlider, indexPath: IndexPath) {
-//        var status: Float = 0.0
-//        var name: String = ""
-//        slider.endBlock = {slider, newValue, newLocation in
-//            let theRelate = self.relations.allObjects[(indexPath as NSIndexPath).row]
-//            name = String((theRelate describing: as AnyObject).value(forKey: "name")!)
-//            status = Float(newValue)
-//            self.changeStatus(name, status: status)
-//        }
+        var status: Float = 0.0
+        var name: String = ""
+        slider.endBlock = {slider, newValue, newLocation in
+            let theRelate = self.relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
+            name = theRelate.name
+            status = Float(newValue)
+            self.changeStatus(name, status: status)
+        }
     }
     
     
@@ -167,20 +169,20 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        RainbowView.isHidden = false
-//        stackView.isHidden = true
-//        
-//        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row]
-//        theName = String((theRelate describing: as AnyObject).value(forKey: "name")!)
-//        theStatus = Float(String((theRelate describing: as AnyObject).value(forKey: "status")!))!
-//        
-//        actLabel.text = theName
-//        theSlider.value = CGFloat(theStatus)
-//        theSlider.thumbColor = UIColor(hue: CGFloat(theStatus) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-//        
-//        chooseSlider(theSlider, status: CGFloat(theStatus))
-//        saveStatus(theSlider, indexPath: indexPath)
-//        setLableText(theName)
+        RainbowView.isHidden = false
+        stackView.isHidden = true
+        
+        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
+        theName = theRelate.name
+        theStatus = theRelate.status
+        
+        actLabel.text = theName
+        theSlider.value = CGFloat(theStatus)
+        theSlider.thumbColor = UIColor(hue: CGFloat(theStatus) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        
+        chooseSlider(theSlider, status: CGFloat(theStatus))
+        saveStatus(theSlider, indexPath: indexPath)
+        setLableText(theName)
     }
     
     @IBAction func doneBtn(_ sender: UIButton) {
@@ -213,6 +215,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             return
         }
         
+        print("pay attention here!!!!!!!!!!" + String(theStatus))
+        
         if (allProgress.count == 0) {
             let progress = ActivityProgress.mr_createEntity()
             
@@ -223,14 +227,14 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             var progressActRelate = NSMutableSet()
             
             newProgress.date = date
-            newProgress.status = theStatus
+            newProgress.status = status
             
             progressActRelate = activity.mutableSetValue(forKey: "activityProgresses")
             progressActRelate.add(newProgress)
             NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
         else {
-            allProgress[0].status = theStatus
+            allProgress[0].status = status
             NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
         
@@ -242,18 +246,20 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         let calendar = Calendar.current
         let components = (calendar as NSCalendar).components ([.day, .month, .year], from: date)
         
-        let year = String(describing: components.year)
+        let year = String(describing: components.year!)
         let month = String(format: "%02d", components.month!)
         let day = String(format: "%02d", components.day!)
         
-        let theDate = year + month + day
+        let theDate = (year + month + day)
         return theDate
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let theName = "asd"
-//            let theName = String((relations.allObjects[(indexPath as NSIndexPath).row] describing: as AnyObject).value(forKey: "name")!)
+            
+            let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
+            let theName = theRelate.name
+
 //            let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
             var theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
             
@@ -324,6 +330,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         var theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
         
+        
         if theActivity == nil {
             theActivity = Activity.mr_createEntity()
             theActivity?.name = theName
@@ -335,25 +342,30 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         progressRelations = activity.mutableSetValue(forKey: "activityProgresses")
+        print(activity.name)
+        print(activity.status)
+        print(progressRelations)
         let theArray: NSArray = progressRelations.sortedArray(using: [NSSortDescriptor(key: "date", ascending: true)]) as NSArray
         
         if progressRelations.count > 7 {
             for index in 0..<7 {
-                let theRelate = theArray.object(at: progressRelations.count-(7-index))
+                let theRelate = theArray.object(at: progressRelations.count-(7-index)) as! ActivityProgress
+                print(theRelate)
+        
+                dates[index] = theRelate.date
                 
-//                dates[index] = String((theRelate describing: as AnyObject).value(forKey: "date")!)
                 theDates[index] = dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].startIndex, offsetBy: 4)..<dates[index].characters.index(dates[index].endIndex, offsetBy: -2))) + "/" + dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].endIndex, offsetBy: -2)..<dates[index].endIndex))
                 
-//                graphPoints.append(Int(Float(String((theRelate describing: as AnyObject).value(forKey: "status")!))! * 1000))
+                graphPoints.append(Int(theRelate.status * 1000.0))
+                //print(Int(theRelate.status * 1000.0))
+                
             }
-
-            print(graphPoints)
-            print(dates)
         }
         else {
             for index in 0..<progressRelations.count {
-                let theRelate = theArray.object(at: index)
-//                dates[index] = String((theRelate describing: as AnyObject).value(forKey: "date")!)
+                let theRelate = theArray.object(at: index) as! ActivityProgress
+                dates[index] = theRelate.date
+                print(dates[index])
                 
                 if (dates[index].characters.count != 0) {
                     theDates[index] = dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].startIndex, offsetBy: 4)..<dates[index].characters.index(dates[index].endIndex, offsetBy: -2))) + "/" + dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].endIndex, offsetBy: -2)..<dates[index].endIndex))
@@ -361,7 +373,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
                 else {
                     theDates[index] = dates[index]
                 }
-//                graphPoints.append(Int(Float(String((theRelate describing: as AnyObject).value(forKey: "status")!))! * 1000))
+                graphPoints.append(Int(theRelate.status * 1000.0))
+                print(Int(theRelate.status * 1000.0))
             }
         }
         
@@ -377,11 +390,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func goBack(){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func goHome(){
-        self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
     func goNext(){

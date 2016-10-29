@@ -170,7 +170,7 @@ protocol NewAlarmDelegate {
             if let id = displayAlarm?.id {
                 
             }
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         default:
             break
         }

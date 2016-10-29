@@ -67,7 +67,7 @@ class TestViewController: UIViewController {
         let refreshCode = Constants.FitbitParameterValue.RefreshCode
         if let accessToken = accessToken, let refreshCode = refreshCode {
             displayTextView.text = "AccessToken: \(accessToken)\nRefreshCode: \(refreshCode)"
-            print(displayTextView.text)
+            //print(displayTextView.text)
         } else {
             displayTextView.text = "AccessToken: Nil\n RefreshCode: Nil"
         }
