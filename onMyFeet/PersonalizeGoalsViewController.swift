@@ -162,14 +162,14 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         homeBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = homeBtn
         
-        if (self.view.frame.height > self.view.frame.width) {
-            topConstrain.constant = self.view.frame.height/10 - 50
-            bottomConstrain.constant = topConstrain.constant
-            widthConstrain.constant = self.view.frame.width/3*2
-        }
-        else if (self.view.frame.height < self.view.frame.width) {
-            widthConstrain.constant = self.view.frame.width/15*7
-        }
+//        if (self.view.frame.height > self.view.frame.width) {
+//            topConstrain.constant = self.view.frame.height/10 - 50
+//            bottomConstrain.constant = topConstrain.constant
+//            widthConstrain.constant = self.view.frame.width/3*2
+//        }
+//        else if (self.view.frame.height < self.view.frame.width) {
+//            widthConstrain.constant = self.view.frame.width/15*7
+//        }
     }
     
     override func didReceiveMemoryWarning() {

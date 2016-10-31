@@ -215,7 +215,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             return
         }
         
-        print("pay attention here!!!!!!!!!!" + String(theStatus))
         
         if (allProgress.count == 0) {
             let progress = ActivityProgress.mr_createEntity()
@@ -342,22 +341,17 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         progressRelations = activity.mutableSetValue(forKey: "activityProgresses")
-        print(activity.name)
-        print(activity.status)
-        print(progressRelations)
         let theArray: NSArray = progressRelations.sortedArray(using: [NSSortDescriptor(key: "date", ascending: true)]) as NSArray
         
         if progressRelations.count > 7 {
             for index in 0..<7 {
                 let theRelate = theArray.object(at: progressRelations.count-(7-index)) as! ActivityProgress
-                print(theRelate)
         
                 dates[index] = theRelate.date
                 
                 theDates[index] = dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].startIndex, offsetBy: 4)..<dates[index].characters.index(dates[index].endIndex, offsetBy: -2))) + "/" + dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].endIndex, offsetBy: -2)..<dates[index].endIndex))
                 
                 graphPoints.append(Int(theRelate.status * 1000.0))
-                //print(Int(theRelate.status * 1000.0))
                 
             }
         }
@@ -365,7 +359,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             for index in 0..<progressRelations.count {
                 let theRelate = theArray.object(at: index) as! ActivityProgress
                 dates[index] = theRelate.date
-                print(dates[index])
                 
                 if (dates[index].characters.count != 0) {
                     theDates[index] = dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].startIndex, offsetBy: 4)..<dates[index].characters.index(dates[index].endIndex, offsetBy: -2))) + "/" + dates[index].substring(with: Range<String.Index> (dates[index].characters.index(dates[index].endIndex, offsetBy: -2)..<dates[index].endIndex))
@@ -374,7 +367,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
                     theDates[index] = dates[index]
                 }
                 graphPoints.append(Int(theRelate.status * 1000.0))
-                print(Int(theRelate.status * 1000.0))
             }
         }
         
