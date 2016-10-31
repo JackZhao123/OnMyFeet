@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
+class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, ViewActivitesTableViewCellDelegate {
     
     
     @IBOutlet weak var stackView: UIStackView!
@@ -111,6 +111,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:indexPath) as! ViewActivitiesTableViewCell
         
         let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
+        cell.currentIdx = indexPath
+        cell.delegate = self
         
         let name = theRelate.name
         let status = CGFloat(theRelate.status)
@@ -251,42 +253,46 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         return theDate
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
-            let theName = theRelate.name
-
-//            let theActivity = GoalDataManager().predicateFetchActivity(NSManagedObjectContext.MR_defaultContext(), theName: theName)
+    func deleteActivityAt(idx: IndexPath) {
+        let theRelate = relations.allObjects[(idx as NSIndexPath).row] as! Activity
+        let theName = theRelate.name
+        
+        let deletingAlertController = UIAlertController(title: "Deleting Activity \n\"\(theName)\"", message: "Are you sure you want to delete the activity \"\(theName)\"", preferredStyle: .alert)
+        let noAction = UIAlertAction(title: "No", style: .default, handler: {(action) in
+            deletingAlertController.dismiss(animated: true, completion: nil)
+        })
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {(action) in
             var theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
-            
             if theActivity == nil {
                 theActivity = Activity.mr_createEntity()
                 theActivity?.name = theName
                 theActivity?.status = 0
             }
             
-            guard let activity = theActivity else {
-                return
+            if let activity = theActivity {
+                self.relations.remove(activity)
+                if (activity.mutableSetValue(forKey: "goals").count == 0) {
+                    activity.mr_deleteEntity()
+                }
+                
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+                
+                DispatchQueue.main.async {
+                    self.activityTable.deleteRows(at: [idx], with: .fade )
+                    self.activityTable.reloadSections(IndexSet(integer: 0), with: .none)
+                }
             }
             
-            relations.remove(activity)
-            
-            tableView.deleteRows(at: [indexPath], with: .fade )
-            tableView.reloadSections(IndexSet(integer: 0), with: .none)
-            
-            
-            if (activity.mutableSetValue(forKey: "goals").count == 0) {
-                activity.mr_deleteEntity()
-//                GoalBackendData().postActivityLatestData()
-            }
-            
-            NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-        }
+            deletingAlertController.dismiss(animated: true, completion: nil)
+        })
+        
+        deletingAlertController.addAction(noAction)
+        deletingAlertController.addAction(deleteAction)
+        self.present(deletingAlertController, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return false
     }
     
     
@@ -406,6 +412,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
 //        desController.index = index
         desController.theGoal = theGoal
         self.navigationController!.pushViewController(desController, animated: true)
+    }
+    
+    //MARK: ViewActivitesTableViewCellDelegate
+    func deleteBtnDidTapped(_ idx: IndexPath) {
+        self.deleteActivityAt(idx: idx)
     }
     
 }
