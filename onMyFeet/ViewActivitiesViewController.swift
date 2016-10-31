@@ -108,15 +108,12 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ViewActivitiesTableViewCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:  indexPath) as! ViewActivitiesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:indexPath) as! ViewActivitiesTableViewCell
         
         let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
         
         let name = theRelate.name
         let status = CGFloat(theRelate.status)
-        
-
-        
         
         cell.label.text = name
         
@@ -294,16 +291,22 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 70
+        return 35
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.frame.width, height: 70))
+        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 70))
         footerView!.backgroundColor = UIColor.white
-        let button = UIButton (frame: CGRect (x: tableView.frame.width/2-30, y: 5, width: 60, height: 60))
-        button.setImage(UIImage (named: "addBtn"), for: UIControlState())
-        button.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: UIControlEvents.touchUpInside)
-        footerView!.addSubview(button)
+        let addBtn = UIButton (frame: CGRect (x: 10, y: 5, width: tableView.width - 20, height: 30))
+        addBtn.setTitle("Tap here to add therapy activities", for: .normal)
+        addBtn.setTitleColor(UIColor.white, for: .normal)
+        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        addBtn.titleLabel?.textAlignment = .center
+        addBtn.backgroundColor = UIColor.defaultGreenColor()
+        addBtn.layer.cornerRadius = 3.0
+        addBtn.clipsToBounds = true
+        addBtn.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: .touchUpInside)
+        footerView!.addSubview(addBtn)
         
         return footerView
     }

@@ -375,19 +375,19 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
-		EB43673E1CFDE23C005CA193 /* Categories */ = {
+		EB43673E1CFDE23C005CA193 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				EB2F92161CFE0949008E65FC /* UIView+Additions.swift */,
 				EB2F92181CFE0970008E65FC /* UIColor+Additions.swift */,
 			);
-			name = Categories;
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		EB43673F1CFDE24E005CA193 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				EB43673E1CFDE23C005CA193 /* Categories */,
+				EB43673E1CFDE23C005CA193 /* Extension */,
 				EB43673A1CFDE220005CA193 /* Controller */,
 				EB43673C1CFDE22C005CA193 /* Model */,
 				EB43673B1CFDE228005CA193 /* View */,
