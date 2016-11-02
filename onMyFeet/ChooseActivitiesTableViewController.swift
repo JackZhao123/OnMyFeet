@@ -14,7 +14,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     var occupationalActs = ["Bath/Shower", "Carrying Groceries", "Dressing", "Eating", "Gathering Items", "Grooming", "Meal Preparation"]
     var physicalActs = ["Balance", "Bed Mobility", "Coordination", "Endurance", "Stairs", "Strengthening", "Transfers", "Walking"]
     
-    var names = ["Bath/Shower", "Carrying Groceries", "Dressing", "Eating", "Gathering Items", "Grooming", "Meal Preparation", "Balance", "Bed Mobility", "Coordination", "Endurance", "Stairs", "Strengthening", "Transfers", "Walking"]
+    var names = ["Balance", "Bed Mobility", "Coordination", "Endurance", "Stairs", "Strengthening", "Transfers", "Walking", "Bath/Shower", "Carrying Groceries", "Dressing", "Eating", "Gathering Items", "Grooming", "Meal Preparation"]
     
     var selectedIndexes = [IndexPath]() {
         didSet {
