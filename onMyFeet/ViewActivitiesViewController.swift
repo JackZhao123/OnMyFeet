@@ -297,11 +297,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 35
+        return 40
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 70))
+        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 40))
         footerView!.backgroundColor = UIColor.white
         let addBtn = UIButton (frame: CGRect (x: 10, y: 5, width: tableView.width - 20, height: 30))
         addBtn.setTitle("Tap here to add therapy activities", for: .normal)
