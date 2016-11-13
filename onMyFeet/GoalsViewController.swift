@@ -22,59 +22,19 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     @IBOutlet weak var constraintLength: NSLayoutConstraint!
     @IBOutlet weak var countLable: UILabel!
     
-    
-
-    @IBAction func deselectAll(_ sender: UIButton) {
-        if (selectedIndexes.count != 0) {
-            selectedIndexes.removeAll()
-            selectedImages.removeAll()
-            countLable.text = "Number of goals selected: 0"
-        }
-    }
-    @IBAction func finishSelecting(_ sender: UIButton) {
-        
-        if ((selectedIndexes.count == 0) && (flagForPersonalGoal == false)) {
-            let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .alert)
-            let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(cancelAction)
-            present(alert, animated: true, completion: nil)
-        }
-            
-        if ((selectedIndexes.count == 0) && (flagForPersonalGoal != false)) {
-            goBack()
-        }
-        else {
-            UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                self.deselectAll.alpha = 0.0
-                self.finishSelecting.alpha = 0.0
-                self.BoxView.alpha = 1.0
-                }, completion: { finished in
-                    
-                    UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseOut, animations: { () -> Void in
-                        self.animation()
-                        }, completion: { finished in
-                            UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                                self.BoxView.alpha = 0.0
-                                self.prioritizeThem.alpha = 1.0
-                                }, completion: { finished in
-                                    self.prioritizeThem.isEnabled = true
-                            })
-                    })
-            })
-        }
-    }
-    
-    
     let reuserIdentifier = "GoalCell"
     var selectedImages = [UIImage]()
-    var selectedIndexes = [IndexPath]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
     var flagForPersonalGoal = false
     var goalsNum = 0
     
+    var selectedIndexes = [IndexPath]() {
+        didSet {
+            countLable.text = "Number of goals selected: \(selectedIndexes.count)"
+            collectionView.reloadData()
+        }
+    }
+    
+    //MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Setting Goals"
@@ -111,7 +71,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         prioritizeThem.alpha = 0.0
         deselectAll.alpha = 1.0
         finishSelecting.alpha = 1.0
-        
+        countLable.isHidden = false
         
         selectedIndexes.removeAll()
         selectedImages.removeAll()
@@ -149,19 +109,16 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
                 selectedImages.remove(at: indexSelected)
                 goalsNum -= 1
                 
-            }else {
+            } else {
                 selectedIndexes.append(indexPath)
                 selectedImages.append(UIImage(named: "\((indexPath as NSIndexPath).item)")!)
                 goalsNum += 1
             }
-        }
-        
-        else {
+            
+        } else {
             flagForPersonalGoal = true
             setPersonalGoal()
         }
-        
-        countLable.text = "Number of goals selected: " + String(goalsNum)
     }
     
     //MARK: Animations
@@ -285,8 +242,83 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     func goHome(){
         _ = self.navigationController?.popToRootViewController(animated: true)
     }
-
     
+    @IBAction func deselectAll(_ sender: UIButton) {
+        if (selectedIndexes.count != 0) {
+            selectedIndexes.removeAll()
+            selectedImages.removeAll()
+            countLable.text = "Number of goals selected: 0"
+        }
+    }
+    
+    @IBAction func finishSelecting(_ sender: UIButton) {
+        
+        if selectedIndexes.count == 0 {
+            //Show alert for not choosing any goals
+            if flagForPersonalGoal == false {
+                let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .alert)
+                let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
+                alert.addAction(cancelAction)
+                present(alert, animated: true, completion: nil)
+            } else {
+                goBack()
+            }
+            
+        } else {
+            //Proceed to next page
+            countLable.isHidden = true
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                self.deselectAll.alpha = 0.0
+                self.finishSelecting.alpha = 0.0
+                self.BoxView.alpha = 1.0
+            }, completion: { finished in
+                
+                UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseOut, animations: { () -> Void in
+                    self.animation()
+                }, completion: { finished in
+                    UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                        self.BoxView.alpha = 0.0
+                        self.prioritizeThem.alpha = 1.0
+                    }, completion: { finished in
+                        self.prioritizeThem.isEnabled = true
+                    })
+                })
+            })
+        }
+        
+//        if ((selectedIndexes.count == 0) && (flagForPersonalGoal == false)) {
+//            let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .alert)
+//            let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
+//            alert.addAction(cancelAction)
+//            present(alert, animated: true, completion: nil)
+//        }
+//        
+//        if ((selectedIndexes.count == 0) && (flagForPersonalGoal != false)) {
+//            goBack()
+//        }
+//        else {
+//            countLable.isHidden = true
+//            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+//                self.deselectAll.alpha = 0.0
+//                self.finishSelecting.alpha = 0.0
+//                self.BoxView.alpha = 1.0
+//            }, completion: { finished in
+//                
+//                UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseOut, animations: { () -> Void in
+//                    self.animation()
+//                }, completion: { finished in
+//                    UIView.animate(withDuration: 0.5, animations: { () -> Void in
+//                        self.BoxView.alpha = 0.0
+//                        self.prioritizeThem.alpha = 1.0
+//                    }, completion: { finished in
+//                        self.prioritizeThem.isEnabled = true
+//                    })
+//                })
+//            })
+//        }
+        
+    }
+
     //MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PrioritizeGoals" {

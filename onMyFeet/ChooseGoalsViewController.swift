@@ -13,6 +13,7 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     
     @IBOutlet weak var personalizeBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var goalsNumLabel: UILabel!
     
     
     let cellIdentifier = "ChooseGoalsCollectionViewCell"
@@ -21,6 +22,7 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     var finalIndexes = [Int]()
     var selectedIndexes = [IndexPath]() {
         didSet {
+            self.goalsNumLabel.text = "Number of goals prioritized: \(selectedIndexes.count)"
             collectionView.reloadData()
         }
     }
@@ -69,15 +71,15 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
         return indexes.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ChooseGoalsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GoalsCollectionViewCell
         
         let theIndex = indexes[(indexPath as NSIndexPath).item]
-        cell.imageView.image = pictures[theIndex]
+        cell.goalImgView.image = pictures[theIndex]
         
         if self.selectedIndexes.index(of: indexPath) == nil {
-            cell.checkView.isHidden = true
+            cell.setCheckViewImage(selected: false)
         } else {
-            cell.checkView.isHidden = false
+            cell.setCheckViewImage(selected: true)
         }
         
         return cell
