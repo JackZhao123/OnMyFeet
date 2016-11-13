@@ -183,7 +183,7 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         textView.text = finalAnswers[index]
         
         if textView.text.isEmpty {
-            textView.text = "Please enter your personalized goal here"
+            textView.text = "Click here to enter your personalized goal"
             textView.textColor = UIColor.lightGray
             _flag = false
         }
