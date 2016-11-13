@@ -482,8 +482,9 @@
 				TargetAttributes = {
 					2AAA60D71C72960300957BEF = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = V6R2PW25Y7;
+						DevelopmentTeam = CMDEE44LM8;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					2AAA60EE1C72960300957BEF = {
 						CreatedOnToolsVersion = 7.2;
@@ -822,12 +823,14 @@
 			baseConfigurationReference = 240F89CFB8837FD94FE6A809 /* Pods-OnMyFeet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = V6R2PW25Y7;
+				DEVELOPMENT_TEAM = CMDEE44LM8;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
+				PROVISIONING_PROFILE = "358dfee6-dd74-43c6-9f11-4cff54c9e992";
+				PROVISIONING_PROFILE_SPECIFIER = "XC Dev";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -838,12 +841,15 @@
 			baseConfigurationReference = BC286E178DDF9E0E05D66733 /* Pods-OnMyFeet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = V6R2PW25Y7;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = CMDEE44LM8;
 				INFOPLIST_FILE = onMyFeet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ece1778.onMyFeet;
 				PRODUCT_NAME = OnMyFeet;
+				PROVISIONING_PROFILE = "7011e00e-29c7-42ad-aae3-efcda2038b86";
+				PROVISIONING_PROFILE_SPECIFIER = "XCWild Ad hoc";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
