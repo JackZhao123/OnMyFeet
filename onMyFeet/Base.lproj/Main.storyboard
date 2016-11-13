@@ -384,7 +384,7 @@
                                 <color key="sectionIndexBackgroundColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" textLabel="hYV-Jc-BxH" rowHeight="65" style="IBUITableViewCellStyleDefault" id="FWp-4L-7f7">
-                                        <rect key="frame" x="0.0" y="55" width="1000" height="65"/>
+                                        <rect key="frame" x="0.0" y="56" width="1000" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ActionCell" tableViewCell="FWp-4L-7f7" id="WyO-jH-d51">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="64"/>
@@ -1003,10 +1003,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1YO-yw-gPL">
-                                <rect key="frame" x="79.5" y="614" width="216" height="33"/>
+                                <rect key="frame" x="70" y="614" width="235" height="33"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.17000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="235" id="6YC-l3-rBF"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <state key="normal" title="  Now let's prioritize them  ">
+                                <state key="normal" title="Click here to prioritize goals">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
