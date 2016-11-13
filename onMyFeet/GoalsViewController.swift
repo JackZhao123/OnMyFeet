@@ -43,7 +43,6 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         if ((selectedIndexes.count == 0) && (flagForPersonalGoal != false)) {
             goBack()
         }
-        
         else {
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
                 self.deselectAll.alpha = 0.0
@@ -131,16 +130,17 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! GoalsCollectionViewCell
         
-        cell.GoalPicture.image = UIImage (named: "\((indexPath as NSIndexPath).item)")
+        cell.goalImgView.image = UIImage (named: "\((indexPath as NSIndexPath).item)")
         
         if self.selectedIndexes.index(of: indexPath) == nil {
-            cell.CheckView.isHidden = true
+            cell.setCheckViewImage(selected: false)
         } else {
-            cell.CheckView.isHidden = false
+            cell.setCheckViewImage(selected: true)
         }
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if ((indexPath as NSIndexPath).row != 16) {
@@ -230,7 +230,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             anim.duration = duration
             anim.timeOffset = delay
             
-            goal.layer.add (anim, forKey: "animate position along path")
+            goal.layer.add(anim, forKey: "animate position along path")
             
         }
 

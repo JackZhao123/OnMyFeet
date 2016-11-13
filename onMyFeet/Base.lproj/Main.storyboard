@@ -384,7 +384,7 @@
                                 <color key="sectionIndexBackgroundColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" textLabel="hYV-Jc-BxH" rowHeight="65" style="IBUITableViewCellStyleDefault" id="FWp-4L-7f7">
-                                        <rect key="frame" x="0.0" y="56" width="1000" height="65"/>
+                                        <rect key="frame" x="0.0" y="55" width="1000" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ActionCell" tableViewCell="FWp-4L-7f7" id="WyO-jH-d51">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="64"/>
@@ -903,12 +903,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FhF-im-ZVe">
-                                <rect key="frame" x="16" y="228.5" width="343" height="210"/>
+                                <rect key="frame" x="16" y="109" width="343" height="422"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="210" id="vpS-3k-xg9"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vEf-WS-oNp">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vEf-WS-oNp">
                                     <size key="itemSize" width="280" height="210"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -916,7 +913,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GoalCell" id="IhW-hQ-ck8" customClass="GoalsCollectionViewCell" customModule="OnMyFeet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="210"/>
+                                        <rect key="frame" x="32" y="0.0" width="280" height="210"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="210"/>
@@ -929,25 +926,25 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Check" translatesAutoresizingMaskIntoConstraints="NO" id="QHJ-QL-LTq">
-                                                    <rect key="frame" x="222" y="157" width="40" height="40"/>
+                                                    <rect key="frame" x="232" y="8" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="2Rc-Rc-UJn"/>
-                                                        <constraint firstAttribute="height" constant="40" id="iXv-K5-fKp"/>
+                                                        <constraint firstAttribute="width" constant="40" id="hET-XP-G33"/>
+                                                        <constraint firstAttribute="height" constant="40" id="nYH-1q-rin"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailingMargin" secondItem="QHJ-QL-LTq" secondAttribute="trailing" constant="10" id="0fM-4m-Aq1"/>
                                             <constraint firstItem="VnS-e4-aBF" firstAttribute="centerX" secondItem="IhW-hQ-ck8" secondAttribute="centerX" id="BNC-Kt-JDm"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="QHJ-QL-LTq" secondAttribute="trailing" id="BS4-Nj-lGo"/>
+                                            <constraint firstAttribute="topMargin" secondItem="QHJ-QL-LTq" secondAttribute="top" id="P2g-xn-Ulb"/>
                                             <constraint firstItem="VnS-e4-aBF" firstAttribute="leading" secondItem="IhW-hQ-ck8" secondAttribute="leadingMargin" id="Ro6-2X-kUU"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="QHJ-QL-LTq" secondAttribute="bottom" constant="5" id="fIQ-Hl-YUg"/>
                                             <constraint firstItem="VnS-e4-aBF" firstAttribute="top" secondItem="IhW-hQ-ck8" secondAttribute="topMargin" id="pOx-qN-7Vu"/>
                                         </constraints>
                                         <size key="customSize" width="280" height="210"/>
                                         <connections>
-                                            <outlet property="CheckView" destination="QHJ-QL-LTq" id="RiP-h1-YgB"/>
-                                            <outlet property="GoalPicture" destination="VnS-e4-aBF" id="HQo-ej-tDN"/>
+                                            <outlet property="checkImgView" destination="QHJ-QL-LTq" id="g8H-5B-IQC"/>
+                                            <outlet property="goalImgView" destination="VnS-e4-aBF" id="Zck-tg-jYu"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -996,8 +993,11 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1: Check the goals that are important to you, as many as you like" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNs-nc-QtW">
-                                <rect key="frame" x="16" y="40" width="343" height="188.5"/>
+                                <rect key="frame" x="16" y="40" width="343" height="55"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="EFH-af-b1U"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1025,10 +1025,12 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="G7W-tB-dyq" secondAttribute="bottom" constant="20" id="AaB-2X-D2b"/>
-                            <constraint firstItem="FhF-im-ZVe" firstAttribute="centerY" secondItem="Ojl-NF-OPL" secondAttribute="centerY" id="DNr-1t-mnH"/>
+                            <constraint firstItem="FhF-im-ZVe" firstAttribute="centerY" secondItem="Ojl-NF-OPL" secondAttribute="centerY" constant="-13.5" id="DNr-1t-mnH"/>
                             <constraint firstItem="1YO-yw-gPL" firstAttribute="top" secondItem="DYs-oo-szB" secondAttribute="bottom" constant="20" id="Ezt-gR-3jw"/>
+                            <constraint firstItem="FhF-im-ZVe" firstAttribute="top" secondItem="VNs-nc-QtW" secondAttribute="bottom" constant="14" id="H9P-qN-SBe"/>
                             <constraint firstItem="FhF-im-ZVe" firstAttribute="leading" secondItem="Ojl-NF-OPL" secondAttribute="leadingMargin" id="HTn-IF-nwg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KDb-tc-sk9" secondAttribute="trailing" id="IiH-tI-wbb"/>
+                            <constraint firstItem="G7W-tB-dyq" firstAttribute="top" secondItem="FhF-im-ZVe" secondAttribute="bottom" constant="-4" id="Ind-fQ-fDp"/>
                             <constraint firstItem="VNs-nc-QtW" firstAttribute="top" secondItem="RFm-dq-tJ0" secondAttribute="bottom" constant="20" id="JSt-q5-ONr">
                                 <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                             </constraint>
@@ -1038,9 +1040,9 @@
                             <constraint firstItem="R8a-5j-L1m" firstAttribute="top" secondItem="1YO-yw-gPL" secondAttribute="bottom" constant="20" id="VsS-QW-due"/>
                             <constraint firstItem="VNs-nc-QtW" firstAttribute="centerX" secondItem="Ojl-NF-OPL" secondAttribute="centerX" id="XE8-Mp-Id5"/>
                             <constraint firstItem="VNs-nc-QtW" firstAttribute="leading" secondItem="Ojl-NF-OPL" secondAttribute="leadingMargin" id="bE8-8r-CHs"/>
-                            <constraint firstItem="FhF-im-ZVe" firstAttribute="top" secondItem="VNs-nc-QtW" secondAttribute="bottom" id="eZa-4e-999"/>
                             <constraint firstItem="R8a-5j-L1m" firstAttribute="top" secondItem="NsI-gq-Q78" secondAttribute="bottom" constant="20" id="ehi-EK-L1v"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VNs-nc-QtW" secondAttribute="trailing" id="kay-Lq-BYj"/>
+                            <constraint firstItem="FhF-im-ZVe" firstAttribute="leading" secondItem="G7W-tB-dyq" secondAttribute="trailing" constant="-231.5" id="mKj-Dx-ef0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FhF-im-ZVe" secondAttribute="trailing" id="pE0-9y-3pl"/>
                             <constraint firstItem="NsI-gq-Q78" firstAttribute="leading" secondItem="Ojl-NF-OPL" secondAttribute="leadingMargin" id="qqC-Ov-9sm"/>
                             <constraint firstItem="G7W-tB-dyq" firstAttribute="centerX" secondItem="FhF-im-ZVe" secondAttribute="centerX" id="uEa-gu-oV4"/>
@@ -1061,7 +1063,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nQD-fI-EAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1947" y="-165"/>
+            <point key="canvasLocation" x="1946.4000000000001" y="-165.06746626686657"/>
         </scene>
         <!--Choose Goals View Controller-->
         <scene sceneID="dDm-Hj-Wx2">
@@ -1392,7 +1394,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z67-QX-hVe">
-                                            <rect key="frame" x="8" y="8" width="359" height="53.5"/>
+                                            <rect key="frame" x="8" y="8" width="359" height="54"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1851,7 +1853,7 @@
     <resources>
         <image name="0" width="473" height="373"/>
         <image name="1" width="473" height="373"/>
-        <image name="Check" width="266" height="266"/>
+        <image name="Check" width="128" height="128"/>
         <image name="Uncheck" width="485" height="485"/>
         <image name="box" width="116" height="103"/>
         <image name="more" width="34" height="32"/>

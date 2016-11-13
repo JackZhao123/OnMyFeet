@@ -10,6 +10,19 @@ import UIKit
 
 class GoalsCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var CheckView: UIImageView!
-    @IBOutlet weak var GoalPicture: UIImageView!
+    @IBOutlet weak var checkImgView: UIImageView!
+    @IBOutlet weak var goalImgView: UIImageView!
+    
+    let checkImg = UIImage(named: "Check")
+    let deselectImg = UIImage(named: "Cross")
+    
+    func setCheckViewImage(selected: Bool)
+    {
+        if selected == false {
+            self.checkImgView.image = deselectImg
+        } else {
+            self.checkImgView.image = checkImg
+        }
+    }
+    
 }
