@@ -173,7 +173,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     
 
     func setPersonalActivity() {
-        let setAct = UIAlertController(title: "Add a personal activity that is important to you", message: "", preferredStyle: .alert)
+        let setAct = UIAlertController(title: "Add another therapy activity that you want to work on", message: "", preferredStyle: .alert)
         let alert = UIAlertController(title: "", message: nil, preferredStyle: .alert)
         setAct.addTextField { (textField) -> Void in
             textField.placeholder = "Enter your personal activity here"
