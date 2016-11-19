@@ -26,6 +26,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var greenView: UIView!
     @IBOutlet weak var actLabel: UILabel!
     @IBOutlet weak var doneBtn: UIButton!
+    @IBOutlet weak var setStatusBtn: UIButton!
+    @IBOutlet weak var viewProgressBtn: UIButton!
+    
+    
+    
     
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
@@ -44,6 +49,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     var flag = false
     var theStatus: Float = 0.0
     var theName: String = ""
+    var headerView: UIView?
     var footerView: UIView?
     var isWeeklyGraphShowing = false
     
@@ -74,14 +80,28 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         doneBtn.layer.cornerRadius = 5.0;
         doneBtn.layer.borderColor = UIColor.gray.cgColor
         doneBtn.layer.borderWidth = 1.5
-        DailyView.layer.cornerRadius = 10.0
+        //DailyView.layer.cornerRadius = 10.0
         greenView.layer.cornerRadius = 10.0
-        redView.layer.cornerRadius = 10.0
+        //redView.layer.cornerRadius = 10.0
+        
+        //setStatusBtn.layer.cornerRadius = 5.0
+        setStatusBtn.layer.borderColor = UIColor.gray.cgColor
+        setStatusBtn.layer.borderWidth = 1.5
+        
+        //viewProgressBtn.layer.cornerRadius = 5.0
+        viewProgressBtn.layer.borderColor = UIColor.gray.cgColor
+        viewProgressBtn.layer.borderWidth = 1.5
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         relations = (theGoal!.mutableSetValue(forKey: "activities"))
         activityTable.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        textView.setContentOffset(CGPoint.zero, animated: false)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -119,8 +139,20 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         cell.label.text = name
         
-        cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        cell.theSlider.value = status
+//        cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+//        cell.theSlider.value = status
+        
+        cell.status.backgroundColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        cell.status.layer.cornerRadius = 5.0
+        cell.status.clipsToBounds = true
+        cell.status.layer.borderColor = UIColor.gray.cgColor
+        cell.status.layer.borderWidth = 1.5
+
+        
+        cell.programBtn.layer.cornerRadius = 5.0
+        cell.programBtn.clipsToBounds = true
+        cell.programBtn.layer.borderColor = UIColor.gray.cgColor
+        cell.programBtn.layer.borderWidth = 1.5
         
         //chooseSlider(cell.theSlider, status: status)
         //getStatus(cell.theSlider)
@@ -188,6 +220,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         RainbowView.isHidden = true
         stackView.isHidden = false
         activityTable.reloadData()
+        UIView.transition(from: WeeklyView, to: DailyView, duration: 0.0, options: .showHideTransitionViews, completion: nil)
+        isWeeklyGraphShowing = false
     }
     
     func changeStatus(_ name: String, status: Float) {
@@ -262,12 +296,12 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             deletingAlertController.dismiss(animated: true, completion: nil)
         })
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {(action) in
-            var theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
-            if theActivity == nil {
-                theActivity = Activity.mr_createEntity()
-                theActivity?.name = theName
-                theActivity?.status = 0
-            }
+            let theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
+//            if theActivity == nil {
+//                theActivity = Activity.mr_createEntity()
+//                theActivity?.name = theName
+//                theActivity?.status = 0
+//            }
             
             if let activity = theActivity {
                 self.relations.remove(activity)
@@ -296,37 +330,99 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 40
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 40))
-        footerView!.backgroundColor = UIColor.white
-        let addBtn = UIButton (frame: CGRect (x: 10, y: 5, width: tableView.width - 20, height: 30))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        headerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
+        headerView!.backgroundColor = UIColor.white
+        let addBtn = UIButton (frame: CGRect (x: 30, y: 10, width: tableView.width - 60, height: 30))
         addBtn.setTitle("Tap here to add therapy activities", for: .normal)
         addBtn.setTitleColor(UIColor.white, for: .normal)
         addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
         addBtn.titleLabel?.textAlignment = .center
         addBtn.backgroundColor = UIColor.defaultGreenColor()
-        addBtn.layer.cornerRadius = 3.0
+        addBtn.layer.cornerRadius = 5.0
         addBtn.clipsToBounds = true
         addBtn.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: .touchUpInside)
-        footerView!.addSubview(addBtn)
+        headerView!.addSubview(addBtn)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 45
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
+        footerView!.backgroundColor = UIColor.white
+        let deleteBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 10, width: 100, height: 30))
+        deleteBtn.setTitle("Delete goal", for: .normal)
+        deleteBtn.setTitleColor(UIColor.white, for: .normal)
+        deleteBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        deleteBtn.titleLabel?.textAlignment = .center
+        deleteBtn.backgroundColor = UIColor.red
+        deleteBtn.layer.cornerRadius = 5.0
+        deleteBtn.clipsToBounds = true
+        deleteBtn.addTarget(self, action: #selector(ViewActivitiesViewController.deleteGoal), for: .touchUpInside)
+        footerView!.addSubview(deleteBtn)
         
         return footerView
     }
     
-    @IBAction func dailyViewTap(_ gesture: UITapGestureRecognizer?) {
+    
+    func deleteGoal() {
+        let deleteGoalAlertController = UIAlertController(title: "Deleting Goal", message: "Are you sure you want to delete the goal", preferredStyle: .alert)
+        let noAction = UIAlertAction(title: "No", style: .default, handler: {(action) in
+            deleteGoalAlertController.dismiss(animated: true, completion: nil)
+        })
+        let deleteGoalAction = UIAlertAction(title: "Delete", style: .destructive, handler: {(action) in
+//            let goal = Goal.mr_findFirst(with: NSPredicate(format: "answer == %@ AND question = %@", (self.theGoal?.answer!)!, (self.theGoal?.question)!))
+
+            
+            DispatchQueue.main.async {
+                let goal = Goal.mr_findFirst(with: NSPredicate(format: "answer == %@ AND question = %@", (self.theGoal?.answer!)!, (self.theGoal?.question)!))
+                goal?.mr_deleteEntity()
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+                deleteGoalAlertController.dismiss(animated: true, completion: nil)
+                self.goBack()
+            }
+        })
         
-        if(isWeeklyGraphShowing) {
-            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
-        }
-        else {
-            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
-        }
-        isWeeklyGraphShowing = !isWeeklyGraphShowing
+        deleteGoalAlertController.addAction(noAction)
+        deleteGoalAlertController.addAction(deleteGoalAction)
+        self.present(deleteGoalAlertController, animated: true, completion: nil)
     }
+
+    
+//    @IBAction func dailyViewTap(_ gesture: UITapGestureRecognizer?) {
+//        
+//        if(isWeeklyGraphShowing) {
+//            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+//        }
+//        else {
+//            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+//        }
+//        isWeeklyGraphShowing = !isWeeklyGraphShowing
+//    }
+    
+    
+    @IBAction func setStatusClick(_ sender: AnyObject) {
+        if (isWeeklyGraphShowing) {
+            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+            isWeeklyGraphShowing = false
+        }
+    }
+    @IBAction func viewProgressClick(_ sender: AnyObject) {
+        if(!isWeeklyGraphShowing) {
+            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+            isWeeklyGraphShowing = true
+        }
+    }
+    
+    
     
     
     func setLableText(_ name: String) {

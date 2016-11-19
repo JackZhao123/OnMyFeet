@@ -71,6 +71,8 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         prioritizeThem.alpha = 0.0
         deselectAll.alpha = 1.0
         finishSelecting.alpha = 1.0
+        collectionView.alpha = 1.0
+        collectionView.allowsSelection = true
         countLable.isHidden = false
         
         selectedIndexes.removeAll()
@@ -132,10 +134,11 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             b2.size.width = 120
             b2.size.height = 120
             let b3 = self.goalView.bounds
-            let width = b3.size.width
-            let height = b3.size.height
             let b4 = self.collectionView.bounds
             let b5 = self.selectLabel.bounds
+            
+            let width = b3.size.width
+            let height = b3.size.height
             
             
             goal.image = self.selectedImages[i]
@@ -170,16 +173,20 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             })
             
             let path = UIBezierPath()
-            let w1 = width / CGFloat(self.selectedImages.count-1)
-            let h1 = b5.size.height+b4.size.height/2+constraintLength.constant*2
+//            let w1 = width / CGFloat(self.selectedImages.count-1)
+//            let h1 = b5.size.height+b4.size.height/2+constraintLength.constant*2
+            
+            let w = b4.size.width - 100
+            let w1 = w / CGFloat(self.selectedImages.count-1)
+            let h1 = height/2-30
             
             if (self.selectedImages.count == 1) {
                 path.move(to: CGPoint (x: width/2, y: h1))
             }else {
-                path.move(to: CGPoint (x: w1*CGFloat(i), y: h1))
+                path.move(to: CGPoint (x: (width-w)/2 + w1*CGFloat(i), y: h1))
             }
             
-            path.addLine(to: CGPoint(x: width/2, y: height-150))
+            path.addLine(to: CGPoint(x: width/2, y: height-180))
             
             let anim = CAKeyframeAnimation (keyPath: "position")
             anim.path = path.cgPath
@@ -188,9 +195,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             anim.timeOffset = delay
             
             goal.layer.add(anim, forKey: "animate position along path")
-            
         }
-
     }
     
     func setPersonalGoal() {
@@ -267,9 +272,11 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
         } else {
             //Proceed to next page
             countLable.isHidden = true
-            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            collectionView.allowsSelection = false
+            UIView.animate(withDuration: 0.7, animations: { () -> Void in
                 self.deselectAll.alpha = 0.0
                 self.finishSelecting.alpha = 0.0
+                self.collectionView.alpha = 0.5
                 self.BoxView.alpha = 1.0
             }, completion: { finished in
                 
@@ -284,39 +291,7 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
                     })
                 })
             })
-        }
-        
-//        if ((selectedIndexes.count == 0) && (flagForPersonalGoal == false)) {
-//            let alert = UIAlertController (title: "Please select your goals", message: "You should select at least 1 goal", preferredStyle: .alert)
-//            let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
-//            alert.addAction(cancelAction)
-//            present(alert, animated: true, completion: nil)
-//        }
-//        
-//        if ((selectedIndexes.count == 0) && (flagForPersonalGoal != false)) {
-//            goBack()
-//        }
-//        else {
-//            countLable.isHidden = true
-//            UIView.animate(withDuration: 0.5, animations: { () -> Void in
-//                self.deselectAll.alpha = 0.0
-//                self.finishSelecting.alpha = 0.0
-//                self.BoxView.alpha = 1.0
-//            }, completion: { finished in
-//                
-//                UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseOut, animations: { () -> Void in
-//                    self.animation()
-//                }, completion: { finished in
-//                    UIView.animate(withDuration: 0.5, animations: { () -> Void in
-//                        self.BoxView.alpha = 0.0
-//                        self.prioritizeThem.alpha = 1.0
-//                    }, completion: { finished in
-//                        self.prioritizeThem.isEnabled = true
-//                    })
-//                })
-//            })
-//        }
-        
+        }        
     }
 
     //MARK: Navigation
@@ -329,5 +304,4 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
             }
         }
     }
-
 }

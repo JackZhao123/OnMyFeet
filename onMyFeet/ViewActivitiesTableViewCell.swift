@@ -15,7 +15,9 @@ protocol ViewActivitesTableViewCellDelegate: class {
 class ViewActivitiesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var theSlider: GradientSlider!
+//    @IBOutlet weak var theSlider: GradientSlider!
+    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var programBtn: UIButton!    
     @IBOutlet weak var deleteBtn: UIButton!
     
     var currentIdx: IndexPath?

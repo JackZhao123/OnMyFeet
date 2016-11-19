@@ -55,6 +55,17 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         goals = Goal.mr_findAll() as! [Goal]
         goalTable.setContentOffset(CGPoint.zero, animated: true)
         goalTable.reloadData()
+        
+        if (goals.count == 0) {
+            goalTable.isHidden = true
+            setGoalsBtn.isHidden = false
+            setGoalsBtn.isEnabled = true
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        automaticallyAdjustsScrollViewInsets = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,11 +94,13 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
         let goal = goals[(indexPath as NSIndexPath).row]
         
         cell.theImage.image = UIImage(data: goal.picture! as Data)
+        cell.theLabel.setContentOffset(CGPoint.zero, animated: false)
         cell.theLabel.text = goal.answer
         cell.theLabel.delegate = self
         
         return cell
     }
+    
     
 //    func textViewDidBeginEditing(textView: UITextView) {
 //        let point = textView.convertPoint(textView.bounds.origin, toView: self.goalTable)
@@ -96,32 +109,37 @@ class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableV
 //        print(indexPath)
 //    }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        let point = textView.convert(textView.bounds.origin, to: self.goalTable)
-        let index = (self.goalTable.indexPathForRow(at: point) as NSIndexPath?)?.row
-        let theGoal = goals[index!]
-        
-        theGoal.answer = textView.text
-        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-    }
-    
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        let point = textView.convert(textView.bounds.origin, to: self.goalTable)
+//        let index = (self.goalTable.indexPathForRow(at: point) as NSIndexPath?)?.row
+//        let theGoal = goals[index!]
+//        
+//        theGoal.answer = textView.text
+//        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+//    }
+//    
+//    
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        if(text == "\n") {
+//            textView.resignFirstResponder()
+//            return false
+//        }
+//        return true
+//    }
     
     //MARK: TableViewDelegate
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            self.goals[(indexPath as NSIndexPath).row].mr_deleteEntity()
-            goals.remove(at: (indexPath as NSIndexPath).row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            self.goals[(indexPath as NSIndexPath).row].mr_deleteEntity()
+//            goals.remove(at: (indexPath as NSIndexPath).row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            if (goals.count == 0) {
+//                goalTable.isHidden = true
+//                setGoalsBtn.isHidden = false
+//                setGoalsBtn.isEnabled = true
+//            }
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true

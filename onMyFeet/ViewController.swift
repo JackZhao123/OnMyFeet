@@ -113,7 +113,7 @@ class ViewController: BaseViewController, UITableViewDataSource, UITableViewDele
         })
         finishAlertController.addAction(okAction)
         
-        let resetAlertController = UIAlertController(title: "Reset All Data", message: "This operation could not be undo", preferredStyle: .actionSheet)
+        let resetAlertController = UIAlertController(title: "Reset All Data", message: "This operation cannot be undone", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(cancelAction) in
             resetAlertController.dismiss(animated: true, completion: nil)
         })

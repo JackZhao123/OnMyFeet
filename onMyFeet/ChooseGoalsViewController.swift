@@ -125,7 +125,11 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
                 finalIndexes.append(indexes[(selectedIndexes[index] as NSIndexPath).row])
             }
             
-            goNext()
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                self.collectionView.alpha = 0.5
+                }, completion: { finished in
+                    self.goNext()
+            })
         }
     }
     
