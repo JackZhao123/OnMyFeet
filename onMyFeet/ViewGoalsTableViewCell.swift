@@ -29,6 +29,4 @@ class ViewGoalsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
         self.theLabel.scrollRangeToVisible(NSMakeRange(0, 0))
     }
-    
-
 }

@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable class GradientSlider: UIControl {
     
     static var defaultThickness:CGFloat = 2.0
-    static var defaultThumbSize:CGFloat = 28.0
+    static var defaultThumbSize:CGFloat = 34
     
     //MARK: Properties
     @IBInspectable var hasRainbow:Bool  = false {didSet{updateTrackColors()}}//Uses saturation & lightness from minColor
@@ -328,9 +328,13 @@ import UIKit
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let pt = touch.location(in: self)
         
-        let center = _thumbLayer.position
+        //let center = _thumbLayer.position
         let diameter = max(thumbSize,44.0)
-        let r = CGRect(x: center.x - diameter/2.0, y: center.y - diameter/2.0, width: diameter, height: diameter)
+        //let r = CGRect(x: center.x - diameter/2.0, y: center.y - diameter/2.0, width: diameter, height: diameter)
+        
+        let border = _trackLayer.bounds
+        let r = CGRect(x: 0, y: 0, width: border.width, height: diameter)
+        
         if r.contains(pt){
             sendActions(for: UIControlEvents.touchDown)
             return true

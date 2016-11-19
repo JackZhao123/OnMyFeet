@@ -160,7 +160,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
         let doneBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 5, width: 100, height: 30))
         doneBtn.setTitle("Done", for: .normal)
         doneBtn.setTitleColor(UIColor.white, for: .normal)
-        doneBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        doneBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17.0)
         doneBtn.titleLabel?.textAlignment = .center
         doneBtn.backgroundColor = UIColor.defaultGreenColor()
         doneBtn.layer.cornerRadius = 3.0
