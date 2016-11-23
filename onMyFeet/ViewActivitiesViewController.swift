@@ -104,63 +104,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         textView.setContentOffset(CGPoint.zero, animated: false)
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        theGoal?.answer = textView.text
-        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
-    
-    func show() {
-        imageView.image = UIImage(data: theGoal!.picture! as Data)
-        textView.text = theGoal!.answer
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return relations.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "ViewActivitiesTableViewCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:indexPath) as! ViewActivitiesTableViewCell
-        
-        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
-        cell.currentIdx = indexPath
-        cell.delegate = self
-        
-        let name = theRelate.name
-        let status = CGFloat(theRelate.status)
-        
-        cell.label.text = name
-        
-//        cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-//        cell.theSlider.value = status
-        
-        cell.status.backgroundColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        cell.status.layer.cornerRadius = 5.0
-        cell.status.clipsToBounds = true
-        cell.status.layer.borderColor = UIColor.gray.cgColor
-        cell.status.layer.borderWidth = 1.5
-
-        
-        cell.programBtn.layer.cornerRadius = 5.0
-        cell.programBtn.clipsToBounds = true
-        cell.programBtn.layer.borderColor = UIColor.gray.cgColor
-        cell.programBtn.layer.borderWidth = 1.5
-        
-        //chooseSlider(cell.theSlider, status: status)
-        //getStatus(cell.theSlider)
-        
-        return cell
-    }
-    
-    
 //    func getStatus(slider: GradientSlider) {
 //        var status: Float = 0.0
 //        var name: String = ""
@@ -176,6 +119,32 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
 //        }
 //    }
     
+    func getDate() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components ([.day, .month, .year], from: date)
+        
+        let year = String(describing: components.year!)
+        let month = String(format: "%02d", components.month!)
+        let day = String(format: "%02d", components.day!)
+        
+        let theDate = (year + month + day)
+        return theDate
+    }
+    
+//    @IBAction func dailyViewTap(_ gesture: UITapGestureRecognizer?) {
+//        
+//        if(isWeeklyGraphShowing) {
+//            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+//        }
+//        else {
+//            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+//        }
+//        isWeeklyGraphShowing = !isWeeklyGraphShowing
+//    }
+    
+    //MARK: Activities, Goals and Status
+    
     func saveStatus(_ slider: GradientSlider, indexPath: IndexPath) {
         var status: Float = 0.0
         var name: String = ""
@@ -185,43 +154,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
             status = Float(newValue)
             self.changeStatus(name, status: status)
         }
-    }
-    
-    
-    func chooseSlider(_ slider: GradientSlider, status: CGFloat) {
-        slider.actionBlock = {slider, newValue in
-            CATransaction.begin()
-            CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-            slider.thumbColor = UIColor(hue: newValue / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-            CATransaction.commit()
-        }
-        slider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        RainbowView.isHidden = false
-        stackView.isHidden = true
-        
-        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
-        theName = theRelate.name
-        theStatus = theRelate.status
-        
-        actLabel.text = theName
-        theSlider.value = CGFloat(theStatus)
-        theSlider.thumbColor = UIColor(hue: CGFloat(theStatus) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        
-        chooseSlider(theSlider, status: CGFloat(theStatus))
-        saveStatus(theSlider, indexPath: indexPath)
-        setLableText(theName)
-    }
-    
-    @IBAction func doneBtn(_ sender: UIButton) {
-        RainbowView.isHidden = true
-        stackView.isHidden = false
-        activityTable.reloadData()
-        UIView.transition(from: WeeklyView, to: DailyView, duration: 0.0, options: .showHideTransitionViews, completion: nil)
-        isWeeklyGraphShowing = false
     }
     
     func changeStatus(_ name: String, status: Float) {
@@ -240,7 +172,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         
         let date = getDate()
-//        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: activity, theDate: date, theStatus: status)
+        //        GoalDataManager().executeProgressUpdate(NSManagedObjectContext.MR_defaultContext(), theAct: activity, theDate: date, theStatus: status)
         
         let results = ActivityProgress.mr_findAllSorted(by: "date", ascending: true, with: NSPredicate(format: "activity.name == %@ AND date == %@", activity.name, date), in: NSManagedObjectContext.mr_default())
         
@@ -274,19 +206,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         setLableText(name)
     }
     
-    func getDate() -> String {
-        let date = Date()
-        let calendar = Calendar.current
-        let components = (calendar as NSCalendar).components ([.day, .month, .year], from: date)
-        
-        let year = String(describing: components.year!)
-        let month = String(format: "%02d", components.month!)
-        let day = String(format: "%02d", components.day!)
-        
-        let theDate = (year + month + day)
-        return theDate
-    }
-    
     func deleteActivityAt(idx: IndexPath) {
         let theRelate = relations.allObjects[(idx as NSIndexPath).row] as! Activity
         let theName = theRelate.name
@@ -297,11 +216,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         })
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {(action) in
             let theActivity = Activity.mr_findFirst(with: NSPredicate(format: "name == %@", theName))
-//            if theActivity == nil {
-//                theActivity = Activity.mr_createEntity()
-//                theActivity?.name = theName
-//                theActivity?.status = 0
-//            }
+            //            if theActivity == nil {
+            //                theActivity = Activity.mr_createEntity()
+            //                theActivity?.name = theName
+            //                theActivity?.status = 0
+            //            }
             
             if let activity = theActivity {
                 self.relations.remove(activity)
@@ -325,62 +244,14 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         self.present(deletingAlertController, animated: true, completion: nil)
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        headerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
-        headerView!.backgroundColor = UIColor.white
-        let addBtn = UIButton (frame: CGRect (x: 30, y: 10, width: tableView.width - 60, height: 30))
-        addBtn.setTitle("Tap here to add therapy activities", for: .normal)
-        addBtn.setTitleColor(UIColor.white, for: .normal)
-        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
-        addBtn.titleLabel?.textAlignment = .center
-        addBtn.backgroundColor = UIColor.defaultGreenColor()
-        addBtn.layer.cornerRadius = 5.0
-        addBtn.clipsToBounds = true
-        addBtn.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: .touchUpInside)
-        headerView!.addSubview(addBtn)
-        
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 45
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
-        footerView!.backgroundColor = UIColor.white
-        let deleteBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 10, width: 100, height: 30))
-        deleteBtn.setTitle("Delete goal", for: .normal)
-        deleteBtn.setTitleColor(UIColor.white, for: .normal)
-        deleteBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
-        deleteBtn.titleLabel?.textAlignment = .center
-        deleteBtn.backgroundColor = UIColor.red
-        deleteBtn.layer.cornerRadius = 5.0
-        deleteBtn.clipsToBounds = true
-        deleteBtn.addTarget(self, action: #selector(ViewActivitiesViewController.deleteGoal), for: .touchUpInside)
-        footerView!.addSubview(deleteBtn)
-        
-        return footerView
-    }
-    
-    
     func deleteGoal() {
         let deleteGoalAlertController = UIAlertController(title: "Deleting Goal", message: "Are you sure you want to delete the goal", preferredStyle: .alert)
         let noAction = UIAlertAction(title: "No", style: .default, handler: {(action) in
             deleteGoalAlertController.dismiss(animated: true, completion: nil)
         })
         let deleteGoalAction = UIAlertAction(title: "Delete", style: .destructive, handler: {(action) in
-//            let goal = Goal.mr_findFirst(with: NSPredicate(format: "answer == %@ AND question = %@", (self.theGoal?.answer!)!, (self.theGoal?.question)!))
-
+            //            let goal = Goal.mr_findFirst(with: NSPredicate(format: "answer == %@ AND question = %@", (self.theGoal?.answer!)!, (self.theGoal?.question)!))
+            
             
             DispatchQueue.main.async {
                 let goal = Goal.mr_findFirst(with: NSPredicate(format: "answer == %@ AND question = %@", (self.theGoal?.answer!)!, (self.theGoal?.question)!))
@@ -395,35 +266,12 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         deleteGoalAlertController.addAction(deleteGoalAction)
         self.present(deleteGoalAlertController, animated: true, completion: nil)
     }
-
     
-//    @IBAction func dailyViewTap(_ gesture: UITapGestureRecognizer?) {
-//        
-//        if(isWeeklyGraphShowing) {
-//            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
-//        }
-//        else {
-//            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
-//        }
-//        isWeeklyGraphShowing = !isWeeklyGraphShowing
-//    }
-    
-    
-    @IBAction func setStatusClick(_ sender: AnyObject) {
-        if (isWeeklyGraphShowing) {
-            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
-            isWeeklyGraphShowing = false
-        }
+    //MARK: Setup UI
+    func show() {
+        imageView.image = UIImage(data: theGoal!.picture! as Data)
+        textView.text = theGoal!.answer
     }
-    @IBAction func viewProgressClick(_ sender: AnyObject) {
-        if(!isWeeklyGraphShowing) {
-            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
-            isWeeklyGraphShowing = true
-        }
-    }
-    
-    
-    
     
     func setLableText(_ name: String) {
         
@@ -494,6 +342,39 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         theLine.setNeedsDisplay()
     }
     
+    //MARK: User Interaction
+    @IBAction func setStatusClick(_ sender: AnyObject) {
+        if (isWeeklyGraphShowing) {
+            UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+            isWeeklyGraphShowing = false
+        }
+    }
+    
+    @IBAction func viewProgressClick(_ sender: AnyObject) {
+        if(!isWeeklyGraphShowing) {
+            UIView.transition(from: DailyView, to: WeeklyView, duration: 1.0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+            isWeeklyGraphShowing = true
+        }
+    }
+    
+    @IBAction func doneBtn(_ sender: UIButton) {
+        RainbowView.isHidden = true
+        stackView.isHidden = false
+        activityTable.reloadData()
+        UIView.transition(from: WeeklyView, to: DailyView, duration: 0.0, options: .showHideTransitionViews, completion: nil)
+        isWeeklyGraphShowing = false
+    }
+    
+    func chooseSlider(_ slider: GradientSlider, status: CGFloat) {
+        slider.actionBlock = {slider, newValue in
+            CATransaction.begin()
+            CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+            slider.thumbColor = UIColor(hue: newValue / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+            CATransaction.commit()
+        }
+        slider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+    }
+    
     func goBack(){
         _ = self.navigationController?.popViewController(animated: true)
     }
@@ -505,9 +386,121 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     func goNext(){
         let storyboardIdentifier = "ChooseActivitiesTableViewController"
         let desController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardIdentifier) as! ChooseActivitiesTableViewController
-//        desController.index = index
+        //        desController.index = index
         desController.theGoal = theGoal
         self.navigationController!.pushViewController(desController, animated: true)
+    }
+    
+    //MARK: TextView delegate
+    func textViewDidEndEditing(_ textView: UITextView) {
+        theGoal?.answer = textView.text
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    //MARK: TableView Datasource & Delegate
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return relations.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = "ViewActivitiesTableViewCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for:indexPath) as! ViewActivitiesTableViewCell
+        
+        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
+        cell.currentIdx = indexPath
+        cell.delegate = self
+        
+        let name = theRelate.name
+        let status = CGFloat(theRelate.status)
+        
+        cell.label.text = name
+        
+        //        cell.theSlider.thumbColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        //        cell.theSlider.value = status
+        
+        cell.status.backgroundColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        cell.status.layer.cornerRadius = 5.0
+        cell.status.clipsToBounds = true
+        cell.status.layer.borderColor = UIColor.gray.cgColor
+        cell.status.layer.borderWidth = 1.5
+        
+        
+        cell.programBtn.layer.cornerRadius = 5.0
+        cell.programBtn.clipsToBounds = true
+        cell.programBtn.layer.borderColor = UIColor.gray.cgColor
+        cell.programBtn.layer.borderWidth = 1.5
+        
+        //chooseSlider(cell.theSlider, status: status)
+        //getStatus(cell.theSlider)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        headerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
+        headerView!.backgroundColor = UIColor.white
+        let addBtn = UIButton (frame: CGRect (x: 30, y: 10, width: tableView.width - 60, height: 30))
+        addBtn.setTitle("Tap here to add therapy activities", for: .normal)
+        addBtn.setTitleColor(UIColor.white, for: .normal)
+        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        addBtn.titleLabel?.textAlignment = .center
+        addBtn.backgroundColor = UIColor.defaultGreenColor()
+        addBtn.layer.cornerRadius = 5.0
+        addBtn.clipsToBounds = true
+        addBtn.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: .touchUpInside)
+        headerView!.addSubview(addBtn)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 45
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
+        footerView!.backgroundColor = UIColor.white
+        let deleteBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 10, width: 100, height: 30))
+        deleteBtn.setTitle("Delete goal", for: .normal)
+        deleteBtn.setTitleColor(UIColor.white, for: .normal)
+        deleteBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        deleteBtn.titleLabel?.textAlignment = .center
+        deleteBtn.backgroundColor = UIColor.red
+        deleteBtn.layer.cornerRadius = 5.0
+        deleteBtn.clipsToBounds = true
+        deleteBtn.addTarget(self, action: #selector(ViewActivitiesViewController.deleteGoal), for: .touchUpInside)
+        footerView!.addSubview(deleteBtn)
+        
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        RainbowView.isHidden = false
+        stackView.isHidden = true
+        
+        let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
+        theName = theRelate.name
+        theStatus = theRelate.status
+        
+        actLabel.text = theName
+        theSlider.value = CGFloat(theStatus)
+        theSlider.thumbColor = UIColor(hue: CGFloat(theStatus) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        
+        chooseSlider(theSlider, status: CGFloat(theStatus))
+        saveStatus(theSlider, indexPath: indexPath)
+        setLableText(theName)
     }
     
     //MARK: ViewActivitesTableViewCellDelegate
