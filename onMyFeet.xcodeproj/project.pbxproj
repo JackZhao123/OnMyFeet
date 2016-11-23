@@ -50,6 +50,7 @@
 		2AAA60F41C72960300957BEF /* onMyFeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA60F31C72960300957BEF /* onMyFeetTests.swift */; };
 		2ABFEC701C960EE00093D574 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC6F1C960EE00093D574 /* Constants.swift */; };
 		2ABFEC731C9699630093D574 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABFEC721C9699630093D574 /* TestViewController.swift */; };
+		2AD080911DE5F835000C8281 /* DisplayConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD080901DE5F835000C8281 /* DisplayConstant.swift */; };
 		2ADFEC9D1CAF4E1100DB16DA /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */; };
 		2ADFEC9E1CAF4E1100DB16DA /* AlarmCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */; };
 		2ADFECA11CAF556E00DB16DA /* NewAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */; };
@@ -135,6 +136,7 @@
 		2AAA60F51C72960300957BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2ABFEC6F1C960EE00093D574 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2ABFEC721C9699630093D574 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		2AD080901DE5F835000C8281 /* DisplayConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayConstant.swift; sourceTree = "<group>"; };
 		2ADFEC9B1CAF4E1100DB16DA /* AlarmCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
 		2ADFEC9C1CAF4E1100DB16DA /* AlarmCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmCell.xib; sourceTree = "<group>"; };
 		2ADFEC9F1CAF556E00DB16DA /* NewAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAlarmController.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				2A3562AF1CA7260500C20CEF /* DateStruct.swift */,
+				2AD080901DE5F835000C8281 /* DisplayConstant.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				EB2F92141CFE086B008E65FC /* BaseViewController.swift in Sources */,
 				2ADFECA81CAF615100DB16DA /* TimePickerCell.swift in Sources */,
 				2A2E41E31C80AE8700E78A37 /* DailySummary.swift in Sources */,
+				2AD080911DE5F835000C8281 /* DisplayConstant.swift in Sources */,
 				2AF9BE4A1CB07F0A007F534E /* Alarm.swift in Sources */,
 				2A1F7C711C9296A700C942CF /* QuestionSet.swift in Sources */,
 				187572FB1CB216B80095F112 /* ViewGoalsTableViewCell.swift in Sources */,

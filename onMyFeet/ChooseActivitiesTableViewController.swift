@@ -29,6 +29,10 @@ class ChooseActivitiesTableViewController: UITableViewController {
     var theGoal: Goal?
     var theActivity: Activity?
     var footerView: UIView?
+    var footerDoneView: UIView!
+    var footerAddView: UIView!
+    var separatorView: UIView!
+    var customActivitiesList = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +43,55 @@ class ChooseActivitiesTableViewController: UITableViewController {
         //        backBtn.tintColor = UIColor.whiteColor()
         //        navigationItem.leftBarButtonItem = backBtn
         
-//        let nextBtn = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
+//        let nextBtn = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChooseActivitiesTableViewController.done))
 //        nextBtn.tintColor = UIColor.white
 //        navigationItem.rightBarButtonItem = nextBtn
         
+        footerAddView = UIView(frame: CGRect(x: 0, y: DisplayConstant.screenHeight() - 50, width: DisplayConstant.screenWidth()/2, height: 50))
+        footerAddView.backgroundColor = UIColor.defaultGreenColor()
+        
+        let addLabel = UILabel(frame: CGRect(x: 0, y: 0, width: footerAddView.width, height: footerAddView.height))
+        addLabel.text = "Add Others"
+        addLabel.textColor = UIColor.white
+        addLabel.font = UIFont.boldSystemFont(ofSize: 23)
+        addLabel.textAlignment = .center
+        footerAddView.addSubview(addLabel)
+        
+        let tapAddGesture = UITapGestureRecognizer(target: self, action: #selector(self.setPersonalActivity))
+        tapAddGesture.numberOfTapsRequired = 1
+        footerAddView.addGestureRecognizer(tapAddGesture)
+        
+        footerDoneView = UIView(frame: CGRect(x: footerAddView.right, y: DisplayConstant.screenHeight() - 50, width: DisplayConstant.screenWidth()/2, height: 50))
+        footerDoneView.backgroundColor = UIColor.defaultGreenColor()
+        
+        let doneLabel = UILabel(frame: CGRect(x: 0, y: 0, width: footerDoneView.width, height: footerDoneView.height))
+        doneLabel.text = "Done"
+        doneLabel.textColor = UIColor.white
+        doneLabel.font = UIFont.boldSystemFont(ofSize: 23)
+        doneLabel.textAlignment = .center
+        footerDoneView.addSubview(doneLabel)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doneBtnTapped))
+        tapGesture.numberOfTapsRequired = 1
+        footerDoneView.addGestureRecognizer(tapGesture)
+        
+        let separatorWidth: CGFloat = 1.00
+        separatorView = UIView(frame: CGRect(x: footerAddView.right - separatorWidth/2, y: footerAddView.top, width: separatorWidth, height: footerAddView.height))
+        separatorView.backgroundColor = UIColor.white
+        
+        AppDelegate.shared().window?.addSubview(footerDoneView)
+        AppDelegate.shared().window?.addSubview(footerAddView)
+        AppDelegate.shared().window?.addSubview(separatorView)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        footerDoneView.removeFromSuperview()
+        footerAddView.removeFromSuperview()
+        separatorView.removeFromSuperview()
+        // Save when user navigate back to last VC
+        self.save()
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,7 +111,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
         case 1:
             return occupationalActs.count
         case 2:
-            return 0
+            return customActivitiesList.count
         default:
             return 0
         }
@@ -71,19 +120,22 @@ class ChooseActivitiesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChooseActivitiesTableViewCell", for: indexPath) as! ChooseActivitiesTableViewCell
         
-        switch ((indexPath as NSIndexPath).section) {
+        switch indexPath.section {
         case 0:
             cell.label.text = physicalActs[(indexPath as NSIndexPath).row]
         case 1:
             cell.label.text = occupationalActs[(indexPath as NSIndexPath).row]
+        case 2:
+            cell.label.text = customActivitiesList[indexPath.row]
         default:
             cell.label.text = "Other"
         }
         
-        if self.selectedIndexes.index(of: indexPath) == nil {
+        if self.selectedIndexes.index(of: indexPath) == nil && indexPath.section != 2 {
             cell.checkView.isHidden = true
         }
-        else {
+        else
+        {
             cell.checkView.isHidden = false
         }
         
@@ -134,10 +186,12 @@ class ChooseActivitiesTableViewController: UITableViewController {
             headerCell.label.text = "Physical Therapy Activities"
             headerCell.backgroundColor = UIColor (red: 234/255, green: 253/255, blue: 251/255, alpha: 0.95)
         case 2:
-            headerCell.button.isHidden = false
-            headerCell.label.isHidden = true
-            headerCell.button.addTarget(self, action: #selector(ChooseActivitiesTableViewController.setPersonalActivity), for: .touchUpInside)
-
+//            headerCell.button.isHidden = false
+//            headerCell.label.isHidden = true
+//            headerCell.button.addTarget(self, action: #selector(ChooseActivitiesTableViewController.setPersonalActivity), for: .touchUpInside)
+            headerCell.button.isHidden = true
+            headerCell.label.text = "Custom Activities"
+            headerCell.backgroundColor = UIColor(red: 0.949, green: 0.902, blue: 0.996, alpha: 1.00)
         default:
             headerCell.label.text = "Others"
         }
@@ -147,7 +201,7 @@ class ChooseActivitiesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if (section == 2) {
-            return 40
+            return 50
         }
         else {
             return 0
@@ -155,20 +209,20 @@ class ChooseActivitiesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 40))
-        footerView.backgroundColor = UIColor.white
-        let doneBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 5, width: 100, height: 30))
-        doneBtn.setTitle("Done", for: .normal)
-        doneBtn.setTitleColor(UIColor.white, for: .normal)
-        doneBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17.0)
-        doneBtn.titleLabel?.textAlignment = .center
-        doneBtn.backgroundColor = UIColor.defaultGreenColor()
-        doneBtn.layer.cornerRadius = 3.0
-        doneBtn.clipsToBounds = true
-        doneBtn.addTarget(self, action: #selector(ChooseActivitiesTableViewController.done), for: .touchUpInside)
-        footerView.addSubview(doneBtn)
+//        let footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 40))
+//        footerView.backgroundColor = UIColor.white
+//        let doneBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 5, width: 100, height: 30))
+//        doneBtn.setTitle("Done", for: .normal)
+//        doneBtn.setTitleColor(UIColor.white, for: .normal)
+//        doneBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17.0)
+//        doneBtn.titleLabel?.textAlignment = .center
+//        doneBtn.backgroundColor = UIColor.defaultGreenColor()
+//        doneBtn.layer.cornerRadius = 3.0
+//        doneBtn.clipsToBounds = true
+//        doneBtn.addTarget(self, action: #selector(ChooseActivitiesTableViewController.done), for: .touchUpInside)
+//        footerView.addSubview(doneBtn)
         
-        return footerView
+        return nil
     }
     
 
@@ -181,6 +235,11 @@ class ChooseActivitiesTableViewController: UITableViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .default, handler:{ (action) -> Void in
             let theName = setAct.textFields![0].text
+            
+            self.customActivitiesList.append(theName!)
+            self.tableView.reloadData()
+            let indexPath = IndexPath(row: self.customActivitiesList.count - 1, section: 2)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
             
             let predicate = NSPredicate(format: "name == %@", theName!)
             self.theActivity = Activity.mr_findFirst(with: predicate)
@@ -201,7 +260,12 @@ class ChooseActivitiesTableViewController: UITableViewController {
         present(setAct, animated: true, completion: nil)
     }
     
-    func done() {
+    func doneBtnTapped() {
+        save()
+        goBack()
+    }
+    
+    func save() {
         for index in 0..<theIndexes.count {
             let theIndex = theIndexes[index]
             let theName = names[theIndex]
@@ -218,7 +282,6 @@ class ChooseActivitiesTableViewController: UITableViewController {
             actGoalRelation.add(theActivity!)
             NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
         }
-        goBack()
     }
     
     func goBack(){
