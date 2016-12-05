@@ -451,7 +451,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         headerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
         headerView!.backgroundColor = UIColor.white
-        let addBtn = UIButton (frame: CGRect (x: 30, y: 10, width: tableView.width - 60, height: 30))
+        let addBtn = UIButton (frame: CGRect (x: 10, y: 10, width: tableView.width - 20, height: 30))
+        addBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         addBtn.setTitle("Tap here to add therapy activities", for: .normal)
         addBtn.setTitleColor(UIColor.white, for: .normal)
         addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)

@@ -39,10 +39,6 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
         super.viewDidLoad()
         self.title = "Prioritizing Goals"
         
-//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ChooseGoalsViewController.goBack))
-//        backBtn.tintColor = UIColor.whiteColor()
-//        navigationItem.leftBarButtonItem = backBtn
-        
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ChooseGoalsViewController.goHome))
         homeBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = homeBtn
@@ -58,6 +54,7 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     override func viewWillAppear(_ animated: Bool) {
+//        self.collectionView.alpha = 1
         selectedIndexes.removeAll()
         finalIndexes.removeAll()
         collectionView.setContentOffset(CGPoint.zero, animated: true)
