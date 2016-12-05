@@ -47,6 +47,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     var goalDescriptionLabel: UILabel!
     var personalizedAlertController: UIAlertController!
+    var noGoalsView: UIView!
     
     //MARK: Controller Life Cycle
     override func viewDidLoad() {
@@ -158,11 +159,30 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         personalizedAlertController.addAction(cancelAction)
         
         self.view.bringSubview(toFront: rainbowView)
+        
+        noGoalsView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.width, height: addActBtn.top))
+        noGoalsView.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.7)
+        let noGoalsLabel = UILabel(frame: CGRect(x: 0, y: noGoalsView.height - 100, width: noGoalsView.width, height: 50))
+        noGoalsLabel.text = "You don't have any Activities for this goal\nPlease tap the button below to add activites."
+        noGoalsLabel.numberOfLines = 2
+        noGoalsLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        noGoalsLabel.adjustsFontSizeToFitWidth = true
+        noGoalsLabel.textColor = UIColor.white
+        noGoalsLabel.textAlignment = .center
+        noGoalsView.addSubview(noGoalsLabel)
+        
+        let arrowImageView = UIImageView(frame: CGRect(x: (noGoalsView.width - 24)/2, y: noGoalsLabel.bottom, width: 24, height: 45))
+        arrowImageView.image = UIImage(named: "down-arrow")
+        noGoalsView.addSubview(arrowImageView)
+        
+        self.view.addSubview(noGoalsView)
+        showNoActsView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         relations = (theGoal!.mutableSetValue(forKey: "activities"))
         activityTable.reloadData()
+        showNoActsView()
     }
     
     //MARK: Activities, Goals and Status
@@ -262,6 +282,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
                 DispatchQueue.main.async {
                     self.activityTable.deleteRows(at: [idx], with: .fade )
                     self.activityTable.reloadSections(IndexSet(integer: 0), with: .none)
+                    self.showNoActsView()
                 }
             }
             
@@ -357,6 +378,10 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         label7.text = theDates[6]
         theLine.thePoints = graphPoints
         theLine.setNeedsDisplay()
+    }
+    
+    func showNoActsView() {
+        noGoalsView.isHidden = relations.count != 0
     }
     
     //MARK: User Interaction
