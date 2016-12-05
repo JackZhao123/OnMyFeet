@@ -25,11 +25,12 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     let reuserIdentifier = "GoalCell"
     var selectedImages = [UIImage]()
     var flagForPersonalGoal = false
-    var goalsNum = 0
+    var setGoalAlertVC: UIAlertController!
+    var customizedGoals = [Goal]()
     
     var selectedIndexes = [IndexPath]() {
         didSet {
-            countLable.text = "Number of goals selected: \(selectedIndexes.count)"
+            countLable.text = "Number of goals selected: \(selectedIndexes.count + customizedGoals.count)"
             collectionView.reloadData()
         }
     }
@@ -38,10 +39,6 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Setting Goals"
-        
-//        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(GoalsViewController.goBack))
-//        backBtn.tintColor = UIColor.whiteColor()
-//        navigationItem.leftBarButtonItem = backBtn
         
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(GoalsViewController.goHome))
         homeBtn.tintColor = UIColor.white
@@ -87,37 +84,55 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 17
+        return 17 + self.customizedGoals.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! GoalsCollectionViewCell
+        var cell = GoalsCollectionViewCell()
         
-        cell.goalImgView.image = UIImage (named: "\((indexPath as NSIndexPath).item)")
-        
-        if self.selectedIndexes.index(of: indexPath) == nil {
-            cell.setCheckViewImage(selected: false)
+        if indexPath.row < 16 {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! GoalsCollectionViewCell
+
+            cell.goalImgView.image = UIImage (named: "\(indexPath.row)")
+            cell.checkImgView.isHidden = false
+
+            if self.selectedIndexes.index(of: indexPath) == nil {
+                cell.setCheckViewImage(selected: false)
+            } else {
+                cell.setCheckViewImage(selected: true)
+            }
+            
+        } else if (indexPath.row == collectionView.numberOfItems(inSection: 0) - 1 ) {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! GoalsCollectionViewCell
+
+            cell.goalImgView.image = UIImage (named: "16")
+            cell.checkImgView.isHidden = true
         } else {
-            cell.setCheckViewImage(selected: true)
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customized", for: indexPath) as! GoalsCollectionViewCell
+            let goal = customizedGoals[indexPath.row - 16]
+            cell.checkImgView.isHidden = true
+            cell.goalImgView.image = UIImage(data: goal.picture!)
+            cell.customizedGoalLabel.text = goal.answer
         }
+       
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if ((indexPath as NSIndexPath).row != 16) {
+        if (indexPath.row < 16) {
             if let indexSelected = selectedIndexes.index(of: indexPath) {
                 selectedIndexes.remove(at: indexSelected)
                 selectedImages.remove(at: indexSelected)
-                goalsNum -= 1
                 
             } else {
                 selectedIndexes.append(indexPath)
-                selectedImages.append(UIImage(named: "\((indexPath as NSIndexPath).item)")!)
-                goalsNum += 1
+                selectedImages.append(UIImage(named: "\(indexPath.row)")!)
+                
             }
             
-        } else {
+        } else if (indexPath.row == collectionView.numberOfItems(inSection: 0) - 1) {
             flagForPersonalGoal = true
             setPersonalGoal()
         }
@@ -199,43 +214,57 @@ class GoalsViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func setPersonalGoal() {
-        let setGoal = UIAlertController(title: "Add a personal goal that is important to you", message: "", preferredStyle: .alert)
-        let alert = UIAlertController(title: "", message: nil, preferredStyle: .alert)
-        setGoal.addTextField { (textField) -> Void in
+        setGoalAlertVC = UIAlertController(title: "Add a personal goal that is important to you", message: "", preferredStyle: .alert)
+        setGoalAlertVC.addTextField { (textField) -> Void in
+            textField.tag = 1
             textField.placeholder = "Enter your personal goal here"
+            textField.delegate = self
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let saveAction = UIAlertAction(title: "Save", style: .default, handler:{ (action) -> Void in
-            let thePicture = UIImage(named: "noImage")
-            let theQuestion = setGoal.textFields![0].text
-            let theExample = setGoal.textFields![0].text
-            let theAnswer = setGoal.textFields![0].text
-            if ((theAnswer!.isEmpty) == true) {
-                alert.title = "Please enter your personal goal"
-                self.present(alert, animated: true, completion: nil)
-            }
-            else {
-                let goal = Goal.mr_createEntity()
-                if let goal = goal {
-                    goal.picture = UIImageJPEGRepresentation(thePicture!, 1.0)
-                    goal.question = theQuestion
-                    goal.example = theExample
-                    goal.answer = theAnswer
-                    NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
-                }
-                self.goalsNum += 1
-                self.countLable.text = "Number of goals selected: " + String(self.goalsNum)
-            }
-        })
         
-        alert.addAction(cancelAction)
-        setGoal.addAction(saveAction)
-        setGoal.addAction(cancelAction)
-        present(setGoal, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler:{ (action) -> Void in
+            let thePicture = UIImage(named: "customized-goal")
+            let theQuestion = self.setGoalAlertVC.textFields![0].text
+            let theExample = self.setGoalAlertVC.textFields![0].text
+            let theAnswer = self.setGoalAlertVC.textFields![0].text
+            
+            let goal = Goal.mr_createEntity()
+            if let goal = goal {
+                goal.picture = UIImageJPEGRepresentation(thePicture!, 1.0)
+                goal.question = theQuestion
+                goal.example = theExample
+                goal.answer = theAnswer
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+                self.customizedGoals.append(goal)
+                self.collectionView.reloadData()
+            }
+            self.countLable.text = "Number of goals selected: \(self.selectedIndexes.count + self.customizedGoals.count)"
+        })
+            
+        saveAction.isEnabled = false
+        setGoalAlertVC.addAction(saveAction)
+        setGoalAlertVC.addAction(cancelAction)
+        
+        present(setGoalAlertVC, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField.tag == 1 {
+            if string == "" && range.location == 0 {
+                setGoalAlertVC.actions[0].isEnabled = false
+                
+            } else {
+                setGoalAlertVC.actions[0].isEnabled = true
+            }
+        }
+        
         return true
     }
     

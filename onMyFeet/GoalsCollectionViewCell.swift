@@ -12,6 +12,7 @@ class GoalsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var checkImgView: UIImageView!
     @IBOutlet weak var goalImgView: UIImageView!
+    @IBOutlet weak var customizedGoalLabel: UILabel!
     
     let checkImg = UIImage(named: "Check")
     let deselectImg = UIImage(named: "Cross")

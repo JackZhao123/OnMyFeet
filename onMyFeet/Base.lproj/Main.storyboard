@@ -895,8 +895,53 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GoalCell" id="IhW-hQ-ck8" customClass="GoalsCollectionViewCell" customModule="OnMyFeet" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="customized" id="1A0-b0-vHj" customClass="GoalsCollectionViewCell" customModule="OnMyFeet" customModuleProvider="target">
                                         <rect key="frame" x="31.5" y="0.0" width="280" height="210"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="280" height="210"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="customized-goal" translatesAutoresizingMaskIntoConstraints="NO" id="I06-RX-1X8">
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="168"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="168" id="uBU-gR-Oj5"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="zrh-Aj-cL0">
+                                                    <rect key="frame" x="0.0" y="176" width="280" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Check" translatesAutoresizingMaskIntoConstraints="NO" id="GHr-lU-vtg">
+                                                    <rect key="frame" x="231.5" y="8" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="cmc-W5-X59"/>
+                                                        <constraint firstAttribute="width" constant="40" id="fnx-QI-8Lh"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailingMargin" secondItem="zrh-Aj-cL0" secondAttribute="trailing" constant="-8" id="3p5-RB-pQ2"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="zrh-Aj-cL0" secondAttribute="bottom" constant="-8" id="PNm-8N-2Gp"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="GHr-lU-vtg" secondAttribute="trailing" id="SGf-h2-aY1"/>
+                                            <constraint firstItem="zrh-Aj-cL0" firstAttribute="top" secondItem="I06-RX-1X8" secondAttribute="bottom" constant="8" id="phN-ES-W7i"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="I06-RX-1X8" secondAttribute="trailing" constant="-8" id="pok-Fb-vJj"/>
+                                            <constraint firstItem="zrh-Aj-cL0" firstAttribute="leading" secondItem="1A0-b0-vHj" secondAttribute="leadingMargin" constant="-8" id="svU-sm-rN6"/>
+                                            <constraint firstItem="GHr-lU-vtg" firstAttribute="top" secondItem="1A0-b0-vHj" secondAttribute="topMargin" id="tqO-q2-jZs"/>
+                                            <constraint firstItem="I06-RX-1X8" firstAttribute="leading" secondItem="1A0-b0-vHj" secondAttribute="leadingMargin" constant="-8" id="v2t-nR-6Bz"/>
+                                            <constraint firstItem="I06-RX-1X8" firstAttribute="top" secondItem="1A0-b0-vHj" secondAttribute="topMargin" constant="-8" id="vIJ-p6-Ain"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="checkImgView" destination="GHr-lU-vtg" id="qdG-ea-7PL"/>
+                                            <outlet property="customizedGoalLabel" destination="zrh-Aj-cL0" id="Jv3-9M-8W0"/>
+                                            <outlet property="goalImgView" destination="I06-RX-1X8" id="PVS-4s-ZtS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GoalCell" id="IhW-hQ-ck8" customClass="GoalsCollectionViewCell" customModule="OnMyFeet" customModuleProvider="target">
+                                        <rect key="frame" x="31.5" y="210" width="280" height="210"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="210"/>
@@ -1351,13 +1396,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4f7-r0-zEo">
-                                            <rect key="frame" x="8" y="8" width="359" height="53.5"/>
+                                            <rect key="frame" x="8" y="8" width="359" height="54"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="745-WZ-dZS">
-                                            <rect key="frame" x="117.5" y="17" width="140" height="36"/>
+                                            <rect key="frame" x="118" y="17" width="140" height="36"/>
                                             <color key="backgroundColor" red="0.93434643745422363" green="0.87209475040435791" blue="0.99739634990692139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="140" id="0pD-GU-Ndb"/>
@@ -1395,7 +1440,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z67-QX-hVe">
-                                            <rect key="frame" x="8" y="8" width="359" height="53.5"/>
+                                            <rect key="frame" x="8" y="8" width="359" height="54"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1740,7 +1785,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dd1-yk-ERV" id="qQZ-su-pEb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Strenthening" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1CS-vb-rvt">
@@ -1849,5 +1894,6 @@
         <image name="Check" width="128" height="128"/>
         <image name="Cross" width="128" height="128"/>
         <image name="box" width="116" height="103"/>
+        <image name="customized-goal" width="212" height="141"/>
     </resources>
 </document>
