@@ -9,12 +9,8 @@
 import UIKit
 import CoreData
 
-class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, ViewActivitesTableViewCellDelegate {
+class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewActivitesTableViewCellDelegate, UITextFieldDelegate {
     
-    
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var activityTable: UITableView!
     @IBOutlet weak var RainbowView: UIView!
     @IBOutlet weak var ContainerView: UIView!
@@ -53,6 +49,13 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     var footerView: UIView?
     var isWeeklyGraphShowing = false
     
+    var goalDescriptionLabel: UILabel!
+    var personalizedAlertController: UIAlertController!
+    
+    deinit {
+        print("Deallocating ViewActivitesViewController")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,13 +66,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         self.title = "My Activities"
         
-        show()
-        
         RainbowView.isHidden = true
-        stackView.isHidden = false
-        textView.isHidden = false
-        textView.delegate = self
-        
 
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
         homeBtn.tintColor = UIColor.white
@@ -92,16 +89,86 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         viewProgressBtn.layer.borderColor = UIColor.gray.cgColor
         viewProgressBtn.layer.borderWidth = 1.5
         
+        let buttonHeight: CGFloat = 45
+        
+        let deleteBtn = UIButton(frame: CGRect(x: 0, y: self.view.height - buttonHeight - 64, width: self.view.width, height: buttonHeight))
+        deleteBtn.setTitle("Delete Goal", for: .normal)
+        deleteBtn.backgroundColor = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1.00)
+        deleteBtn.addTarget(self, action: #selector(self.deleteGoal), for: .touchUpInside)
+        self.view.addSubview(deleteBtn)
+        
+        let addActBtn = UIButton(frame: CGRect(x: 0, y: deleteBtn.top - 7 - buttonHeight, width: self.view.width, height: buttonHeight))
+        addActBtn.setTitle("Tap here to add therapy activities", for: .normal)
+        addActBtn.backgroundColor = UIColor.defaultGreenColor()
+        addActBtn.addTarget(self, action: #selector(self.goNext), for: .touchUpInside)
+        self.view.addSubview(addActBtn)
+        
+        let headerV = UIView(frame: CGRect(x: 0, y: 0, width: self.view.width, height: 235))
+        
+        let actImageView = UIImageView(frame: CGRect(x: (headerV.width - 200) / 2, y: 15, width: 200, height: 150))
+        actImageView.image = UIImage(data: theGoal!.picture! as Data)
+        headerV.addSubview(actImageView)
+        
+        goalDescriptionLabel = UILabel(frame: CGRect(x: 20, y: actImageView.bottom + 10, width: (headerV.width - 40), height: 50))
+        if theGoal!.answer == nil || theGoal!.answer == "" {
+            goalDescriptionLabel.text = "Please tap here to personalize your goal"
+            goalDescriptionLabel.textColor = UIColor.gray
+        } else {
+            goalDescriptionLabel.text = theGoal!.answer
+            goalDescriptionLabel.textColor = UIColor.black
+        }
+        goalDescriptionLabel.numberOfLines = 0
+        goalDescriptionLabel.backgroundColor = UIColor(red: 0.820, green: 0.945, blue: 0.820, alpha: 1.00)
+        goalDescriptionLabel.textAlignment = .center
+        goalDescriptionLabel.sizeToFit()
+        goalDescriptionLabel.setWidth(value: (headerV.width - 40))
+        goalDescriptionLabel.setHeight(value: goalDescriptionLabel.height + 10)
+        goalDescriptionLabel.isUserInteractionEnabled = true
+        headerV.addSubview(goalDescriptionLabel)
+        
+        let descriptionTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.descriptionLabelTapped))
+        goalDescriptionLabel.addGestureRecognizer(descriptionTapGesture)
+        
+        
+        headerV.setHeight(value: (actImageView.height + goalDescriptionLabel.height + 10 + 15 + 10))
+        activityTable.tableHeaderView = headerV
+        
+        personalizedAlertController = UIAlertController(title: nil, message: "Please enter your personalized goal", preferredStyle: .alert)
+        personalizedAlertController.addTextField(configurationHandler: {(textField) in
+            textField.delegate = self
+            if self.theGoal!.answer == nil || self.theGoal!.answer == "" {
+                textField.placeholder = "Personlize your goal"
+            } else {
+                textField.placeholder = self.theGoal!.answer
+            }
+        })
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action) in
+            
+            if let text = self.personalizedAlertController.textFields?.first?.text, text != ""{
+                self.theGoal?.answer = text
+                self.goalDescriptionLabel.text = text
+                self.personalizedAlertController.textFields?.first?.placeholder = text
+                NSManagedObjectContext.mr_default().mr_saveToPersistentStoreAndWait()
+            }
+            
+            self.personalizedAlertController.textFields?.first?.text = ""
+            
+
+        })
+        okAction.isEnabled = false
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action) in
+            self.personalizedAlertController.textFields?.first?.text = ""
+        })
+        
+        personalizedAlertController.addAction(okAction)
+        personalizedAlertController.addAction(cancelAction)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         relations = (theGoal!.mutableSetValue(forKey: "activities"))
         activityTable.reloadData()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        textView.setContentOffset(CGPoint.zero, animated: false)
     }
     
 //    func getStatus(slider: GradientSlider) {
@@ -267,12 +334,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         self.present(deleteGoalAlertController, animated: true, completion: nil)
     }
     
-    //MARK: Setup UI
-    func show() {
-        imageView.image = UIImage(data: theGoal!.picture! as Data)
-        textView.text = theGoal!.answer
-    }
-    
     func setLableText(_ name: String) {
         
         var dates: [String] = ["", "", "", "", "", "", ""]
@@ -343,6 +404,12 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     //MARK: User Interaction
+    func descriptionLabelTapped() {
+        
+        personalizedAlertController.actions[0].isEnabled = false
+        self.present(personalizedAlertController, animated: true, completion: nil)
+    }
+    
     @IBAction func setStatusClick(_ sender: AnyObject) {
         if (isWeeklyGraphShowing) {
             UIView.transition(from: WeeklyView, to: DailyView, duration: 1.0, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
@@ -359,7 +426,6 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func doneBtn(_ sender: UIButton) {
         RainbowView.isHidden = true
-        stackView.isHidden = false
         activityTable.reloadData()
         UIView.transition(from: WeeklyView, to: DailyView, duration: 0.0, options: .showHideTransitionViews, completion: nil)
         isWeeklyGraphShowing = false
@@ -429,14 +495,12 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         cell.status.backgroundColor = UIColor(hue: status / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
         cell.status.layer.cornerRadius = 5.0
         cell.status.clipsToBounds = true
-        cell.status.layer.borderColor = UIColor.gray.cgColor
-        cell.status.layer.borderWidth = 1.5
         
         
-        cell.programBtn.layer.cornerRadius = 5.0
-        cell.programBtn.clipsToBounds = true
-        cell.programBtn.layer.borderColor = UIColor.gray.cgColor
-        cell.programBtn.layer.borderWidth = 1.5
+//        cell.programBtn.layer.cornerRadius = 5.0
+//        cell.programBtn.clipsToBounds = true
+//        cell.programBtn.layer.borderColor = UIColor.gray.cgColor
+//        cell.programBtn.layer.borderWidth = 1.5
         
         //chooseSlider(cell.theSlider, status: status)
         //getStatus(cell.theSlider)
@@ -444,52 +508,51 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 0
+//    }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        headerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
-        headerView!.backgroundColor = UIColor.white
-        let addBtn = UIButton (frame: CGRect (x: 10, y: 10, width: tableView.width - 20, height: 30))
-        addBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        addBtn.setTitle("Tap here to add therapy activities", for: .normal)
-        addBtn.setTitleColor(UIColor.white, for: .normal)
-        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
-        addBtn.titleLabel?.textAlignment = .center
-        addBtn.backgroundColor = UIColor.defaultGreenColor()
-        addBtn.layer.cornerRadius = 5.0
-        addBtn.clipsToBounds = true
-        addBtn.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: .touchUpInside)
-        headerView!.addSubview(addBtn)
-        
-        return headerView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        headerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
+//        headerView!.backgroundColor = UIColor.white
+//        let addBtn = UIButton (frame: CGRect (x: 10, y: 10, width: tableView.width - 20, height: 30))
+//        addBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+//        addBtn.setTitle("Tap here to add therapy activities", for: .normal)
+//        addBtn.setTitleColor(UIColor.white, for: .normal)
+//        addBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+//        addBtn.titleLabel?.textAlignment = .center
+//        addBtn.backgroundColor = UIColor.defaultGreenColor()
+//        addBtn.layer.cornerRadius = 5.0
+//        addBtn.clipsToBounds = true
+//        addBtn.addTarget(self, action: #selector(ViewActivitiesViewController.goNext), for: .touchUpInside)
+//        headerView!.addSubview(addBtn)
+//        
+//        return headerView
+//    }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 45
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
-        footerView!.backgroundColor = UIColor.white
-        let deleteBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 10, width: 100, height: 30))
-        deleteBtn.setTitle("Delete goal", for: .normal)
-        deleteBtn.setTitleColor(UIColor.white, for: .normal)
-        deleteBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
-        deleteBtn.titleLabel?.textAlignment = .center
-        deleteBtn.backgroundColor = UIColor.red
-        deleteBtn.layer.cornerRadius = 5.0
-        deleteBtn.clipsToBounds = true
-        deleteBtn.addTarget(self, action: #selector(ViewActivitiesViewController.deleteGoal), for: .touchUpInside)
-        footerView!.addSubview(deleteBtn)
-        
-        return footerView
-    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 45
+//    }
+//    
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        footerView = UIView (frame: CGRect (x: 0, y: 0, width: tableView.width, height: 45))
+//        footerView!.backgroundColor = UIColor.white
+//        let deleteBtn = UIButton (frame: CGRect (x: tableView.width/2-50, y: 10, width: 100, height: 30))
+//        deleteBtn.setTitle("Delete goal", for: .normal)
+//        deleteBtn.setTitleColor(UIColor.white, for: .normal)
+//        deleteBtn.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+//        deleteBtn.titleLabel?.textAlignment = .center
+//        deleteBtn.backgroundColor = UIColor.red
+//        deleteBtn.layer.cornerRadius = 5.0
+//        deleteBtn.clipsToBounds = true
+//        deleteBtn.addTarget(self, action: #selector(ViewActivitiesViewController.deleteGoal), for: .touchUpInside)
+//        footerView!.addSubview(deleteBtn)
+//        
+//        return footerView
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         RainbowView.isHidden = false
-        stackView.isHidden = true
         
         let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
         theName = theRelate.name
@@ -509,4 +572,16 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         self.deleteActivityAt(idx: idx)
     }
     
+    //MARK: TextField Delegate
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if string == "" && range.location == 0 {
+            personalizedAlertController.actions[0].isEnabled = false
+            
+        } else {
+            personalizedAlertController.actions[0].isEnabled = true
+        }
+        
+        return true
+    }
 }
