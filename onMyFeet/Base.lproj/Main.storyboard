@@ -1801,12 +1801,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="ContainerView" destination="03l-0S-skp" id="S0v-wH-IOc"/>
-                        <outlet property="DailyView" destination="bEC-NE-zac" id="GHZ-Dr-nQq"/>
-                        <outlet property="RainbowView" destination="KEi-Lm-sPR" id="bGg-nW-5Ph"/>
-                        <outlet property="WeeklyView" destination="MyF-Pr-kK9" id="fd1-ix-Fmg"/>
                         <outlet property="actLabel" destination="bf9-WJ-Nhu" id="kcA-1d-pge"/>
                         <outlet property="activityTable" destination="9wP-Ip-91O" id="kXq-fs-nOe"/>
+                        <outlet property="containerView" destination="03l-0S-skp" id="pfM-md-Myh"/>
+                        <outlet property="dailyView" destination="bEC-NE-zac" id="27G-im-pGy"/>
                         <outlet property="doneBtn" destination="eEe-y8-d63" id="Sli-Gi-R38"/>
                         <outlet property="greenView" destination="fy5-hv-GaY" id="tI7-kc-Z5q"/>
                         <outlet property="label1" destination="2Eo-dz-GdU" id="0d9-Xt-UKn"/>
@@ -1816,11 +1814,13 @@
                         <outlet property="label5" destination="HEZ-CS-sqE" id="z2x-fX-xru"/>
                         <outlet property="label6" destination="9Mu-cs-kN0" id="yte-JZ-v4n"/>
                         <outlet property="label7" destination="5MA-ar-4Xq" id="p2z-YM-HTA"/>
+                        <outlet property="rainbowView" destination="KEi-Lm-sPR" id="3vK-RP-zsk"/>
                         <outlet property="redView" destination="8eb-gO-2pd" id="iyW-67-qUT"/>
                         <outlet property="setStatusBtn" destination="3OM-hn-iqg" id="nKA-Lj-2gk"/>
                         <outlet property="theLine" destination="72o-MG-QSv" id="tdk-D2-0rW"/>
                         <outlet property="theSlider" destination="GOu-2B-ppM" id="lv0-Vi-5qD"/>
                         <outlet property="viewProgressBtn" destination="JFY-CL-mPj" id="C6C-yY-L7S"/>
+                        <outlet property="weeklyView" destination="MyF-Pr-kK9" id="1Mz-CZ-ekC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LnS-eg-kT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
