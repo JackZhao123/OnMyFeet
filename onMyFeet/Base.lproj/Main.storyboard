@@ -384,7 +384,7 @@
                                 <color key="sectionIndexBackgroundColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" textLabel="hYV-Jc-BxH" rowHeight="65" style="IBUITableViewCellStyleDefault" id="FWp-4L-7f7">
-                                        <rect key="frame" x="0.0" y="55" width="383" height="66"/>
+                                        <rect key="frame" x="0.0" y="56" width="383" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ActionCell" tableViewCell="FWp-4L-7f7" id="WyO-jH-d51">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="64"/>
@@ -1496,14 +1496,6 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="more" translatesAutoresizingMaskIntoConstraints="NO" id="yCt-RO-Xki">
-                                                            <rect key="frame" x="305" y="55" width="25" height="25"/>
-                                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="25" id="6Qy-3Y-yZO"/>
-                                                                <constraint firstAttribute="height" constant="25" id="Z9L-I3-VjF"/>
-                                                            </constraints>
-                                                        </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zic-iK-ZpU">
                                                             <rect key="frame" x="274" y="9" width="56" height="30"/>
                                                             <color key="backgroundColor" red="1" green="0.27450980392156865" blue="0.36078431372549019" alpha="1" colorSpace="calibratedRGB"/>
@@ -1519,17 +1511,17 @@
                                                             </connections>
                                                         </button>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="jqY-Sj-hrh">
-                                                            <rect key="frame" x="8" y="48" width="277" height="30"/>
+                                                            <rect key="frame" x="8" y="48" width="172" height="30"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqq-iC-iJt">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="124" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="71" height="30"/>
                                                                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puA-QM-RBk">
-                                                                    <rect key="frame" x="154" y="0.0" width="123" height="30"/>
+                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puA-QM-RBk">
+                                                                    <rect key="frame" x="101" y="0.0" width="71" height="30"/>
                                                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                                     <state key="normal" title="Program">
@@ -1545,13 +1537,10 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="zic-iK-ZpU" secondAttribute="trailing" constant="5" id="3JU-rM-ABh"/>
                                                         <constraint firstItem="zic-iK-ZpU" firstAttribute="top" secondItem="qQZ-su-pEb" secondAttribute="topMargin" constant="1" id="GOj-Yg-GoO"/>
-                                                        <constraint firstItem="yCt-RO-Xki" firstAttribute="leading" secondItem="jqY-Sj-hrh" secondAttribute="trailing" constant="20" id="GSt-aU-hbB"/>
                                                         <constraint firstItem="jqY-Sj-hrh" firstAttribute="leading" secondItem="qQZ-su-pEb" secondAttribute="leadingMargin" id="N1e-rS-BKi"/>
                                                         <constraint firstItem="jqY-Sj-hrh" firstAttribute="top" secondItem="1CS-vb-rvt" secondAttribute="bottom" constant="8" id="QmA-ox-MIo"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="yCt-RO-Xki" secondAttribute="trailing" constant="5" id="dvo-Vg-ZQy"/>
                                                         <constraint firstAttribute="leadingMargin" secondItem="1CS-vb-rvt" secondAttribute="leading" id="kV1-hv-0Jw"/>
                                                         <constraint firstAttribute="topMargin" secondItem="1CS-vb-rvt" secondAttribute="top" id="rIm-rT-aSO"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="yCt-RO-Xki" secondAttribute="bottom" constant="12" id="vs6-9H-z4W"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -1890,6 +1879,5 @@
         <image name="Check" width="128" height="128"/>
         <image name="Cross" width="128" height="128"/>
         <image name="box" width="116" height="103"/>
-        <image name="more" width="34" height="32"/>
     </resources>
 </document>
