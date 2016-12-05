@@ -11,56 +11,57 @@ import CoreData
 import MagicalRecord
 
 
-class ViewGoalsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
+class ViewGoalsViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var goalTable: UITableView!
-    @IBOutlet weak var setGoalsBtn: UIButton!
-    var goals = [Goal]()
+    var setGoalsView: UIView!
+    var goals: [Goal]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        goalTable.delegate = self
-        goalTable.dataSource = self
-
-        
-        if Goal.mr_findAll() != nil {
-            goals = Goal.mr_findAll() as! [Goal]
-        }
-        
-        
-        if (goals.count == 0) {
-            goalTable.isHidden = true
-        }
-        else {
-            setGoalsBtn.isHidden = true
-            setGoalsBtn.isEnabled = false
-        }
         
         self.title = "My Goals"
-        
-        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewGoalsViewController.goBack))
-        backBtn.tintColor = UIColor.white
-        navigationItem.leftBarButtonItem = backBtn
+
+        goalTable.delegate = self
+        goalTable.dataSource = self
         
         let nextBtn = UIBarButtonItem(title: "Add Goals", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewGoalsViewController.goNext))
         nextBtn.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = nextBtn
         
-        setGoalsBtn.layer.cornerRadius = 5.0;
-        setGoalsBtn.layer.borderColor = UIColor.gray.cgColor
-        setGoalsBtn.layer.borderWidth = 1.5
+        setGoalsView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.width, height: self.view.height))
+        setGoalsView.backgroundColor = UIColor(colorLiteralRed: 0, green: 0, blue: 0, alpha: 0.7)
+        self.view.addSubview(setGoalsView)
+        
+        let instructionLabel = UILabel(frame: CGRect(x: 0, y: (setGoalsView.height - 40) / 2 - 20, width: setGoalsView.width, height: 45))
+        instructionLabel.font = UIFont.systemFont(ofSize: 18)
+        instructionLabel.numberOfLines = 2
+        instructionLabel.textAlignment = .center
+        instructionLabel.textColor = UIColor.white
+        instructionLabel.text = "You don't have any goals\nPlease add goals to contiune."
+        setGoalsView.addSubview(instructionLabel)
+        
+        let goalsBtn = UIButton(frame: CGRect(x: (setGoalsView.width - 235) / 2, y: instructionLabel.bottom + 10, width: 235, height: 35))
+        goalsBtn.backgroundColor = UIColor.defaultGreenColor()
+        goalsBtn.addTarget(self, action: #selector(self.goNext), for: .touchUpInside)
+        goalsBtn.setTitle("Click here to set goals", for: .normal)
+        goalsBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19)
+        goalsBtn.layer.cornerRadius = 5.0
+        setGoalsView.addSubview(goalsBtn)
+        
+        goals = Goal.mr_findAll() == nil ? [Goal]() : Goal.mr_findAll() as! [Goal]
+        
+        goalTable.isHidden = goals.count == 0 ? true : false
+        setGoalsView.isHidden = !goalTable.isHidden
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        goals = Goal.mr_findAll() as! [Goal]
+        goals = Goal.mr_findAll() == nil ? [Goal]() : Goal.mr_findAll() as! [Goal]
         goalTable.setContentOffset(CGPoint.zero, animated: true)
         goalTable.reloadData()
         
-        if (goals.count == 0) {
-            goalTable.isHidden = true
-            setGoalsBtn.isHidden = false
-            setGoalsBtn.isEnabled = true
-        }
+        goalTable.isHidden = goals.count == 0 ? true : false
+        setGoalsView.isHidden = !goalTable.isHidden
     }
     
     override func viewDidLayoutSubviews() {

@@ -77,14 +77,14 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
             
             if (index == indexes.count - 1) {
                 saveToCoreData()
-                goNext()
+                _ = self.navigationController?.popToRootViewController(animated: true)
             }
             
             if (index < indexes.count - 1) {
                 index += 1
                 show()
                 if (index == indexes.count - 1 ) {
-                    nextBtn.setTitle("Finished", for: UIControlState())
+                    nextBtn.setTitle("Finish", for: UIControlState())
                 }
             }
         }
