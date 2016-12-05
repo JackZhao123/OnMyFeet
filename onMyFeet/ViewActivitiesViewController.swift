@@ -60,6 +60,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         self.title = "My Activities"
         
         rainbowView.isHidden = true
+        rainbowView.alpha = 0.0
 
         let homeBtn = UIBarButtonItem(title: "Home", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewActivitiesViewController.goHome))
         homeBtn.tintColor = UIColor.white
@@ -68,18 +69,16 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         self.edgesForExtendedLayout = UIRectEdge()
         
         doneBtn.layer.cornerRadius = 5.0;
-        doneBtn.layer.borderColor = UIColor.gray.cgColor
-        doneBtn.layer.borderWidth = 1.5
         //dailyView.layer.cornerRadius = 10.0
         greenView.layer.cornerRadius = 10.0
         //redView.layer.cornerRadius = 10.0
         
         //setStatusBtn.layer.cornerRadius = 5.0
-        setStatusBtn.layer.borderColor = UIColor.gray.cgColor
+        setStatusBtn.layer.borderColor = UIColor.white.cgColor
         setStatusBtn.layer.borderWidth = 1.5
         
         //viewProgressBtn.layer.cornerRadius = 5.0
-        viewProgressBtn.layer.borderColor = UIColor.gray.cgColor
+        viewProgressBtn.layer.borderColor = UIColor.white.cgColor
         viewProgressBtn.layer.borderWidth = 1.5
         
         let buttonHeight: CGFloat = 45
@@ -157,6 +156,8 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         personalizedAlertController.addAction(okAction)
         personalizedAlertController.addAction(cancelAction)
+        
+        self.view.bringSubview(toFront: rainbowView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -380,7 +381,16 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     @IBAction func doneBtn(_ sender: UIButton) {
-        rainbowView.isHidden = true
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+                        self.rainbowView.alpha = 0.0
+        },
+                       completion: {(finished) in
+                        if finished {
+                            self.rainbowView.isHidden = true
+                        }
+        })
+        
         activityTable.reloadData()
         UIView.transition(from: weeklyView, to: dailyView, duration: 0.0, options: .showHideTransitionViews, completion: nil)
         isWeeklyGraphShowing = false
@@ -439,7 +449,11 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         rainbowView.isHidden = false
+        UIView.animate(withDuration: 0.3, animations: {
+            self.rainbowView.alpha = 1.0
+        })
         
         let theRelate = relations.allObjects[(indexPath as NSIndexPath).row] as! Activity
         theName = theRelate.name
