@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GoalsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
+class GoalsViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
     
     //MARK: Properties
     @IBOutlet var goalView: UIView!

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ChooseGoalsViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var personalizeBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -54,7 +54,7 @@ class ChooseGoalsViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        self.collectionView.alpha = 1
+        self.collectionView.alpha = 1
         selectedIndexes.removeAll()
         finalIndexes.removeAll()
         collectionView.setContentOffset(CGPoint.zero, animated: true)
