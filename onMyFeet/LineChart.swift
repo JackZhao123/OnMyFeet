@@ -83,17 +83,17 @@ import UIKit
             rectPath.fill()
             context?.restoreGState()
             
-            graphPath.lineWidth = 2.0
+            graphPath.lineWidth = 4.0
             graphPath.stroke()
             
             
             
             for i in 0..<graphPoints.count {
                 var point = CGPoint(x: xPoint(i), y: yPoint(graphPoints[i]))
-                point.x -= 4.0/2
-                point.y -= 4.0/2
+                point.x -= 8.0/2
+                point.y -= 8.0/2
                 
-                let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: 4, height: 4)))
+                let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize(width: 8, height: 8)))
                 circle.fill()
                 
                 let line = UIBezierPath()
@@ -103,7 +103,7 @@ import UIKit
                 let color = UIColor(white: 1.0, alpha: 0.7)
                 color.setStroke()
                 
-                line.lineWidth = 2.0
+                line.lineWidth = 4.0
                 line.stroke()
             }
             
@@ -120,7 +120,7 @@ import UIKit
             let color = UIColor(white: 1.0, alpha: 0.7)
             color.setStroke()
             
-            linePath.lineWidth = 2.0
+            linePath.lineWidth = 4.0
             linePath.stroke()
                     
         }

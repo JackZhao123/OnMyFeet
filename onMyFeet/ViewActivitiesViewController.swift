@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewActivitesTableViewCellDelegate, UITextFieldDelegate {
+class ViewActivitiesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, ViewActivitesTableViewCellDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var activityTable: UITableView!
     @IBOutlet weak var rainbowView: UIView!
@@ -71,7 +71,7 @@ class ViewActivitiesViewController: UIViewController, UITableViewDelegate, UITab
         
         doneBtn.layer.cornerRadius = 5.0;
         //dailyView.layer.cornerRadius = 10.0
-        greenView.layer.cornerRadius = 10.0
+        //greenView.layer.cornerRadius = 10.0
         //redView.layer.cornerRadius = 10.0
         
         //setStatusBtn.layer.cornerRadius = 5.0

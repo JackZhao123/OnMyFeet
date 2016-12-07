@@ -9,7 +9,7 @@
 import UIKit
 import MagicalRecord
 
-class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
+class PersonalizeGoalsViewController: BaseViewController, UITextViewDelegate {
     
     var index = 0
     var indexes = [Int]()
@@ -138,6 +138,7 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
         textView.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PersonalizeGoalsViewController.keyboardWillChange(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
         if (index <= 0) {
             previousBtn.isEnabled = false
@@ -202,6 +203,26 @@ class PersonalizeGoalsViewController: UIViewController, UITextViewDelegate {
     }
     
     func keyboardWillShow(_ notification: Notification) {
+        var userInfo = (notification as NSNotification).userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        if (theFlag == true) {
+            length = self.textView.contentSize.height
+            distance = keyboardFrame.size.height - self.textView.frame.height - nextBtn.frame.height + length
+        }
+        
+        scrollView.isScrollEnabled = true
+        
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: distance), animated: true)
+        
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        self.scrollView.contentInset = contentInset
+        
+    }
+    
+    func keyboardWillChange(_ notification: Notification) {
         var userInfo = (notification as NSNotification).userInfo!
         var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
